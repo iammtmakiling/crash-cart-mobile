@@ -32,8 +32,5 @@ Map<String, dynamic> parsePatient(Map<String, dynamic> json) {
           : null,
       'philHealthID': decryptField(general, 'philHealthID'),
     },
-    // 'lastHospital': json['lastHospital'],
-    // 'patientHistory': json['patientHistory'],
-    // 'lastStatus': decryptField(json, 'lastStatus'),
   };
 }
