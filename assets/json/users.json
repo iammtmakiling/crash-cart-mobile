@@ -1,0 +1,26 @@
+{
+    "Users": [
+        {
+            "id": 1,
+            "username": "doctor1@gmail.com",
+            "password": "doctor1",
+            "pin": 1234,
+            "devices": []
+            
+        },
+        {
+            "id": 2,
+            "username": "doctor2@gmail.com",
+            "password": "doctor2",
+            "pin": 1234,
+            "devices": ["48:87:59:91:68:73"]
+        },
+        {
+            "id": 3,
+            "username": "doctor3@gmail.com",
+            "password": "doctor3",
+            "pin": 1234,
+            "devices": ["49:88:60:92:69:74"]
+        }
+    ]
+}

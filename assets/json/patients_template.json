@@ -1,0 +1,132 @@
+{
+    "PatientTemplate": 
+        {
+            "id": 0,
+            "centralRegistryNum": null,
+            "healthFacility": null, 
+            "hospitalPatientID": null, 
+            "hospitalRegistryID": null, 
+            "hospitalCaseNum": null, 
+            "lastName": null, 
+            "firstName": null, 
+            "middleName": null,
+            "suffix": null,
+            "general": 
+                {
+                    "patientType": null,
+                    "birthday": null,
+                    "age": null,
+                    "gender": null,
+                    "presentAddress": null,
+                    "permanentAddress": null,
+                    "philhealthID": null
+                }
+            ,  
+            "prehospital": 
+                {
+                    "chiefComplaint": null,
+                    "massInjury": null,
+                    "regionsID": null,
+                    "provincesID": null,
+                    "citiesID": null,
+                    "dateTimeInjury": null,
+                    "injuryType": null,
+                    "firstAidGiven": null,
+                    "firstAider": null,
+                    "firstAidGivenProperly": null,
+                    "natureOfInjury": null,
+                    "externalCauseOfInjury": null,
+                    "vehicularAccidentBool": null,
+                    "typeVehicularAccident": null,
+                    "collisionOrNonCollision": null,
+                    "partiesInvolved": [],
+                    "positionOfPatient": null,
+                    "placeOfOccurence": null,
+                    "activityDuringAccident": null,
+                    "safetyIssues": [],
+                    "medicolegalCase": null,
+                    "medicolegalCategory": null
+                }
+            ,
+            "er": 
+                {
+                    "patientTransferred": null,
+                    "coordinatedTransfer": null,
+                    "originatingInstitution": null,
+                    "previousInCharge": null,
+                    "positionPreviousInCharge": null,
+                    "statusOnArrival": null,
+                    "aliveStatus": null,
+                    "modeOfTransport": null,
+                    "initialImpressions": null,
+                    "outrightSurgical": null,
+                    "cavityForSurgery": null,
+                    "servicesOnboardSurgery": null,
+                    "patientDisposition": null,
+                    "outcome": null
+                }
+            ,
+            "surgery": {
+                    "forSurgery": null,
+                    "surgeriesList": [
+                        {
+                            "placeOfSurgery": null,
+                            "rvsCode": null,
+                            "cavityInvolved": null,
+                            "servicesPresent": [],
+                            "phaseBegun": null,
+                            "startDateTime": null,
+                            "endDateTime": null,
+                            "surgeryType": null,
+                            "surgeon": null,
+                            "hemorrhageControlType": null,
+                            "hemorrhageControlDateTime": null,
+                            "nextPhase": null
+                        }
+                    ]
+                }
+            ,
+            "inhospital": {
+                    "forInhospitalAdmission": null,
+                    "comorbiditiesList": [],
+                    "hospitalEvents": [
+                        {
+                            "eventId": null,
+                            "complicationCodes": [],
+                            "caprini": null,
+                            "vteInclusion": null,
+                            "vteType": null,
+                            "vteDate": null,
+                            "ICUArrival": null,
+                            "ICUExit": null,
+                            "ICUStay": null,
+                            "withdrawLifeSupportBool": null,
+                            "withdrawalDate": null,
+                            "withdrawalTime": null
+                        }
+                    ],
+                    "inReferrals": [
+                        {
+                            "referralsId": null,
+                            "consultService": null,
+                            "consultationDate": null,
+                            "consultationPhysician": null
+                        }
+                    ]
+            },
+            "discharge": {
+                "forDischarge": null,
+                "treatmentCompletedBool": null,
+                "finalDiagnosis": null,
+                "icdCode": null,
+                "dischargeDisposition": null
+            },
+            "edit_history": [
+                { 
+                    "username": null,
+                    "details": null
+                }
+            ]
+        }
+    
+}

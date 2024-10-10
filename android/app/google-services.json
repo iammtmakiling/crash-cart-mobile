@@ -1,0 +1,82 @@
+{
+  "project_info": {
+    "project_number": "428801016937",
+    "project_id": "sp2-trauma-registry",
+    "storage_bucket": "sp2-trauma-registry.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:428801016937:android:2b545bcb5297658edf0ef8",
+        "android_client_info": {
+          "package_name": "com.example.dashboard"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "428801016937-l9td8bnapic74h94qkgdqv0q1enesi43.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDL309R_bF_P8aTmhaE54NL-IcyqHYIJXY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "428801016937-l9td8bnapic74h94qkgdqv0q1enesi43.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "428801016937-hdjdhj1rif0qir8a8a1aoc08qqf9rok0.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.dashboard"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:428801016937:android:f8d0794e3c003df3df0ef8",
+        "android_client_info": {
+          "package_name": "traumapatientregistry2122.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "428801016937-l9td8bnapic74h94qkgdqv0q1enesi43.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDL309R_bF_P8aTmhaE54NL-IcyqHYIJXY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "428801016937-l9td8bnapic74h94qkgdqv0q1enesi43.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "428801016937-hdjdhj1rif0qir8a8a1aoc08qqf9rok0.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.dashboard"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,89 @@
+{
+    "patientHistory":
+        [{
+            
+            "preHospital":{
+                "chiefComplaint": "Heat Stroke",
+                "massInjury": "null",
+                "injuryTimestamp": "null",
+                "injuryIntent": "null",
+                "placeOfInjury": {
+                    "region": "regionId",
+                    "province": "provincesId",
+                    "cityMun": "citiesId"
+                  },
+                "firstAid": {
+                    "isGiven": "no",
+                    "firstAider": "null",
+                    "isStandard": "no"
+                },
+                "natureOfInjury": "null",
+                "externalCauses": "null",
+                "vehicularAccident": {
+                    "isVehicular": "no",
+                    "position": "null",
+                    "collision": "null",
+                    "partiesInvolved": [],
+                    "vehicleType": "null",
+                    "placeOfOccurence": "null"
+                },
+                "preInjuryActivity": "null",
+                "safetyIssues": [],
+                "medicolegal": {
+                    "isMedicolegal":"no",
+                    "medicolegalCategory":"null"
+                }
+            },
+            "er":{
+                "isTransferred": "yes",
+                "isCoordinated": "yes",
+                "originatingInstitution": "null",
+                "previousInCharge": "null",
+                "positionPreviousInCharge": "null",
+                "statusOnArrival": "null",
+                "aliveCategory": "null",
+                "transportation": "null",
+                "initialImpression": "null",
+                "isSurgical": "no",
+                "cavityInvolved": "null",
+                "servicesOnboard": [],
+                "dispositionER": "null",
+                "outcome": "null"
+            },
+            "surgery": {
+                "surgeryBoolean": "",
+                "surgeriesList": []
+                },
+            "inHospital": {
+                "comorbidities": [],
+                "capriniScore": null,
+        
+                "vteProphylaxis": {
+                "inclusion": null,
+                "type": null,
+                "date": null
+                },
+        
+                "icu": {
+                "arrival": null,
+                "exit": null,
+                "lengthOfStay": null
+                }, 
+        
+                "lifeSupportWithdrawal": {
+                "lswBoolean": "",
+                "lswTimestamp": null
+                },
+        
+                "complications": [],
+                "dispositionInHospital": null,
+                "consultations": []
+            },
+             
+            "discharge": {
+                "isTreatmentComplete": "",
+                "finalDiagnosis": null,
+                "dispositionDischarge": null
+            }
+        }]
+}
