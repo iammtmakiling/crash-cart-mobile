@@ -1,9 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
-
-import 'package:dashboard/api_requests/addPatient.dart';
-import 'package:dashboard/api_requests/addRecord.dart';
+import '../../core/api_requests/_api.dart';
 import 'package:dashboard/globals.dart';
-import 'package:dashboard/helperFunctions.dart';
+import 'package:dashboard/core/utils/helper_utils.dart';
 import 'package:dashboard/initializedList.dart';
 
 import 'package:dashboard/screens/screens.dart';

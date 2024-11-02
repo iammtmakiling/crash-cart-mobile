@@ -1,7 +1,7 @@
-import 'package:dashboard/api_requests/updateRecord.dart';
+import 'package:dashboard/core/api_requests/updateRecord.dart';
 import 'package:dashboard/features/viewFeature/viewSummary.dart';
 import 'package:dashboard/globals.dart';
-import 'package:dashboard/helperFunctions.dart';
+import 'package:dashboard/core/utils/helper_utils.dart';
 import 'package:dashboard/initializedList.dart';
 import 'package:dashboard/screens/home_page.dart';
 import 'package:dashboard/screens/pincode.dart';

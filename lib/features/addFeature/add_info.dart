@@ -1,5 +1,4 @@
-import 'package:dashboard/api_requests/addPatient.dart';
-import 'package:dashboard/api_requests/addRecord.dart';
+import '../../core/api_requests/_api.dart';
 import 'package:dashboard/globals.dart';
 import 'package:dashboard/screens/pincode.dart';
 import 'package:dashboard/widgets/formWidgets/formTextArea.dart';
@@ -22,7 +21,7 @@ import 'dart:convert';
 import 'package:flutter/services.dart';
 
 import '../../widgets/widgets.dart';
-import '../../helperFunctions.dart';
+import '../../core/utils/helper_utils.dart';
 import '../../initializedList.dart';
 
 // ignore: camel_case_types

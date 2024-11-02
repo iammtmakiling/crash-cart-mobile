@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:dashboard/helperFunctions.dart';
+import 'package:dashboard/core/utils/helper_utils.dart';
 import 'package:flutter/material.dart';
-import 'package:dashboard/api_requests/getPatient.dart';
+import '../../core/api_requests/_api.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import '../globals.dart';

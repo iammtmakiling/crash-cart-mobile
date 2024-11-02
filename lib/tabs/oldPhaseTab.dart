@@ -1,226 +1,226 @@
-import 'dart:async';
-import 'dart:convert';
+// import 'dart:async';
+// import 'dart:convert';
 
-import 'package:dashboard/helperFunctions.dart';
-import 'package:flutter/material.dart';
-import 'package:dashboard/api_requests/getPatient.dart';
-import 'package:form_builder_validators/localization/l10n.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:intl/date_symbol_data_local.dart';
-import '../globals.dart';
-import '../widgets/widgets.dart';
+// import 'package:dashboard/core/utils/helper_utils.dart';
+// import 'package:flutter/material.dart';
+// import '../../core/api_requests/_api.dart';
+// import 'package:form_builder_validators/localization/l10n.dart';
+// import 'package:google_fonts/google_fonts.dart';
+// import 'package:intl/date_symbol_data_local.dart';
+// import '../globals.dart';
+// import '../widgets/widgets.dart';
 
-// ignore: camel_case_types
-class oldPhaseTab extends StatelessWidget {
-  final List<Map<String, dynamic>> oldPhase;
-  const oldPhaseTab({super.key, required this.oldPhase});
+// // ignore: camel_case_types
+// class oldPhaseTab extends StatelessWidget {
+//   final List<Map<String, dynamic>> oldPhase;
+//   const oldPhaseTab({super.key, required this.oldPhase});
 
-  @override
-  Widget build(BuildContext context) {
-    initializeDateFormatting('az');
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      supportedLocales: const [
-        Locale('de'),
-        Locale('en'),
-        Locale('es'),
-        Locale('fr'),
-        Locale('it'),
-      ],
-      localizationsDelegates: const [
-        FormBuilderLocalizations.delegate,
-      ],
-      // title: 'Add Patient',
-      theme: ThemeData(
-          primarySwatch: Colors.cyan,
-          visualDensity: VisualDensity.adaptivePlatformDensity,
-          textTheme: GoogleFonts.poppinsTextTheme().apply(
-            bodyColor: Colors.black,
-            fontSizeFactor: 1.0,
-            decoration: TextDecoration.none,
-          )),
-      home: OldPhaseTab(oldPhase: oldPhase),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     initializeDateFormatting('az');
+//     return MaterialApp(
+//       debugShowCheckedModeBanner: false,
+//       supportedLocales: const [
+//         Locale('de'),
+//         Locale('en'),
+//         Locale('es'),
+//         Locale('fr'),
+//         Locale('it'),
+//       ],
+//       localizationsDelegates: const [
+//         FormBuilderLocalizations.delegate,
+//       ],
+//       // title: 'Add Patient',
+//       theme: ThemeData(
+//           primarySwatch: Colors.cyan,
+//           visualDensity: VisualDensity.adaptivePlatformDensity,
+//           textTheme: GoogleFonts.poppinsTextTheme().apply(
+//             bodyColor: Colors.black,
+//             fontSizeFactor: 1.0,
+//             decoration: TextDecoration.none,
+//           )),
+//       home: OldPhaseTab(oldPhase: oldPhase),
+//     );
+//   }
+// }
 
-class OldPhaseTab extends StatefulWidget {
-  final List<Map<String, dynamic>> oldPhase;
-  const OldPhaseTab({super.key, required this.oldPhase});
+// class OldPhaseTab extends StatefulWidget {
+//   final List<Map<String, dynamic>> oldPhase;
+//   const OldPhaseTab({super.key, required this.oldPhase});
 
-  @override
-  OldPhaseTabState createState() => OldPhaseTabState();
-}
+//   @override
+//   OldPhaseTabState createState() => OldPhaseTabState();
+// }
 
-class OldPhaseTabState extends State<OldPhaseTab> {
-  final TextEditingController searchController = TextEditingController();
-  List<Map<String, dynamic>> processedPatients = [];
-  List<dynamic> filteredPatients = [];
-  int currentPage = 1;
-  int itemsPerPage = 5;
-  bool isLoading = true;
+// class OldPhaseTabState extends State<OldPhaseTab> {
+//   final TextEditingController searchController = TextEditingController();
+//   List<Map<String, dynamic>> processedPatients = [];
+//   List<dynamic> filteredPatients = [];
+//   int currentPage = 1;
+//   int itemsPerPage = 5;
+//   bool isLoading = true;
 
-  @override
-  void initState() {
-    super.initState();
-    fetchPatients();
-  }
+//   @override
+//   void initState() {
+//     super.initState();
+//     fetchPatients();
+//   }
 
-  Future<void> fetchPatients() async {
-    try {
-      List<Future<Map<String, dynamic>>> fetchTasks = [];
+//   Future<void> fetchPatients() async {
+//     try {
+//       List<Future<Map<String, dynamic>>> fetchTasks = [];
 
-      // Prepare fetch tasks for each patient
-      for (var patient in widget.oldPhase) {
-        Map<String, dynamic> parsedPatient = patient['parsed'];
-        var patientID = encryp(parsedPatient['patientID']);
-        String encodedpatientID = base64.encode(utf8.encode(patientID));
-        fetchTasks.add(getPatientDetails(encodedpatientID, bearerToken));
-      }
+//       // Prepare fetch tasks for each patient
+//       for (var patient in widget.oldPhase) {
+//         Map<String, dynamic> parsedPatient = patient['parsed'];
+//         var patientID = encryp(parsedPatient['patientID']);
+//         String encodedpatientID = base64.encode(utf8.encode(patientID));
+//         fetchTasks.add(getPatientDetails(encodedpatientID, bearerToken));
+//       }
 
-      // Execute fetch tasks in parallel
-      List<Map<String, dynamic>> fetchedPatients =
-          await Future.wait(fetchTasks);
+//       // Execute fetch tasks in parallel
+//       List<Map<String, dynamic>> fetchedPatients =
+//           await Future.wait(fetchTasks);
 
-      // Process fetched data
+//       // Process fetched data
 
-      for (int i = 0; i < fetchedPatients.length; i++) {
-        Map<String, dynamic> temp = fetchedPatients[i];
-        String fullName = "${temp["general"]['firstName']}. ";
-        if (temp["general"]['middleName'] != null &&
-            temp["general"]['middleName'].isNotEmpty) {
-          fullName += "${temp["general"]['middleName'][0]}. ";
-        }
-        fullName += "${temp["general"]['lastName']}";
-        if (temp["general"]["suffix"] != null &&
-            temp["general"]["suffix"].isNotEmpty) {
-          fullName += " ${temp["general"]["suffix"]}";
-        }
-        Map<String, dynamic> processedPatient = {
-          "record": widget.oldPhase[i]['parsed'],
-          "unparsedRecord": widget.oldPhase[i]['unparsed'],
-          "fullName": fullName,
-          "patientID": widget.oldPhase[i]['patientID'],
-          "general": temp['general'],
-        };
-        processedPatients.add(processedPatient);
-      }
+//       for (int i = 0; i < fetchedPatients.length; i++) {
+//         Map<String, dynamic> temp = fetchedPatients[i];
+//         String fullName = "${temp["general"]['firstName']}. ";
+//         if (temp["general"]['middleName'] != null &&
+//             temp["general"]['middleName'].isNotEmpty) {
+//           fullName += "${temp["general"]['middleName'][0]}. ";
+//         }
+//         fullName += "${temp["general"]['lastName']}";
+//         if (temp["general"]["suffix"] != null &&
+//             temp["general"]["suffix"].isNotEmpty) {
+//           fullName += " ${temp["general"]["suffix"]}";
+//         }
+//         Map<String, dynamic> processedPatient = {
+//           "record": widget.oldPhase[i]['parsed'],
+//           "unparsedRecord": widget.oldPhase[i]['unparsed'],
+//           "fullName": fullName,
+//           "patientID": widget.oldPhase[i]['patientID'],
+//           "general": temp['general'],
+//         };
+//         processedPatients.add(processedPatient);
+//       }
 
-      setState(() {
-        filteredPatients = processedPatients;
-        isLoading = false;
-      });
-    } catch (e) {
-      setState(() {
-        isLoading = false;
-      });
-    }
-  }
+//       setState(() {
+//         filteredPatients = processedPatients;
+//         isLoading = false;
+//       });
+//     } catch (e) {
+//       setState(() {
+//         isLoading = false;
+//       });
+//     }
+//   }
 
-  void filterPatients(String query) {
-    List<dynamic> filteredList = processedPatients
-        .where((patient) {
-          String fullName = (patient["fullName"] ?? "").toLowerCase();
-          String patientID =
-              (patient["record"]["patientID"] ?? "").toLowerCase();
-          String lowercaseQuery = query.toLowerCase();
+//   void filterPatients(String query) {
+//     List<dynamic> filteredList = processedPatients
+//         .where((patient) {
+//           String fullName = (patient["fullName"] ?? "").toLowerCase();
+//           String patientID =
+//               (patient["record"]["patientID"] ?? "").toLowerCase();
+//           String lowercaseQuery = query.toLowerCase();
 
-          return fullName.contains(lowercaseQuery) ||
-              patientID.contains(lowercaseQuery);
-        })
-        .toSet()
-        .toList();
+//           return fullName.contains(lowercaseQuery) ||
+//               patientID.contains(lowercaseQuery);
+//         })
+//         .toSet()
+//         .toList();
 
-    setState(() {
-      filteredPatients = filteredList;
-    });
-  }
+//     setState(() {
+//       filteredPatients = filteredList;
+//     });
+//   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      child: Center(
-        child: Column(
-          children: [
-            const MiniAppBar(),
-            const SizedBox(height: 10),
-            const Row(
-              children: [
-                SizedBox(width: 24),
-                Text(
-                  "History",
-                  textAlign: TextAlign.start,
-                  style: TextStyle(
-                      fontSize: 18,
-                      color: Colors.black54,
-                      fontWeight: FontWeight.bold),
-                ),
-              ],
-            ),
-            Row(
-              children: [
-                Expanded(
-                  child: Center(
-                    child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const SizedBox(height: 10),
-                          SearchTextField(
-                            controller: searchController,
-                            onChanged: (value) {
-                              filterPatients(value);
-                            },
-                          ),
-                          const SizedBox(height: 10),
-                          if (!isLoading)
-                            Text(
-                              '${filteredPatients.length} Searches',
-                              textAlign: TextAlign.start,
-                              style: const TextStyle(
-                                fontSize: 16,
-                                color: Colors.grey,
-                              ),
-                            ),
-                          const SizedBox(height: 20),
-                        ]),
-                  ),
-                ),
-              ],
-            ),
-            isLoading
-                ? const Expanded(
-                    child: Center(
-                      child: CircularProgressIndicator(),
-                    ),
-                  )
-                : Expanded(
-                    child: filteredPatients.isEmpty
-                        ? const Center(
-                            child: Text(
-                              'No patients found',
-                              style: TextStyle(fontSize: 18.0),
-                            ),
-                          )
-                        : ListView.builder(
-                            key: UniqueKey(),
-                            itemCount: filteredPatients.length,
-                            itemBuilder: (context, index) {
-                              return PatientBox(
-                                key: UniqueKey(),
-                                patient: filteredPatients[index],
-                                viewMoreStatus: false,
-                              );
-                            },
-                          ),
-                  ),
-          ],
-        ),
-      ),
-    );
-  }
+//   @override
+//   Widget build(BuildContext context) {
+//     return Material(
+//       child: Center(
+//         child: Column(
+//           children: [
+//             const MiniAppBar(),
+//             const SizedBox(height: 10),
+//             const Row(
+//               children: [
+//                 SizedBox(width: 24),
+//                 Text(
+//                   "History",
+//                   textAlign: TextAlign.start,
+//                   style: TextStyle(
+//                       fontSize: 18,
+//                       color: Colors.black54,
+//                       fontWeight: FontWeight.bold),
+//                 ),
+//               ],
+//             ),
+//             Row(
+//               children: [
+//                 Expanded(
+//                   child: Center(
+//                     child: Column(
+//                         crossAxisAlignment: CrossAxisAlignment.start,
+//                         children: [
+//                           const SizedBox(height: 10),
+//                           SearchTextField(
+//                             controller: searchController,
+//                             onChanged: (value) {
+//                               filterPatients(value);
+//                             },
+//                           ),
+//                           const SizedBox(height: 10),
+//                           if (!isLoading)
+//                             Text(
+//                               '${filteredPatients.length} Searches',
+//                               textAlign: TextAlign.start,
+//                               style: const TextStyle(
+//                                 fontSize: 16,
+//                                 color: Colors.grey,
+//                               ),
+//                             ),
+//                           const SizedBox(height: 20),
+//                         ]),
+//                   ),
+//                 ),
+//               ],
+//             ),
+//             isLoading
+//                 ? const Expanded(
+//                     child: Center(
+//                       child: CircularProgressIndicator(),
+//                     ),
+//                   )
+//                 : Expanded(
+//                     child: filteredPatients.isEmpty
+//                         ? const Center(
+//                             child: Text(
+//                               'No patients found',
+//                               style: TextStyle(fontSize: 18.0),
+//                             ),
+//                           )
+//                         : ListView.builder(
+//                             key: UniqueKey(),
+//                             itemCount: filteredPatients.length,
+//                             itemBuilder: (context, index) {
+//                               return PatientBox(
+//                                 key: UniqueKey(),
+//                                 patient: filteredPatients[index],
+//                                 viewMoreStatus: false,
+//                               );
+//                             },
+//                           ),
+//                   ),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
 
-  @override
-  void dispose() {
-    super.dispose();
-  }
-}
+//   @override
+//   void dispose() {
+//     super.dispose();
+//   }
+// }

@@ -1,4 +1,4 @@
-import 'package:dashboard/helperFunctions.dart';
+import 'package:dashboard/core/utils/helper_utils.dart';
 
 Map<String, dynamic> parsePatient(Map<String, dynamic> json) {
   String? decryptField(Map<String, dynamic> map, String key) {

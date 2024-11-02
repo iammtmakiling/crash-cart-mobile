@@ -1,7 +1,7 @@
-import 'package:dashboard/api_requests/login.dart';
+import 'package:dashboard/core/api_requests/login.dart';
 import 'package:dashboard/core/enums/auth_status.dart';
 import 'package:dashboard/core/exceptions/auth_exceptions.dart';
-import 'package:dashboard/core/models/user.dart';
+import 'package:dashboard/core/models/_models.dart';
 import 'package:flutter/material.dart';
 
 class UserProvider extends ChangeNotifier {

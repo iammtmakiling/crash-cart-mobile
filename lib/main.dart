@@ -16,7 +16,7 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  final backgroundColor = AppTheme.lightTheme.colorScheme.surface;
+  final backgroundColor = AppTheme.lightTheme.scaffoldBackgroundColor;
 
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
     statusBarColor: backgroundColor,

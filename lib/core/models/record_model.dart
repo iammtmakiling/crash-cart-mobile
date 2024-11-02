@@ -1,4 +1,4 @@
-import 'package:dashboard/helperFunctions.dart';
+import 'package:dashboard/core/utils/helper_utils.dart';
 import 'package:intl/intl.dart';
 
 Map<String, dynamic> getRecord(Map<String, dynamic> json) {

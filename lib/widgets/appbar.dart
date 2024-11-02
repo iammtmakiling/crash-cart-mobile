@@ -1,5 +1,5 @@
 import 'package:dashboard/core/provider/user_provider.dart';
-import 'package:dashboard/helperFunctions.dart';
+import 'package:dashboard/core/utils/helper_utils.dart';
 import 'package:dashboard/screens/SigninScreen/signin_screen.dart';
 import 'package:dashboard/screens/login_page.dart';
 import 'package:flutter/material.dart';

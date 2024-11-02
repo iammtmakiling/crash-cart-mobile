@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dashboard/globals.dart';
+import 'package:dashboard/screens/HistoryScreen/history_screen.dart';
 import 'package:dashboard/screens/ProfileScreen/profile_screen.dart';
 import 'package:dashboard/screens/widgets/bottomnavbar.dart';
 import 'package:flutter/material.dart';
@@ -133,6 +134,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         body: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
           stream: FirebaseFirestore.instance
               .collection('records')
@@ -171,7 +173,7 @@ class _HomePageState extends State<HomePage> {
                 myPhase: myPhase,
                 otherPhases: otherPhases,
               ),
-        oldPhaseTab(oldPhase: oldPhases),
+        HistoryScreen(oldPhase: oldPhases),
         const ProfileScreen(),
       ],
     );

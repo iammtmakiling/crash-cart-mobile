@@ -1,5 +1,4 @@
-import 'package:dashboard/api_requests/addRecord.dart';
-import 'package:dashboard/api_requests/getPatient.dart';
+import '../../core/api_requests/_api.dart';
 import 'package:dashboard/globals.dart';
 import 'package:dashboard/screens/home_page.dart';
 
@@ -13,7 +12,7 @@ import 'package:form_builder_validators/form_builder_validators.dart';
 
 import '../../widgets/formWidgets/formWidgets.dart';
 import '../../globals.dart' as globals;
-import '../../helperFunctions.dart';
+import '../../core/utils/helper_utils.dart';
 import '../../initializedList.dart';
 
 DateTime current = DateTime.now();

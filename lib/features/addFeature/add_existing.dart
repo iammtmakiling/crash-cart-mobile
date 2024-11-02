@@ -1,7 +1,7 @@
-import 'package:dashboard/api_requests/checkPatient.dart';
+import '../../core/api_requests/_api.dart';
 import 'package:dashboard/features/addFeature/add_prehospital.dart';
 import 'package:dashboard/globals.dart';
-import 'package:dashboard/helperFunctions.dart';
+import 'package:dashboard/core/utils/helper_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';

@@ -134,17 +134,10 @@ class _SignInScreenState extends State<SignInScreen> {
                 const SizedBox(height: 8.0),
                 TextFormField(
                   controller: _emailController,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     hintText: 'crashcart@gmail.com',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8.0),
-                      borderSide:
-                          BorderSide(color: Theme.of(context).dividerColor),
-                    ),
-                    filled: true,
-                    fillColor:
-                        Theme.of(context).primaryColorLight.withOpacity(0.1),
                   ),
+                  style: Theme.of(context).textTheme.bodyMedium,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter your email';
@@ -167,16 +160,17 @@ class _SignInScreenState extends State<SignInScreen> {
                 TextFormField(
                   controller: _passwordController,
                   obscureText: true,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8.0),
-                      borderSide:
-                          BorderSide(color: Theme.of(context).dividerColor),
-                    ),
-                    filled: true,
-                    fillColor:
-                        Theme.of(context).primaryColorLight.withOpacity(0.1),
-                  ),
+                  style: Theme.of(context).textTheme.bodyMedium,
+                  // decoration: InputDecoration(
+                  //   border: OutlineInputBorder(
+                  //     borderRadius: BorderRadius.circular(8.0),
+                  //     borderSide:
+                  //         BorderSide(color: Theme.of(context).dividerColor),
+                  //   ),
+                  //   filled: true,
+                  //   fillColor:
+                  //       Theme.of(context).primaryColorLight.withOpacity(0.1),
+                  // ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter your password';

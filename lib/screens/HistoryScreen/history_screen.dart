@@ -1,20 +1,19 @@
 import 'dart:async';
 import 'dart:convert';
+
 import 'package:dashboard/core/utils/helper_utils.dart';
+import 'package:dashboard/globals.dart';
+import 'package:dashboard/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import '../../core/api_requests/_api.dart';
 import 'package:form_builder_validators/localization/l10n.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import '../globals.dart';
-import '../widgets/widgets.dart';
 
 // ignore: camel_case_types
-class otherPhasesTab extends StatelessWidget {
-  final List<Map<String, dynamic>> otherPhase;
-  final bool isSolo;
-  const otherPhasesTab(
-      {super.key, required this.otherPhase, required this.isSolo});
+class HistoryScreen extends StatelessWidget {
+  final List<Map<String, dynamic>> oldPhase;
+  const HistoryScreen({super.key, required this.oldPhase});
 
   @override
   Widget build(BuildContext context) {
@@ -32,30 +31,28 @@ class otherPhasesTab extends StatelessWidget {
         FormBuilderLocalizations.delegate,
       ],
       // title: 'Add Patient',
-      theme: ThemeData(
-          primarySwatch: Colors.cyan,
-          visualDensity: VisualDensity.adaptivePlatformDensity,
-          textTheme: GoogleFonts.poppinsTextTheme().apply(
-            bodyColor: Colors.black,
-            fontSizeFactor: 1.0,
-            decoration: TextDecoration.none,
-          )),
-      home: OtherPhasesTab(otherPhases: otherPhase, isSolo: isSolo),
+      // theme: ThemeData(
+      //     primarySwatch: Colors.cyan,
+      //     visualDensity: VisualDensity.adaptivePlatformDensity,
+      //     textTheme: GoogleFonts.poppinsTextTheme().apply(
+      //       bodyColor: Colors.black,
+      //       fontSizeFactor: 1.0,
+      //       decoration: TextDecoration.none,
+      //     )),
+      home: OldPhaseTab(oldPhase: oldPhase),
     );
   }
 }
 
-class OtherPhasesTab extends StatefulWidget {
-  final bool isSolo;
-  final List<Map<String, dynamic>> otherPhases;
-  const OtherPhasesTab(
-      {super.key, required this.otherPhases, required this.isSolo});
+class OldPhaseTab extends StatefulWidget {
+  final List<Map<String, dynamic>> oldPhase;
+  const OldPhaseTab({super.key, required this.oldPhase});
 
   @override
-  OtherPhasesTabState createState() => OtherPhasesTabState();
+  OldPhaseTabState createState() => OldPhaseTabState();
 }
 
-class OtherPhasesTabState extends State<OtherPhasesTab> {
+class OldPhaseTabState extends State<OldPhaseTab> {
   final TextEditingController searchController = TextEditingController();
   List<Map<String, dynamic>> processedPatients = [];
   List<dynamic> filteredPatients = [];
@@ -74,7 +71,7 @@ class OtherPhasesTabState extends State<OtherPhasesTab> {
       List<Future<Map<String, dynamic>>> fetchTasks = [];
 
       // Prepare fetch tasks for each patient
-      for (var patient in widget.otherPhases) {
+      for (var patient in widget.oldPhase) {
         Map<String, dynamic> parsedPatient = patient['parsed'];
         var patientID = encryp(parsedPatient['patientID']);
         String encodedpatientID = base64.encode(utf8.encode(patientID));
@@ -86,6 +83,7 @@ class OtherPhasesTabState extends State<OtherPhasesTab> {
           await Future.wait(fetchTasks);
 
       // Process fetched data
+
       for (int i = 0; i < fetchedPatients.length; i++) {
         Map<String, dynamic> temp = fetchedPatients[i];
         String fullName = "${temp["general"]['firstName']}. ";
@@ -99,10 +97,10 @@ class OtherPhasesTabState extends State<OtherPhasesTab> {
           fullName += " ${temp["general"]["suffix"]}";
         }
         Map<String, dynamic> processedPatient = {
-          "record": widget.otherPhases[i]['parsed'],
-          "unparsedRecord": widget.otherPhases[i]['unparsed'],
+          "record": widget.oldPhase[i]['parsed'],
+          "unparsedRecord": widget.oldPhase[i]['unparsed'],
           "fullName": fullName,
-          "patientID": widget.otherPhases[i]['patientID'],
+          "patientID": widget.oldPhase[i]['patientID'],
           "general": temp['general'],
         };
         processedPatients.add(processedPatient);
@@ -141,73 +139,51 @@ class OtherPhasesTabState extends State<OtherPhasesTab> {
   @override
   Widget build(BuildContext context) {
     return Material(
-      child: Center(
-        child: Column(
-          children: [
-            if (widget.isSolo) const MiniAppBar(),
-            const SizedBox(height: 10),
-            if (role == "Pre-Hospital Staff")
-              const Row(
-                children: [
-                  SizedBox(width: 24),
-                  Text(
-                    "Others",
-                    textAlign: TextAlign.start,
-                    style: TextStyle(
-                        fontSize: 18,
-                        color: Colors.black54,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
-            Row(
-              children: [
-                Expanded(
-                  child: Center(
-                    child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const SizedBox(height: 10),
-                          SearchTextField(
-                            controller: searchController,
-                            onChanged: (value) {
-                              filterPatients(value);
-                            },
-                          ),
-                          const SizedBox(height: 10),
-                          if (!isLoading)
-                            Text(
-                              '${filteredPatients.length} Searches',
-                              textAlign: TextAlign.start,
-                              style: const TextStyle(
-                                fontSize: 16,
-                                color: Colors.grey,
-                              ),
-                            ),
-                          const SizedBox(height: 20),
-                        ]),
-                  ),
-                ),
-              ],
+      child: Scaffold(
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        appBar: AppBar(
+          title: Center(
+            child: Text(
+              "HISTORY",
+              style: Theme.of(context).textTheme.headlineSmall,
             ),
-            isLoading
-                ? const Expanded(
-                    child: Center(
-                      child: CircularProgressIndicator(),
-                    ),
-                  )
-                : Expanded(
-                    child: filteredPatients.isEmpty
-                        ? const Center(
+          ),
+          toolbarHeight: kToolbarHeight + 20,
+        ),
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 32.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SearchTextField(
+                controller: searchController,
+                onChanged: (value) {
+                  filterPatients(value);
+                },
+              ),
+              const SizedBox(height: 10),
+              if (!isLoading)
+                Text(
+                  '${filteredPatients.length} Searches',
+                  textAlign: TextAlign.start,
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+              const SizedBox(height: 20),
+              Expanded(
+                child: isLoading
+                    ? const Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : filteredPatients.isEmpty
+                        ? Center(
                             child: Text(
                               'No patients found',
-                              style: TextStyle(fontSize: 18.0),
+                              style: Theme.of(context).textTheme.bodySmall,
                             ),
                           )
                         : ListView.builder(
                             key: UniqueKey(),
                             itemCount: filteredPatients.length,
-                            padding: const EdgeInsets.fromLTRB(0, 0, 0, 8),
                             itemBuilder: (context, index) {
                               return PatientBox(
                                 key: UniqueKey(),
@@ -216,8 +192,9 @@ class OtherPhasesTabState extends State<OtherPhasesTab> {
                               );
                             },
                           ),
-                  ),
-          ],
+              ),
+            ],
+          ),
         ),
       ),
     );

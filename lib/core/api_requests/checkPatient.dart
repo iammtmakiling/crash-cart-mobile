@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
 
-import '../core/models/_models.dart';
+import '../models/_models.dart';
 
 /// Checks if a patient with given details exists in the trauma registry.
 ///

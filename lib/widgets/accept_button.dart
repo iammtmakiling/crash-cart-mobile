@@ -2,10 +2,10 @@
 
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:dashboard/api_requests/updateRecord.dart';
+import '../../core/api_requests/_api.dart';
 import 'package:dashboard/features/addFeature/add_surgery.dart';
 import 'package:dashboard/globals.dart';
-import 'package:dashboard/helperFunctions.dart';
+import 'package:dashboard/core/utils/helper_utils.dart';
 import 'package:dashboard/screens/home_page.dart';
 
 class AcceptButton extends StatefulWidget {

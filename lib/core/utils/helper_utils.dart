@@ -1,9 +1,8 @@
-import 'package:dashboard/api_requests/checkPatient.dart';
-import 'package:dashboard/api_requests/getPatient.dart';
+import '../../../../core/api_requests/_api.dart';
 import 'package:dashboard/globals.dart';
 import 'package:encrypt/encrypt.dart';
 import 'package:intl/intl.dart';
-import '../globals.dart' as globals;
+import '../../../globals.dart' as globals;
 
 final newKey = Key.fromUtf8(key);
 final newIv = IV.fromUtf8(iv);

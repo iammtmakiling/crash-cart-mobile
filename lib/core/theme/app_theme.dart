@@ -31,9 +31,9 @@ class AppTheme {
           foregroundColor: AppColors.background,
           backgroundColor: AppColors.primary,
           textStyle: AppTextTheme.textTheme.bodyLarge,
-          // shape: RoundedRectangleBorder(
-          //   borderRadius: BorderRadius.circular(8),
-          // ),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
         ),
       ),
 
@@ -49,18 +49,18 @@ class AppTheme {
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
         fillColor: AppColors.primaryVariant.withOpacity(0.1),
-        labelStyle: AppTextTheme.textTheme.bodyMedium?.copyWith(
+        labelStyle: AppTextTheme.textTheme.bodySmall?.copyWith(
           color: AppColors.textSecondary,
         ),
-        hintStyle: AppTextTheme.textTheme.bodyMedium?.copyWith(
+        hintStyle: AppTextTheme.textTheme.bodySmall?.copyWith(
           color: AppColors.textTertiary,
         ),
         enabledBorder: OutlineInputBorder(
-          borderSide: const BorderSide(color: AppColors.primaryVariant),
+          borderSide: BorderSide(color: AppColors.primary.withOpacity(0.1)),
           borderRadius: BorderRadius.circular(8),
         ),
         focusedBorder: OutlineInputBorder(
-          borderSide: const BorderSide(color: AppColors.primary),
+          borderSide: BorderSide(color: AppColors.primary.withOpacity(0.5)),
           borderRadius: BorderRadius.circular(8),
         ),
         errorBorder: OutlineInputBorder(

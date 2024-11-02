@@ -1,6 +1,6 @@
 import 'package:dashboard/features/viewFeature/viewSummary.dart';
 import 'package:dashboard/globals.dart';
-import 'package:dashboard/helperFunctions.dart';
+import 'package:dashboard/core/utils/helper_utils.dart';
 import 'package:dashboard/initializedList.dart';
 import 'package:dashboard/screens/home_page.dart';
 import 'package:dashboard/screens/pincode.dart';
@@ -10,9 +10,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
+import '../../core/api_requests/_api.dart';
 import '../../widgets/formWidgets/formWidgets.dart';
 import '../../globals.dart' as globals;
-import 'package:dashboard/api_requests/updateRecord.dart';
 import 'dart:convert';
 import '../../widgets/widgets.dart';
 

@@ -1,4 +1,4 @@
-import 'package:dashboard/api_requests/addPatient.dart';
+import '../../core/api_requests/_api.dart';
 import 'package:dashboard/features/addFeature/add_prehospital.dart';
 
 import 'package:dashboard/globals.dart';

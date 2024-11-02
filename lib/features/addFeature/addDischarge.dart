@@ -1,7 +1,7 @@
-import 'package:dashboard/api_requests/updateRecord.dart';
+import '../../core/api_requests/_api.dart';
 import 'package:dashboard/features/viewFeature/viewSummary.dart';
 import 'package:dashboard/globals.dart';
-import 'package:dashboard/helperFunctions.dart';
+import 'package:dashboard/core/utils/helper_utils.dart';
 import 'package:dashboard/widgets/formWidgets/formTextArea.dart';
 import 'package:dashboard/widgets/miniAppBarBack.dart';
 import 'package:flutter/material.dart';
