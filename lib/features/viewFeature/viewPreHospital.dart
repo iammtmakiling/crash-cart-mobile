@@ -1,6 +1,6 @@
-import 'package:dashboard/models/recordModel.dart';
 import 'package:flutter/material.dart';
 
+import '../../core/models/_models.dart';
 import '../../widgets/widgets.dart';
 
 class ViewPreHospital extends StatelessWidget {

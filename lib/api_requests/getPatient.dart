@@ -1,8 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:dashboard/globals.dart';
-import 'package:dashboard/models/recordModel.dart';
-import '../models/patientModel.dart';
+import '../core/models/_models.dart';
 import "package:http/http.dart" as http;
 
 /// Retrieves details of a patient from the trauma registry.

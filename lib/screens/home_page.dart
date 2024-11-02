@@ -1,12 +1,11 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dashboard/globals.dart';
-import 'package:dashboard/models/recordModel.dart';
 import 'package:dashboard/screens/ProfileScreen/profile_screen.dart';
 import 'package:dashboard/screens/widgets/bottomnavbar.dart';
 import 'package:flutter/material.dart';
+import '../core/models/_models.dart';
 import '../tabs/tabs.dart';
-import 'package:lucide_icons/lucide_icons.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
