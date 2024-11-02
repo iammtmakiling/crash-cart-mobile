@@ -3,6 +3,7 @@ import 'package:dashboard/features/viewFeature/viewSummary.dart';
 import 'package:dashboard/globals.dart';
 import 'package:dashboard/helperFunctions.dart';
 import 'package:dashboard/initializedList.dart';
+import 'package:dashboard/models/recordModel.dart';
 import 'package:dashboard/screens/home_page.dart';
 import 'package:dashboard/screens/pincode.dart';
 import 'package:dashboard/widgets/formWidgets/formTextArea.dart';
@@ -612,7 +613,7 @@ class EditERState extends State<EditER> with SingleTickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    erData = widget.erData;
+    erData = parseERRecord(widget.erData);
     record = widget.record;
 
     visibleTransferDetails = erData['isTransferred'] == "yes";

@@ -1,3 +1,4 @@
+import 'package:dashboard/models/recordModel.dart';
 import 'package:flutter/material.dart';
 
 import '../../widgets/widgets.dart';
@@ -8,7 +9,7 @@ class ViewER extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var record = patientRecord;
+    var record = parseERRecord(patientRecord);
     // print("ER: $record");
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

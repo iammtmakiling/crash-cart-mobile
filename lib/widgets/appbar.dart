@@ -1,6 +1,9 @@
+import 'package:dashboard/core/provider/user_provider.dart';
 import 'package:dashboard/helperFunctions.dart';
+import 'package:dashboard/screens/SigninScreen/signin_screen.dart';
 import 'package:dashboard/screens/login_page.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../globals.dart';
 
 class CustomizedAppBar extends StatefulWidget implements PreferredSizeWidget {
@@ -193,10 +196,14 @@ class CustomizedAppBarState extends State<CustomizedAppBar> {
   }
 
   void _logout(BuildContext context) {
-    resetGlobalExtraValues();
-    resetGlobalValues();
+    // resetGlobalExtraValues();
+    // resetGlobalValues();
+    final authProvider = Provider.of<UserProvider>(context, listen: false);
+
+    // Call the logout method from the provider
+    // authProvider.logout();
     Navigator.of(context).pushAndRemoveUntil(
-      MaterialPageRoute(builder: (context) => const LoginScreen()),
+      MaterialPageRoute(builder: (context) => const SignInScreen()),
       (Route<dynamic> route) => false,
     );
   }

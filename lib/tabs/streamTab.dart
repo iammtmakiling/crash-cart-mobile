@@ -7,8 +7,11 @@ class StreamTab extends StatelessWidget {
   final List<Map<String, dynamic>> myPhase;
   final List<Map<String, dynamic>> otherPhases;
 
-  const StreamTab(
-      {super.key, required this.myPhase, required this.otherPhases});
+  const StreamTab({
+    super.key,
+    required this.myPhase,
+    required this.otherPhases,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -27,9 +30,11 @@ class StreamTab extends StatelessWidget {
                     tabs: [
                       Tab(
                         child: Text(
-                          role.substring(0, role.length - 6) == "ER"
+                          // Safely accessing role with a length check
+                          (role.length >= 6 &&
+                                  role.substring(0, role.length - 6) == "ER")
                               ? "Emergency Room"
-                              : role.substring(0, role.length - 6),
+                              : role,
                           style: const TextStyle(
                             fontSize: 16,
                             color: Colors.cyan,
@@ -53,7 +58,7 @@ class StreamTab extends StatelessWidget {
                 body: TabBarView(
                   children: [
                     myPhaseTab(myPhase: myPhase, isSolo: false),
-                    otherPhasesTab(otherPhase: otherPhases, isSolo: false)
+                    otherPhasesTab(otherPhase: otherPhases, isSolo: false),
                   ],
                 ),
               ),

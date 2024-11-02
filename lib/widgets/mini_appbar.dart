@@ -1,4 +1,5 @@
 import 'package:dashboard/helperFunctions.dart';
+import 'package:dashboard/screens/SigninScreen/signin_screen.dart';
 import 'package:dashboard/screens/login_page.dart';
 import 'package:flutter/material.dart';
 
@@ -157,7 +158,7 @@ void _logout(BuildContext context) {
   resetGlobalExtraValues();
   resetGlobalValues();
   Navigator.of(context).pushAndRemoveUntil(
-    MaterialPageRoute(builder: (context) => const LoginScreen()),
+    MaterialPageRoute(builder: (context) => const SignInScreen()),
     (Route<dynamic> route) => false,
   );
 }

@@ -3,6 +3,7 @@ import 'package:dashboard/features/viewFeature/viewSummary.dart';
 import 'package:dashboard/globals.dart';
 import 'package:dashboard/helperFunctions.dart';
 import 'package:dashboard/initializedList.dart';
+import 'package:dashboard/models/recordModel.dart';
 import 'package:dashboard/screens/home_page.dart';
 import 'package:dashboard/screens/pincode.dart';
 import 'package:flutter/material.dart';
@@ -848,7 +849,7 @@ class EditInHospitalState extends State<EditInHospital>
   }
 
   Future<void> initializeData() async {
-    inHospitaldata = widget.inHospitalData;
+    inHospitaldata = parseInHospitalRecord(widget.inHospitalData);
     record = widget.record;
     // await readJsonICDCodes();
 

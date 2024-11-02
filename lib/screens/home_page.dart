@@ -2,8 +2,11 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dashboard/globals.dart';
 import 'package:dashboard/models/recordModel.dart';
+import 'package:dashboard/screens/ProfileScreen/profile_screen.dart';
+import 'package:dashboard/screens/widgets/bottomnavbar.dart';
 import 'package:flutter/material.dart';
 import '../tabs/tabs.dart';
+import 'package:lucide_icons/lucide_icons.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -75,7 +78,8 @@ class _HomePageState extends State<HomePage> {
       Map<String, dynamic>? record = document.data() as Map<String, dynamic>?;
       if (record == null) continue;
 
-      Map<String, dynamic> currentRecord = parseRecord(record);
+      Map<String, dynamic> currentRecord = getRecord(record);
+      print(currentRecord);
 
       hospitalStatus['total']++;
       switch (currentRecord['patientStatus']) {
@@ -140,62 +144,20 @@ class _HomePageState extends State<HomePage> {
               return const Center(child: CircularProgressIndicator());
             } else if (snapshot.hasError) {
               return Center(child: Text('Error: ${snapshot.error}'));
-              // } else if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-              //   return const Center(child: Text('No records found.'));
             } else {
               return _buildPage();
             }
           },
         ),
-        bottomNavigationBar: _buildBottomNavigationBar(),
-      ),
-    );
-  }
-
-  Widget _buildBottomNavigationBar() {
-    return SafeArea(
-      child: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [Colors.cyan, Colors.indigo],
-          ),
-        ),
-        child: BottomNavigationBar(
+        bottomNavigationBar: BottomNavBar(
           currentIndex: _currentIndex,
           onTap: (index) {
-            if (mounted) {
-              setState(() {
-                _currentIndex = index;
-              });
-            }
+            setState(() {
+              _currentIndex = index;
+            });
           },
-          items: [
-            _buildBottomNavigationBarItem(Icons.home, Icons.home_outlined, 0),
-            _buildBottomNavigationBarItem(
-                Icons.insert_drive_file, Icons.insert_drive_file_outlined, 1),
-            _buildBottomNavigationBarItem(
-                Icons.history, Icons.history_outlined, 2),
-            _buildBottomNavigationBarItem(
-                Icons.person, Icons.person_outline, 3),
-          ],
-          backgroundColor: Colors.transparent,
-          selectedItemColor: Colors.white,
-          unselectedItemColor: Colors.white,
-          type: BottomNavigationBarType.fixed,
-          showSelectedLabels: false,
-          showUnselectedLabels: false,
         ),
       ),
-    );
-  }
-
-  BottomNavigationBarItem _buildBottomNavigationBarItem(
-      IconData activeIcon, IconData inactiveIcon, int index) {
-    return BottomNavigationBarItem(
-      icon: _currentIndex == index ? Icon(activeIcon) : Icon(inactiveIcon),
-      label: '',
     );
   }
 
@@ -211,7 +173,7 @@ class _HomePageState extends State<HomePage> {
                 otherPhases: otherPhases,
               ),
         oldPhaseTab(oldPhase: oldPhases),
-        const ProfileTab(),
+        const ProfileScreen(),
       ],
     );
   }

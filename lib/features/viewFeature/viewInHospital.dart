@@ -1,3 +1,4 @@
+import 'package:dashboard/models/recordModel.dart';
 import 'package:flutter/material.dart';
 
 import '../../widgets/widgets.dart';
@@ -65,7 +66,7 @@ class _ViewInHospitalState extends State<ViewInHospital> {
   @override
   void initState() {
     super.initState();
-    record = widget.patientRecord;
+    record = parseInHospitalRecord(widget.patientRecord);
 
     if (record.isNotEmpty) {
       renderInHospitalWidgets();

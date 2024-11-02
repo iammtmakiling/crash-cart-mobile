@@ -2,6 +2,7 @@ import 'package:dashboard/api_requests/updateRecord.dart';
 import 'package:dashboard/features/viewFeature/viewSummary.dart';
 import 'package:dashboard/globals.dart';
 import 'package:dashboard/helperFunctions.dart';
+import 'package:dashboard/models/recordModel.dart';
 import 'package:dashboard/screens/home_page.dart';
 import 'package:dashboard/screens/pincode.dart';
 import 'package:dashboard/widgets/formWidgets/formTextArea.dart';
@@ -1056,7 +1057,7 @@ class EditPreHospitalState extends State<EditPreHospital>
   }
 
   Future<void> initializeData() async {
-    preHospitalData = widget.preHospitalData;
+    preHospitalData = parsePreHospitalRecord(widget.preHospitalData);
     record = widget.record;
 
     if (preHospitalData['externalCauses'].isNotEmpty) {

@@ -3,6 +3,7 @@ import 'package:dashboard/features/viewFeature/viewSummary.dart';
 import 'package:dashboard/globals.dart';
 import 'package:dashboard/helperFunctions.dart';
 import 'package:dashboard/initializedList.dart';
+import 'package:dashboard/models/recordModel.dart';
 import 'package:dashboard/screens/home_page.dart';
 import 'package:dashboard/screens/pincode.dart';
 import 'package:flutter/material.dart';
@@ -960,7 +961,7 @@ class EditSurgeryState extends State<EditSurgery>
 
     setState(() {
       initialSurgeriesNumber = getSurgeriesNumber();
-      surgeryData = widget.surgeryData;
+      surgeryData = parseSurgeryRecord(widget.surgeryData);
       surgeries = surgeryData['surgeriesList'] ?? [];
       record = widget.record;
       isInSurgery = decryp(record['patientStatus']) == "In-Surgery";

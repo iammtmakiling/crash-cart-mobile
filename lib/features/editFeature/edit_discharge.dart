@@ -2,6 +2,7 @@ import 'package:dashboard/api_requests/updateRecord.dart';
 import 'package:dashboard/features/viewFeature/viewSummary.dart';
 import 'package:dashboard/globals.dart';
 import 'package:dashboard/helperFunctions.dart';
+import 'package:dashboard/models/recordModel.dart';
 import 'package:dashboard/screens/home_page.dart';
 import 'package:dashboard/screens/pincode.dart';
 import 'package:dashboard/widgets/formWidgets/formTextArea.dart';
@@ -374,7 +375,7 @@ class EditDischargeState extends State<EditDischarge>
 
   @override
   void initState() {
-    dischargeData = widget.discharge;
+    dischargeData = parseDischargeRecord(widget.discharge);
     record = widget.record;
     super.initState();
     _tabController = TabController(length: 2, vsync: this);

@@ -19,17 +19,18 @@ class InfoCol extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
+        // Use a ListView with a fixed height if you expect a specific size.
+        // Otherwise, you may consider other alternatives like ListView.separated for better performance.
         ListView.builder(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           itemCount: itemList.length,
-          itemBuilder: (BuildContext context, int index) {
+          itemBuilder: (context, index) {
             return Text(
               "- ${itemList[index]}",
               style: const TextStyle(
                 color: Colors.black,
                 fontSize: 14,
-                height: 1,
               ),
             );
           },

@@ -1,3 +1,4 @@
+import 'package:dashboard/models/recordModel.dart';
 import 'package:dashboard/widgets/info.dart';
 import 'package:flutter/material.dart';
 // import '../mockData/records.dart';
@@ -9,7 +10,7 @@ class ViewDischarge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var record = patientRecord;
+    var record = parseDischargeRecord(patientRecord);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,

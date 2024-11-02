@@ -1,3 +1,4 @@
+import 'package:dashboard/screens/SigninScreen/signin_screen.dart';
 import 'package:dashboard/screens/login_page.dart';
 import 'package:flutter/material.dart';
 
@@ -25,7 +26,7 @@ class SplashScreen extends StatelessWidget {
               child: child,
             );
           },
-          pageBuilder: (_, __, ___) => const LoginScreen(),
+          pageBuilder: (_, __, ___) => const SignInScreen(),
         ),
       );
     });
