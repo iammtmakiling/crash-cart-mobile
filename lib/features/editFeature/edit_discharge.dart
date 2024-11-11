@@ -2,7 +2,7 @@ import 'package:dashboard/core/api_requests/updateRecord.dart';
 import 'package:dashboard/features/viewFeature/viewSummary.dart';
 import 'package:dashboard/globals.dart';
 import 'package:dashboard/core/utils/helper_utils.dart';
-import 'package:dashboard/screens/home_page.dart';
+import 'package:dashboard/main/main_navigation.dart';
 import 'package:dashboard/screens/pincode.dart';
 import 'package:dashboard/widgets/formWidgets/formTextArea.dart';
 import 'package:flutter/material.dart';
@@ -404,7 +404,7 @@ class EditDischargeState extends State<EditDischarge>
                       onPressed: () {
                         Navigator.of(context).pushReplacement(
                           MaterialPageRoute(
-                            builder: (context) => const HomePage(),
+                            builder: (context) => const MainNavigation(),
                           ),
                         );
                       },

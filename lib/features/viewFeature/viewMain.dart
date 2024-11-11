@@ -1,5 +1,6 @@
 // import 'package:dashboard/features/editFeature/editER.dart';
 import 'package:dashboard/globals.dart';
+import 'package:dashboard/screens/RecordsScreen/widgets/patient_box.dart';
 import 'package:dashboard/widgets/accept_button.dart';
 import 'package:dashboard/widgets/add_button.dart';
 import 'package:dashboard/widgets/edit_button.dart';

@@ -1,4 +1,4 @@
-import 'package:dashboard/screens/home_page.dart';
+import 'package:dashboard/main/main_navigation.dart';
 import 'package:dashboard/screens/pincode.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -732,7 +732,7 @@ class EditGeneralState extends State<EditGeneral>
                           onPressed: () {
                             Navigator.of(context).pushReplacement(
                               MaterialPageRoute(
-                                builder: (context) => const HomePage(),
+                                builder: (context) => const MainNavigation(),
                               ),
                             );
                           },

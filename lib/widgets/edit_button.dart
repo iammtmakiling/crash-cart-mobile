@@ -3,7 +3,7 @@ import 'package:dashboard/features/editFeature/edit_er.dart';
 import 'package:dashboard/features/editFeature/editInHospital.dart';
 import 'package:dashboard/features/editFeature/edit_prehospital.dart';
 import 'package:dashboard/features/editFeature/edit_surgery.dart';
-import 'package:dashboard/screens/home_page.dart';
+import 'package:dashboard/main/main_navigation.dart';
 import 'package:flutter/material.dart';
 
 class EditButton extends StatelessWidget {
@@ -37,7 +37,7 @@ class EditButton extends StatelessWidget {
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const HomePage(),
+                      builder: (context) => const MainNavigation(),
                     ),
                   );
                 },
@@ -71,7 +71,7 @@ class EditButton extends StatelessWidget {
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const HomePage(),
+                      builder: (context) => const MainNavigation(),
                     ),
                   );
                 },
@@ -105,7 +105,7 @@ class EditButton extends StatelessWidget {
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const HomePage(),
+                      builder: (context) => const MainNavigation(),
                     ),
                   );
                 },
@@ -128,7 +128,7 @@ class EditButton extends StatelessWidget {
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const HomePage(),
+                      builder: (context) => const MainNavigation(),
                     ),
                   );
                 },
@@ -162,7 +162,7 @@ class EditButton extends StatelessWidget {
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const HomePage(),
+                      builder: (context) => const MainNavigation(),
                     ),
                   );
                 },

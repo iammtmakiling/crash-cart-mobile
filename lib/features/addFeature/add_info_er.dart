@@ -1,4 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
+import 'package:dashboard/main/main_navigation.dart';
+
 import '../../core/api_requests/_api.dart';
 import 'package:dashboard/globals.dart';
 import 'package:dashboard/core/utils/helper_utils.dart';
@@ -2215,7 +2217,7 @@ class AddInfoERState extends State<AddInfoER>
                         onPressed: () {
                           Navigator.of(context).pushReplacement(
                             MaterialPageRoute(
-                              builder: (context) => const HomePage(),
+                              builder: (context) => const MainNavigation(),
                             ),
                           );
                         },

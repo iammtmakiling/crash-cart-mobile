@@ -10,6 +10,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
 
+import 'patient_box.dart';
+
 class OtherRecords extends StatefulWidget {
   final bool isSolo;
   final List<Map<String, dynamic>> otherRecords;

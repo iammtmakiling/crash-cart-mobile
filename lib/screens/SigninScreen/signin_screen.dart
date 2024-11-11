@@ -1,9 +1,11 @@
 import 'package:dashboard/core/enums/auth_status.dart';
 import 'package:dashboard/core/exceptions/auth_exceptions.dart';
 import 'package:dashboard/core/provider/user_provider.dart';
-import 'package:dashboard/screens/screens.dart';
+import 'package:dashboard/main/main_navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import '../../core/utils/helper_utils.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
@@ -39,6 +41,7 @@ class SignInScreenState extends State<SignInScreen> {
       // Check authentication status
       if (userProvider.authStatus == AuthStatus.authenticated) {
         // If authenticated, navigate to home page
+        initializeUserCredentials(userProvider);
         _navigateToHome();
       } else if (userProvider.lastError != null) {
         // Show error message if authentication failed
@@ -62,7 +65,7 @@ class SignInScreenState extends State<SignInScreen> {
 // Navigation to Home page after successful authentication
   void _navigateToHome() {
     Navigator.of(context).pushAndRemoveUntil(
-      MaterialPageRoute(builder: (_) => const HomePage()),
+      MaterialPageRoute(builder: (_) => const MainNavigation()),
       (route) => false,
     );
   }

@@ -3,7 +3,7 @@ import 'package:dashboard/features/viewFeature/viewSummary.dart';
 import 'package:dashboard/globals.dart';
 import 'package:dashboard/core/utils/helper_utils.dart';
 import 'package:dashboard/initializedList.dart';
-import 'package:dashboard/screens/home_page.dart';
+import 'package:dashboard/main/main_navigation.dart';
 import 'package:dashboard/screens/pincode.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -757,7 +757,7 @@ class AddInHospitalState extends State<AddInHospital>
                       onPressed: () {
                         Navigator.of(context).pushReplacement(
                           MaterialPageRoute(
-                            builder: (context) => const HomePage(),
+                            builder: (context) => const MainNavigation(),
                           ),
                         );
                       },

@@ -4,7 +4,7 @@ import '../../core/api_requests/_api.dart';
 import 'package:dashboard/features/addFeature/add_prehospital.dart';
 
 import 'package:dashboard/globals.dart';
-import 'package:dashboard/screens/home_page.dart';
+import 'package:dashboard/main/main_navigation.dart';
 import 'package:dashboard/screens/pincode.dart';
 
 import 'package:flutter/material.dart';
@@ -661,7 +661,8 @@ class AddGeneralState extends State<AddGeneral>
                                 onBack: () {
                                   Navigator.of(context).pushReplacement(
                                     MaterialPageRoute(
-                                        builder: (context) => const HomePage()),
+                                        builder: (context) =>
+                                            const MainNavigation()),
                                   );
                                 },
                                 patient: currentPatient,

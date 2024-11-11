@@ -1,13 +1,32 @@
-import '../../../../core/api_requests/_api.dart';
-import 'package:dashboard/globals.dart';
-import 'package:encrypt/encrypt.dart';
+import 'package:encrypt/encrypt.dart' as encrypt;
 import 'package:intl/intl.dart';
-import '../../../globals.dart' as globals;
 
-final newKey = Key.fromUtf8(key);
-final newIv = IV.fromUtf8(iv);
+import '../../../../core/api_requests/_api.dart';
+import '../provider/user_provider.dart';
 
-//Functions for General Use
+/// Top-level variables to hold the encryption key, IV, bearer token, and hospital ID.
+encrypt.Key? _key;
+encrypt.IV? _iv;
+String? _bearerToken;
+String? _hospitalID;
+
+/// Ensures that the encryption key, IV, bearer token, and hospital ID are initialized from `UserProvider`.
+void initializeUserCredentials(UserProvider userProvider) {
+  if (_key == null ||
+      _iv == null ||
+      _bearerToken == null ||
+      _hospitalID == null) {
+    _key = encrypt.Key.fromUtf8(userProvider.key);
+    _iv = encrypt.IV.fromUtf8(userProvider.iv);
+    _bearerToken = userProvider.bearerToken;
+    _hospitalID = userProvider.hospitalID;
+  }
+
+  print('Key: $_key');
+  print('IV: $_iv');
+  print('Bearer Token: $_bearerToken');
+  print('Hospital ID: $_hospitalID');
+}
 
 /// Formats a given date-time string into a readable format.
 String formatDateTime(String dateTimeString) {
@@ -18,8 +37,9 @@ String formatDateTime(String dateTimeString) {
 
 /// Decrypts the given text using AES encryption.
 String decryp(String text) {
-  final encrypter = Encrypter(AES(newKey, mode: AESMode.cbc));
-  final decrypted = encrypter.decrypt64(text, iv: newIv);
+  final encrypter =
+      encrypt.Encrypter(encrypt.AES(_key!, mode: encrypt.AESMode.cbc));
+  final decrypted = encrypter.decrypt64(text, iv: _iv!);
   return decrypted;
 }
 
@@ -34,8 +54,9 @@ List<String> decryptList(List<dynamic>? encryptedValues) {
 
 /// Encrypts the given text using AES encryption.
 String encryp(String text) {
-  final encrypter = Encrypter(AES(newKey, mode: AESMode.cbc));
-  final encrypted = encrypter.encrypt(text, iv: newIv);
+  final encrypter =
+      encrypt.Encrypter(encrypt.AES(_key!, mode: encrypt.AESMode.cbc));
+  final encrypted = encrypter.encrypt(text, iv: _iv!);
   return encrypted.base64;
 }
 
@@ -72,7 +93,7 @@ String currentDate() {
 
 /// Generates a unique patient ID based on the city code and description.
 Future<String> generatePatientID(String cityCode, String cityDesc) async {
-  final document = await getPatients(bearerToken);
+  final document = await getPatients(_bearerToken!);
   int count = document
           .where((patient) =>
               patient['general']['permanentAddress']['cityMun'] == cityDesc)
@@ -84,10 +105,10 @@ Future<String> generatePatientID(String cityCode, String cityDesc) async {
 
 /// Generates a unique record ID based on the hospital ID and existing records.
 Future<String> generateRecordID() async {
-  final document = await getCurrentPatients(hospitalID, bearerToken);
+  final document = await getCurrentPatients(_hospitalID!, _bearerToken!);
   final numberOfRecords = document.length + 1;
   final paddedCount = numberOfRecords.toString().padLeft(5, '0');
-  return '$hospitalID-$paddedCount';
+  return '${_hospitalID!}-$paddedCount';
 }
 
 /// Checks if a patient already exists based on the provided form values.
@@ -103,7 +124,8 @@ Future<Map<String, dynamic>> checkIfPatientExist(
       "suffix": nullChecker(formValues['suffix']),
       "birthday": nullChecker(formValues['birthday'].toString().split(" ")[0]),
     };
-    final patientFound = await checkPatientExist(encryptedPatient, bearerToken);
+    final patientFound =
+        await checkPatientExist(encryptedPatient, _bearerToken!);
     if (patientFound['ifExist']) {
       return {"isFound": true, "patient": patientFound['patient']};
     }
@@ -128,34 +150,4 @@ calculateAge(DateTime birthDate) {
     }
   }
   return age;
-}
-
-Future<void> resetGlobalValues() async {
-  globals.firstName = "";
-  globals.lastName = "";
-  globals.middleName = "";
-  globals.suffix = "";
-  globals.name = "";
-  globals.username = "";
-  globals.patientID = "";
-  globals.department = "";
-  globals.userID = "";
-  globals.pin = "";
-  globals.email = "";
-  globals.sex = "";
-  globals.birthday = "";
-  globals.occupation = "";
-  globals.role = "";
-  globals.userFirebaseGenId = "";
-  globals.hospitalID = "";
-  globals.devices = [];
-}
-
-Future<void> resetGlobalExtraValues() async {
-  globals.key = "";
-  globals.iv = "";
-  globals.iat = 0;
-  globals.aud = "";
-  globals.iss = "";
-  globals.sub = "";
 }

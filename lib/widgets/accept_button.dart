@@ -1,12 +1,12 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'dart:convert';
+import 'package:dashboard/main/main_navigation.dart';
 import 'package:flutter/material.dart';
 import '../../core/api_requests/_api.dart';
 import 'package:dashboard/features/addFeature/add_surgery.dart';
 import 'package:dashboard/globals.dart';
 import 'package:dashboard/core/utils/helper_utils.dart';
-import 'package:dashboard/screens/home_page.dart';
 
 class AcceptButton extends StatefulWidget {
   final String role;
@@ -60,7 +60,7 @@ class _AcceptButtonState extends State<AcceptButton> {
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const HomePage(),
+                    builder: (context) => const MainNavigation(),
                   ),
                 );
               },

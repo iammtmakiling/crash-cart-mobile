@@ -32,6 +32,12 @@ class UserProvider extends ChangeNotifier {
   String get hospitalID => _user?.hospitalID ?? '';
   List<dynamic> get devices => _user?.devices ?? [];
   String get bearerToken => _user?.bearerToken ?? '';
+  String get key => _user?.key ?? '';
+  String get iv => _user?.iv ?? '';
+  int get iat => _user?.iat ?? 0;
+  String get aud => _user?.aud ?? '';
+  String get iss => _user?.iss ?? '';
+  String get sub => _user?.sub ?? '';
 
   void _setAuthStatus(AuthStatus status) {
     _authStatus = status;

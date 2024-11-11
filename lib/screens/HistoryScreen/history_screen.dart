@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:dashboard/core/utils/helper_utils.dart';
 import 'package:dashboard/globals.dart';
+import 'package:dashboard/screens/RecordsScreen/widgets/patient_box.dart';
 import 'package:dashboard/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import '../../core/api_requests/_api.dart';
@@ -46,7 +47,6 @@ class HistoryScreenState extends State<HistoryScreen> {
           await Future.wait(fetchTasks);
 
       // Process fetched data
-
       for (int i = 0; i < fetchedPatients.length; i++) {
         Map<String, dynamic> temp = fetchedPatients[i];
         String fullName = "${temp["general"]['firstName']}. ";
@@ -69,14 +69,18 @@ class HistoryScreenState extends State<HistoryScreen> {
         processedPatients.add(processedPatient);
       }
 
-      setState(() {
-        filteredPatients = processedPatients;
-        isLoading = false;
-      });
+      if (mounted) {
+        setState(() {
+          filteredPatients = processedPatients;
+          isLoading = false;
+        });
+      }
     } catch (e) {
-      setState(() {
-        isLoading = false;
-      });
+      if (mounted) {
+        setState(() {
+          isLoading = false;
+        });
+      }
     }
   }
 

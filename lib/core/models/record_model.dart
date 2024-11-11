@@ -1,7 +1,7 @@
 import 'package:dashboard/core/utils/helper_utils.dart';
 import 'package:intl/intl.dart';
 
-Map<String, dynamic> getRecord(Map<String, dynamic> json) {
+Map<String, dynamic> parseRecord(Map<String, dynamic> json) {
   final preHospital = json['preHospital'];
   final er = json['er'];
   final inHospital = json['inHospital'];
@@ -9,21 +9,163 @@ Map<String, dynamic> getRecord(Map<String, dynamic> json) {
   final discharge = json['discharge'];
 
   final record = {
-    "hospitalID": json['hospitalID'] ?? '', //Not Decrypted??
+    "hospitalID": json['hospitalID'] ?? '',
     "patientID": json['patientID'] != null ? decryp(json['patientID']) : null,
     "patientStatus":
         json['patientStatus'] != null ? decryp(json['patientStatus']) : null,
     "patientType":
         json['patientType'] != null ? decryp(json['patientType']) : null,
     "recordID": json['recordID'] != null ? decryp(json['recordID']) : null,
-    "preHospital": preHospital,
-    "er": er,
-    "inHospital": inHospital,
-    "surgery": surgery,
-    "discharge": discharge,
+    "preHospital": parsePreHospitalRecord(preHospital),
+    "er": parseERRecord(er),
+    "inHospital": parseInHospitalRecord(inHospital),
+    "surgery": parseSurgeryRecord(surgery),
+    "discharge": parseDischargeRecord(discharge),
   };
   return record;
 }
+
+// Map<String, dynamic> getRecord(Map<String, dynamic> json) {
+//   try {
+//     print('Starting record parsing for record: ${json['recordID']}');
+
+//     // Check if json is null
+//     if (json == null) {
+//       throw Exception('Input json is null');
+//     }
+
+//     Map<String, dynamic> record = {};
+
+//     // Parse basic fields with error tracking
+//     try {
+//       record['hospitalID'] = json['hospitalID'] ?? '';
+//       print('Successfully parsed hospitalID: ${record['hospitalID']}');
+//     } catch (e) {
+//       print('Error parsing hospitalID: $e');
+//       record['hospitalID'] = '';
+//     }
+
+//     // Patient ID parsing
+//     try {
+//       record['patientID'] =
+//           json['patientID'] != null ? decryp(json['patientID']) : null;
+//       print('Successfully parsed patientID');
+//     } catch (e) {
+//       print('Error parsing patientID: $e');
+//       print('Raw patientID value: ${json['patientID']}');
+//       record['patientID'] = null;
+//     }
+
+//     // Patient Status parsing
+//     try {
+//       record['patientStatus'] =
+//           json['patientStatus'] != null ? decryp(json['patientStatus']) : null;
+//       print('Successfully parsed patientStatus: ${record['patientStatus']}');
+//     } catch (e) {
+//       print('Error parsing patientStatus: $e');
+//       print('Raw patientStatus value: ${json['patientStatus']}');
+//       record['patientStatus'] = null;
+//     }
+
+//     // Patient Type parsing
+//     try {
+//       record['patientType'] =
+//           json['patientType'] != null ? decryp(json['patientType']) : null;
+//       print('Successfully parsed patientType');
+//     } catch (e) {
+//       print('Error parsing patientType: $e');
+//       print('Raw patientType value: ${json['patientType']}');
+//       record['patientType'] = null;
+//     }
+
+//     // Record ID parsing
+//     try {
+//       record['recordID'] =
+//           json['recordID'] != null ? decryp(json['recordID']) : null;
+//       print('Successfully parsed recordID');
+//     } catch (e) {
+//       print('Error parsing recordID: $e');
+//       print('Raw recordID value: ${json['recordID']}');
+//       record['recordID'] = null;
+//     }
+
+//     // PreHospital section parsing
+//     try {
+//       final preHospital = json['preHospital'];
+//       record['preHospital'] = parsePreHospitalRecord(preHospital);
+//       print('Successfully parsed preHospital section');
+//     } catch (e) {
+//       print('Error parsing preHospital section: $e');
+//       print('Raw preHospital value: ${json['preHospital']}');
+//       record['preHospital'] = {};
+//     }
+
+//     // ER section parsing
+//     try {
+//       final er = json['er'];
+//       record['er'] = parseERRecord(er);
+//       print('Successfully parsed ER section');
+//     } catch (e) {
+//       print('Error parsing ER section: $e');
+//       print('Raw ER value: ${json['er']}');
+//       record['er'] = {};
+//     }
+
+//     // InHospital section parsing
+//     try {
+//       final inHospital = json['inHospital'];
+//       record['inHospital'] = parseInHospitalRecord(inHospital);
+//       print('Successfully parsed inHospital section');
+//     } catch (e) {
+//       print('Error parsing inHospital section: $e');
+//       print('Raw inHospital value: ${json['inHospital']}');
+//       record['inHospital'] = {};
+//     }
+
+//     // Surgery section parsing
+//     try {
+//       final surgery = json['surgery'];
+//       record['surgery'] = parseSurgeryRecord(surgery);
+//       print('Successfully parsed surgery section');
+//     } catch (e) {
+//       print('Error parsing surgery section: $e');
+//       print('Raw surgery value: ${json['surgery']}');
+//       record['surgery'] = {};
+//     }
+
+//     // Discharge section parsing
+//     try {
+//       final discharge = json['discharge'];
+//       record['discharge'] = parseDischargeRecord(discharge);
+//       print('Successfully parsed discharge section');
+//     } catch (e) {
+//       print('Error parsing discharge section: $e');
+//       print('Raw discharge value: ${json['discharge']}');
+//       record['discharge'] = {};
+//     }
+
+//     print('Completed parsing record successfully');
+//     return record;
+//   } catch (e, stackTrace) {
+//     print('Critical error in parseRecord: $e');
+//     print('Stack trace: $stackTrace');
+//     print('Raw JSON data: $json');
+
+//     // Return a safely structured empty record instead of throwing
+//     return {
+//       'hospitalID': '',
+//       'patientID': null,
+//       'patientStatus': null,
+//       'patientType': null,
+//       'recordID': null,
+//       'preHospital': {},
+//       'er': {},
+//       'inHospital': {},
+//       'surgery': {},
+//       'discharge': {},
+//     };
+//   }
+// }
 
 Map<String, dynamic> parsePreHospitalRecord(Map<String, dynamic> preHospital) {
   final firstAid = preHospital['firstAid'];
@@ -232,7 +374,7 @@ Map<String, dynamic> parseInHospitalRecord(Map<String, dynamic> inHospital) {
 }
 
 Map<String, dynamic> parseSurgeryRecord(Map<String, dynamic> surgery) {
-  print("Original surgery data: $surgery");
+  // print("Original surgery data: $surgery");
   if (surgery.isEmpty) {
     return {};
   }
@@ -317,12 +459,19 @@ Map<String, dynamic> parseDischargeRecord(Map<String, dynamic> discharge) {
   };
 }
 
-Map<String, dynamic> parseRecord(Map<String, dynamic> json) {
+Map<String, dynamic> getRecord(Map<String, dynamic> json) {
   final preHospital = json['preHospital'];
   final er = json['er'];
   final inHospital = json['inHospital'];
   final surgery = json['surgery'];
   final discharge = json['discharge'];
+
+  print('Pre-Hospital: $preHospital');
+  print('ER: $er');
+  print('In-Hospital: $inHospital');
+  print('Surgery: $surgery');
+  print('Discharge: $discharge');
+
   var erRecord = {};
   var preHospitalRecord = {};
   var surgeryRecord = {};
@@ -435,6 +584,7 @@ Map<String, dynamic> parseRecord(Map<String, dynamic> json) {
           : null,
     };
   }
+  print('Pre-Hospital Record: $preHospitalRecord');
 
   if (!er.isEmpty) {
     erRecord = {

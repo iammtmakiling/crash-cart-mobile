@@ -3,7 +3,7 @@
 import 'package:dashboard/features/addFeature/add_info.dart';
 import 'package:dashboard/features/addFeature/add_info_er.dart';
 import 'package:dashboard/globals.dart';
-import 'package:dashboard/screens/home_page.dart';
+import 'package:dashboard/main/main_navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
@@ -198,14 +198,16 @@ class RoleBasedFAB extends StatelessWidget {
                   return addInfo(
                     onBack: () => Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (context) => const HomePage()),
+                      MaterialPageRoute(
+                          builder: (context) => const MainNavigation()),
                     ),
                   );
                 } else {
                   return addInfoER(
                     onBack: () => Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (context) => const HomePage()),
+                      MaterialPageRoute(
+                          builder: (context) => const MainNavigation()),
                     ),
                   );
                 }

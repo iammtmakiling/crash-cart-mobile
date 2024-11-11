@@ -1,6 +1,6 @@
 import '../../core/api_requests/_api.dart';
 import 'package:dashboard/globals.dart';
-import 'package:dashboard/screens/home_page.dart';
+import 'package:dashboard/main/main_navigation.dart';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -930,7 +930,7 @@ class AddPreHospitalState extends State<AddPreHospital>
                       onPressed: () {
                         Navigator.of(context).pushReplacement(
                           MaterialPageRoute(
-                            builder: (context) => const HomePage(),
+                            builder: (context) => const MainNavigation(),
                           ),
                         );
                       },

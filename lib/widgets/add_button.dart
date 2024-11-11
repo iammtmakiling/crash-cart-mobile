@@ -1,7 +1,7 @@
 import 'package:dashboard/features/addFeature/addDischarge.dart';
 import 'package:dashboard/features/addFeature/add_er.dart';
 import 'package:dashboard/features/addFeature/addInHospital.dart';
-import 'package:dashboard/screens/home_page.dart';
+import 'package:dashboard/main/main_navigation.dart';
 import 'package:flutter/material.dart';
 
 class AddButton extends StatelessWidget {
@@ -36,7 +36,7 @@ class AddButton extends StatelessWidget {
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const HomePage(),
+                      builder: (context) => const MainNavigation(),
                     ),
                   );
                 },
@@ -58,7 +58,7 @@ class AddButton extends StatelessWidget {
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const HomePage(),
+                      builder: (context) => const MainNavigation(),
                     ),
                   );
                 },
@@ -90,7 +90,7 @@ class AddButton extends StatelessWidget {
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const HomePage(),
+                      builder: (context) => const MainNavigation(),
                     ),
                   );
                 },

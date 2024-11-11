@@ -3,7 +3,7 @@ import 'package:dashboard/features/viewFeature/viewSummary.dart';
 import 'package:dashboard/globals.dart';
 import 'package:dashboard/core/utils/helper_utils.dart';
 import 'package:dashboard/initializedList.dart';
-import 'package:dashboard/screens/home_page.dart';
+import 'package:dashboard/main/main_navigation.dart';
 import 'package:dashboard/screens/pincode.dart';
 import 'package:dashboard/widgets/formWidgets/formTextArea.dart';
 
@@ -654,7 +654,7 @@ class EditERState extends State<EditER> with SingleTickerProviderStateMixin {
                           onPressed: () {
                             Navigator.of(context).pushReplacement(
                               MaterialPageRoute(
-                                builder: (context) => const HomePage(),
+                                builder: (context) => const MainNavigation(),
                               ),
                             );
                           },

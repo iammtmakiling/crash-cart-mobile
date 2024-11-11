@@ -1,11 +1,12 @@
-import 'package:dashboard/screens/home_page.dart';
+import 'package:dashboard/main/main_navigation.dart';
 import 'package:flutter/material.dart';
 
 class SuccessfulWidget extends StatelessWidget {
   final VoidCallback onPressed;
   final String message;
 
-  const SuccessfulWidget({super.key, required this.onPressed, required this.message});
+  const SuccessfulWidget(
+      {super.key, required this.onPressed, required this.message});
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +63,7 @@ class SuccessfulWidget extends StatelessWidget {
                   // Navigate to the home screen
                   Navigator.of(context).pushReplacement(
                     MaterialPageRoute(
-                      builder: (context) => const HomePage(),
+                      builder: (context) => const MainNavigation(),
                     ),
                   );
                 },

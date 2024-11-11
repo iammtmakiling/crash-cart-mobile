@@ -8,6 +8,8 @@ import 'package:dashboard/widgets/searchbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'patient_box.dart';
+
 class MyRecords extends StatefulWidget {
   final List<Map<String, dynamic>> myRecords;
   final bool isSolo;
@@ -72,14 +74,20 @@ class MyRecordsState extends State<MyRecords> {
         processedPatients.add(processedPatient);
       }
 
-      setState(() {
-        filteredPatients = processedPatients;
-        isLoading = false;
-      });
+      // Check if the widget is still mounted before calling setState()
+      if (mounted) {
+        setState(() {
+          filteredPatients = processedPatients;
+          isLoading = false;
+        });
+      }
     } catch (e) {
-      setState(() {
-        isLoading = false;
-      });
+      // Check if the widget is still mounted before calling setState()
+      if (mounted) {
+        setState(() {
+          isLoading = false;
+        });
+      }
     }
   }
 

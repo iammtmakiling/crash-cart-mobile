@@ -155,8 +155,6 @@ void _showLogoutConfirmationDialog(BuildContext context) {
 }
 
 void _logout(BuildContext context) {
-  resetGlobalExtraValues();
-  resetGlobalValues();
   Navigator.of(context).pushAndRemoveUntil(
     MaterialPageRoute(builder: (context) => const SignInScreen()),
     (Route<dynamic> route) => false,

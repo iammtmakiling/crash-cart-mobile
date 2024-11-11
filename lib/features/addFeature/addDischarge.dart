@@ -1,3 +1,5 @@
+import 'package:dashboard/main/main_navigation.dart';
+
 import '../../core/api_requests/_api.dart';
 import 'package:dashboard/features/viewFeature/viewSummary.dart';
 import 'package:dashboard/globals.dart';
@@ -286,7 +288,7 @@ class AddDischargeState extends State<AddDischarge>
                       onPressed: () {
                         Navigator.of(context).pushReplacement(
                           MaterialPageRoute(
-                            builder: (context) => const HomePage(),
+                            builder: (context) => const MainNavigation(),
                           ),
                         );
                       },

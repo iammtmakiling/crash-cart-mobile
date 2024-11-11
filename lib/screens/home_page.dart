@@ -1,183 +1,223 @@
-import 'dart:async';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dashboard/core/provider/user_provider.dart';
-import 'package:dashboard/screens/_screens.dart';
-import 'package:dashboard/screens/widgets/bottomnavbar.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import '../core/models/_models.dart';
+// import 'dart:async';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:dashboard/core/provider/user_provider.dart';
+// import 'package:dashboard/screens/_screens.dart';
+// import 'package:dashboard/screens/widgets/bottomnavbar.dart';
+// import 'package:flutter/material.dart';
+// import 'package:provider/provider.dart';
+// import '../core/models/_models.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+// class HomePage extends StatefulWidget {
+//   const HomePage({super.key});
 
-  @override
-  HomePageState createState() => HomePageState();
-}
+//   @override
+//   HomePageState createState() => HomePageState();
+// }
 
-class HomePageState extends State<HomePage> {
-  int _currentIndex = 0;
-  final List<Map<String, dynamic>> _myPhase = [];
-  final List<Map<String, dynamic>> _otherPhases = [];
-  final List<Map<String, dynamic>> _oldPhases = [];
-  final Map<String, int> _hospitalStatus = {
-    'total': 0,
-    'er': 0,
-    'sur_pen': 0,
-    'in': 0,
-    'sur': 0,
-    'dis_pen': 0,
-  };
+// class HomePageState extends State<HomePage> {
+//   int _currentIndex = 0;
+//   final List<Map<String, dynamic>> _myRecords = [];
+//   final List<Map<String, dynamic>> _otherRecords = [];
+//   final List<Map<String, dynamic>> _oldRecords = [];
+//   List<DocumentSnapshot> _documents = [];
+//   final Map<String, int> _hospitalStatus = {
+//     "total": 0,
+//     "er": 0,
+//     "sur_pen": 0,
+//     "in": 0,
+//     "sur": 0,
+//     "dis_pen": 0,
+//     "dis": 0,
+//   };
 
-  StreamSubscription<QuerySnapshot<Map<String, dynamic>>>? _subscription;
-  String? _hospitalID;
-  String? _role;
+//   late final StreamSubscription<QuerySnapshot<Map<String, dynamic>>>
+//       _subscription;
+//   late final UserProvider _userProvider;
 
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _initializeUserData();
-    });
-  }
+//   @override
+//   void initState() {
+//     super.initState();
+//     _userProvider = Provider.of<UserProvider>(context, listen: false);
+//     _initializeFirestoreStream();
+//   }
 
-  void _initializeUserData() {
-    final userProvider = Provider.of<UserProvider>(context, listen: false);
-    setState(() {
-      _hospitalID = userProvider.hospitalID;
-      _role = userProvider.role;
-    });
-    print(
-        '------------ Initializing HomePage for hospital: $_hospitalID with role: $_role ------------');
-    _setupFirestoreStream();
-  }
+//   void _initializeFirestoreStream() {
+//     print(
+//         'Initializing Firestore stream for hospital: ${_userProvider.hospitalID}');
 
-  void _setupFirestoreStream() {
-    if (_hospitalID == null) return;
+//     _subscription = FirebaseFirestore.instance
+//         .collection('records')
+//         .where('hospitalID', isEqualTo: _userProvider.hospitalID)
+//         .snapshots()
+//         .listen(_handleSnapshot,
+//             onError: (error) => print('Firestore stream error: $error'));
+//   }
 
-    _subscription = FirebaseFirestore.instance
-        .collection('records')
-        .where('hospitalID', isEqualTo: _hospitalID)
-        .snapshots()
-        .listen(
-          _handleSnapshot,
-          onError: (error) => print('Firestore stream error: $error'),
-        );
-  }
+//   void _handleSnapshot(QuerySnapshot<Map<String, dynamic>> snapshot) {
+//     if (!mounted) return;
 
-  void _handleSnapshot(QuerySnapshot<Map<String, dynamic>> snapshot) {
-    if (!mounted) return;
+//     setState(() {
+//       _documents = snapshot.docs;
+//       _updateHospitalData();
+//     });
+//     print('Processed ${_documents.length} records');
+//   }
 
-    setState(() {
-      _resetData();
-      for (var doc in snapshot.docs) {
-        _processRecord(doc.data());
-      }
-    });
-  }
+//   void _updateHospitalData() {
+//     _resetHospitalStatus();
+//     _clearAllPhases();
 
-  void _resetData() {
-    _hospitalStatus.updateAll((key, value) => 0);
-    _myPhase.clear();
-    _oldPhases.clear();
-    _otherPhases.clear();
-  }
+//     for (var document in _documents) {
+//       final record = document.data() as Map<String, dynamic>?;
+//       if (record == null) continue;
 
-  void _processRecord(Map<String, dynamic> record) {
-    final currentRecord = getRecord(record);
-    _updateHospitalStatus(currentRecord['patientStatus']);
-    _categorizeRecord(currentRecord, record);
-  }
+//       final currentRecord = parseRecord(record);
+//       _updateHospitalStatus(currentRecord);
+//       _categorizePatient(currentRecord, record);
+//     }
 
-  void _updateHospitalStatus(String status) {
-    _hospitalStatus['total'] = _hospitalStatus['total']! + 1;
+//     print('Hospital Status: $_hospitalStatus');
+//   }
 
-    switch (status) {
-      case 'Emergency Room':
-        _hospitalStatus['er'] = _hospitalStatus['er']! + 1;
-        break;
-      case 'Pending Surgery':
-        _hospitalStatus['sur_pen'] = _hospitalStatus['sur_pen']! + 1;
-        break;
-      case 'In-Surgery':
-        _hospitalStatus['in'] = _hospitalStatus['in']! + 1;
-        _hospitalStatus['sur'] = _hospitalStatus['sur']! + 1;
-        break;
-      case 'In-Hospital':
-        _hospitalStatus['in'] = _hospitalStatus['in']! + 1;
-        break;
-      case 'Pending Discharge':
-        _hospitalStatus['dis_pen'] = _hospitalStatus['dis_pen']! + 1;
-        break;
-      default:
-        _hospitalStatus['total'] = _hospitalStatus['total']! - 1;
-    }
-  }
+//   void _resetHospitalStatus() {
+//     _hospitalStatus.updateAll((key, value) => 0);
+//   }
 
-  void _categorizeRecord(
-      Map<String, dynamic> currentRecord, Map<String, dynamic> rawRecord) {
-    if (_role == null) return;
+//   void _clearAllPhases() {
+//     _myRecords.clear();
+//     _oldRecords.clear();
+//     _otherRecords.clear();
+//   }
 
-    final status = currentRecord['patientStatus'];
-    final record = {'parsed': currentRecord, 'unparsed': rawRecord};
+//   void _updateHospitalStatus(Map<String, dynamic> record) {
+//     final status = record['patientStatus'] as String?;
+//     if (status == null) return;
 
-    if (_isInMyPhase(status)) {
-      _myPhase.add(record);
-      return;
-    }
+//     if (status != 'Discharged' && status != 'Deceased') {
+//       _hospitalStatus['total'] = _hospitalStatus['total']! + 1;
+//     }
 
-    if (status == 'Discharged' || status == 'Deceased') {
-      _oldPhases.add(record);
-    } else {
-      _otherPhases.add(record);
-    }
-  }
+//     final statusMapping = {
+//       'Emergency Room': () {
+//         _hospitalStatus['er'] = _hospitalStatus['er']! + 1;
+//       },
+//       'Pending Surgery': () {
+//         _hospitalStatus['sur_pen'] = _hospitalStatus['sur_pen']! + 1;
+//       },
+//       'In-Surgery': () {
+//         _hospitalStatus['in'] = _hospitalStatus['in']! + 1;
+//         _hospitalStatus['sur'] = _hospitalStatus['sur']! + 1;
+//       },
+//       'In-Hospital': () {
+//         _hospitalStatus['in'] = _hospitalStatus['in']! + 1;
+//       },
+//       'Pending Discharge': () {
+//         _hospitalStatus['dis_pen'] = _hospitalStatus['dis_pen']! + 1;
+//       }
+//     };
 
-  bool _isInMyPhase(String status) {
-    return (_role == 'ER Staff' && status == 'Emergency Room') ||
-        (_role == 'Surgery Staff' &&
-            (status == 'Pending Surgery' || status == 'In-Surgery')) ||
-        (_role == 'In-Hospital Staff' && status == 'In-Hospital') ||
-        (_role == 'Discharge Staff' && status == 'Pending Discharge');
-  }
+//     statusMapping[status]?.call();
 
-  Widget _buildContent() {
-    if (_role == null || _hospitalID == null) {
-      return const Center(child: CircularProgressIndicator());
-    }
+//     print(
+//         'Updated hospital status - Active patients: ${_hospitalStatus["total"]}');
+//   }
 
-    return IndexedStack(
-      index: _currentIndex,
-      children: [
-        HomeScreen(status: _hospitalStatus),
-        (_role == 'Pre-Hospital Staff')
-            ? OtherRecords(otherRecords: _otherPhases, isSolo: true)
-            : RecordsScreen(
-                myRecords: _myPhase,
-                otherRecords: _otherPhases,
-              ),
-        HistoryScreen(historyPhase: _oldPhases),
-        const ProfileScreen(),
-      ],
-    );
-  }
+//   void _categorizePatient(
+//       Map<String, dynamic> currentRecord, Map<String, dynamic> record) {
+//     final recordData = {"parsed": currentRecord, "unparsed": record};
 
-  @override
-  Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        body: _buildContent(),
-        bottomNavigationBar: BottomNavBar(
-          currentIndex: _currentIndex,
-          onTap: (index) => setState(() => _currentIndex = index),
-        ),
-      ),
-    );
-  }
+//     if (_isMyPhaseRecord(currentRecord['patientStatus'])) {
+//       _myRecords.add(recordData);
+//       return;
+//     }
 
-  @override
-  void dispose() {
-    _subscription?.cancel();
-    super.dispose();
-  }
-}
+//     if (['Discharged', 'Deceased'].contains(currentRecord['patientStatus'])) {
+//       _oldRecords.add(recordData);
+//     } else {
+//       _otherRecords.add(recordData);
+//     }
+//     print("oldRecords: ${_oldRecords.length}");
+//     print("otherRecords: ${_otherRecords.length}");
+//   }
+
+//   bool _isMyPhaseRecord(String status) {
+//     final roleStatusMap = {
+//       "ER Staff": ["Emergency Room"],
+//       "Surgery Staff": ["Pending Surgery", "In-Surgery"],
+//       "In-Hospital Staff": ["In-Hospital"],
+//       "Discharge Staff": ["Pending Discharge"],
+//     };
+
+//     return roleStatusMap[_userProvider.role]?.contains(status) ?? false;
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return SafeArea(
+//       child: Scaffold(
+//         appBar: _buildAppBar(),
+//         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+//         body: _buildBody(),
+//         bottomNavigationBar: BottomNavBar(
+//           currentIndex: _currentIndex,
+//           onTap: (index) => setState(() => _currentIndex = index),
+//         ),
+//       ),
+//     );
+//   }
+
+//   AppBar _buildAppBar() {
+//     return AppBar(
+//       title: const Text('Home Page'),
+//       actions: [
+//         IconButton(
+//           icon: const Icon(Icons.refresh, color: Colors.cyan),
+//           onPressed: _initializeFirestoreStream,
+//         ),
+//       ],
+//     );
+//   }
+
+//   Widget _buildBody() {
+//     return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+//       stream: FirebaseFirestore.instance
+//           .collection('records')
+//           .where('hospitalID', isEqualTo: _userProvider.hospitalID)
+//           .snapshots(),
+//       builder: (context, snapshot) {
+//         if (snapshot.connectionState == ConnectionState.waiting) {
+//           return const Center(child: CircularProgressIndicator());
+//         }
+
+//         if (snapshot.hasError) {
+//           return Center(child: Text('Error: ${snapshot.error}'));
+//         }
+
+//         return _buildPageContent();
+//       },
+//     );
+//   }
+
+//   Widget _buildPageContent() {
+//     return IndexedStack(
+//       index: _currentIndex,
+//       children: [
+//         HomeScreen(status: _hospitalStatus),
+//         _userProvider.role == "Pre-Hospital Staff"
+//             ? OtherRecords(otherRecords: _otherRecords, isSolo: true)
+//             : RecordsScreen(
+//                 myRecords: _myRecords,
+//                 otherRecords: _otherRecords,
+//               ),
+//         HistoryScreen(historyPhase: _oldRecords),
+//         const ProfileScreen(),
+//       ],
+//     );
+//   }
+
+//   @override
+//   void dispose() {
+//     _subscription.cancel();
+//     super.dispose();
+//   }
+// }
