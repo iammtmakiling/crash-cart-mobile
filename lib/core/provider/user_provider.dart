@@ -31,7 +31,7 @@ class UserProvider extends ChangeNotifier {
   String get userFirebaseGenId => _user?.userFirebaseGenId ?? '';
   String get hospitalID => _user?.hospitalID ?? '';
   List<dynamic> get devices => _user?.devices ?? [];
-  String? get bearerToken => _user?.bearerToken;
+  String get bearerToken => _user?.bearerToken ?? '';
 
   void _setAuthStatus(AuthStatus status) {
     _authStatus = status;

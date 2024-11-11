@@ -9,11 +9,10 @@ class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
-  _SignInScreenState createState() => _SignInScreenState();
+  SignInScreenState createState() => SignInScreenState();
 }
 
-class _SignInScreenState extends State<SignInScreen> {
+class SignInScreenState extends State<SignInScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();

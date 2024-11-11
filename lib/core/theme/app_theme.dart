@@ -18,11 +18,9 @@ class AppTheme {
 
       // AppBar Theme
       appBarTheme: AppBarTheme(
-        color: AppColors.primary,
+        color: AppColors.background,
         iconTheme: const IconThemeData(color: AppColors.background),
-        titleTextStyle: AppTextTheme.textTheme.headlineLarge?.copyWith(
-          color: AppColors.background,
-        ),
+        titleTextStyle: AppTextTheme.textTheme.headlineLarge,
       ),
 
       // Button Theme
