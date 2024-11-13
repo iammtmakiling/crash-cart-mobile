@@ -1,5 +1,6 @@
 import 'package:dashboard/core/provider/user_provider.dart';
 import 'package:dashboard/screens/RecordsScreen/widgets/_widget.dart';
+import 'package:dashboard/widgets/main_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -16,53 +17,33 @@ class RecordsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final userProvider = Provider.of<UserProvider>(context);
+    final role = userProvider.role;
+    final roleDisplay = role.endsWith("ER") ? "Emergency Room" : role;
+
     return SafeArea(
-      child: Column(
-        children: [
-          Expanded(
-            child: DefaultTabController(
-              length: 2, // Number of tabs
-              child: Scaffold(
-                appBar: AppBar(
-                  backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-                  toolbarHeight: kToolbarHeight + 20,
-                  title: const Center(
-                    child: Text(
-                      "RECORDS",
-                    ),
-                  ),
-                  bottom: TabBar(
-                    tabs: [
-                      Tab(
-                        child: Text(
-                          (userProvider.role.length >= 6 &&
-                                  userProvider.role.substring(
-                                          0, userProvider.role.length - 6) ==
-                                      "ER")
-                              ? "Emergency Room"
-                              : userProvider.role,
-                          style: Theme.of(context).textTheme.bodyMedium,
-                        ),
-                      ),
-                      Tab(
-                        child: Text(
-                          'Others',
-                          style: Theme.of(context).textTheme.bodyMedium,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                body: TabBarView(
+      child: DefaultTabController(
+        length: 2,
+        child: Scaffold(
+          appBar: mainAppBar(context, "RECORDS"),
+          body: Column(
+            children: [
+              TabBar(
+                tabs: [
+                  Tab(text: roleDisplay),
+                  Tab(text: 'Others'),
+                ],
+              ),
+              Expanded(
+                child: TabBarView(
                   children: [
                     MyRecords(myRecords: myRecords, isSolo: false),
                     OtherRecords(otherRecords: otherRecords, isSolo: false),
                   ],
                 ),
               ),
-            ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }

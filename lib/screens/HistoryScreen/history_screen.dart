@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:dashboard/core/utils/helper_utils.dart';
 import 'package:dashboard/globals.dart';
 import 'package:dashboard/screens/RecordsScreen/widgets/patient_box.dart';
+import 'package:dashboard/widgets/main_appbar.dart';
 import 'package:dashboard/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import '../../core/api_requests/_api.dart';
@@ -108,14 +109,7 @@ class HistoryScreenState extends State<HistoryScreen> {
     return Material(
       child: Scaffold(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        appBar: AppBar(
-          title: const Center(
-            child: Text(
-              "HISTORY",
-            ),
-          ),
-          toolbarHeight: kToolbarHeight + 20,
-        ),
+        appBar: mainAppBar(context, "HISTORY"),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 32.0),
           child: Column(

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
-AppBar mainAppBar(BuildContext context) {
+AppBar mainAppBar(BuildContext context, String title) {
   return AppBar(
-    title: Text('CrashCart', style: Theme.of(context).textTheme.titleLarge),
+    title: Text(title, style: Theme.of(context).textTheme.titleLarge),
     centerTitle: true,
     leading: Icon(LucideIcons.activitySquare,
         color: Theme.of(context).iconTheme.color),

@@ -1,7 +1,5 @@
 import 'package:dashboard/features/viewFeature/components/view_expand.dart';
 import 'package:flutter/material.dart';
-
-import '../../widgets/widgets.dart';
 import '_view.dart';
 
 class ViewSummary extends StatefulWidget {

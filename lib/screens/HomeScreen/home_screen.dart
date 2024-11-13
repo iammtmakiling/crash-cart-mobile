@@ -17,7 +17,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: mainAppBar(context),
+      appBar: mainAppBar(context, 'CrashCart'),
       body: Padding(
         padding: const EdgeInsets.all(32.0),
         child: SingleChildScrollView(
@@ -171,44 +171,3 @@ class StatusCard extends StatelessWidget {
     );
   }
 }
-
-// class RoleBasedFAB extends StatelessWidget {
-//   const RoleBasedFAB({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     if (role == 'Pre-Hospital Staff' || role == 'ER Staff') {
-//       return FloatingActionButton(
-//         onPressed: () {
-//           Navigator.pushReplacement(
-//             context,
-//             MaterialPageRoute(
-//               builder: (context) {
-//                 if (role == 'Pre-Hospital Staff') {
-//                   return addInfo(
-//                     onBack: () => Navigator.pushReplacement(
-//                       context,
-//                       MaterialPageRoute(
-//                           builder: (context) => const MainNavigation()),
-//                     ),
-//                   );
-//                 } else {
-//                   return addInfoER(
-//                     onBack: () => Navigator.pushReplacement(
-//                       context,
-//                       MaterialPageRoute(
-//                           builder: (context) => const MainNavigation()),
-//                     ),
-//                   );
-//                 }
-//               },
-//             ),
-//           );
-//         },
-//         backgroundColor: Colors.cyan,
-//         child: const Icon(LucideIcons.plus, color: Colors.white, size: 36),
-//       );
-//     }
-//     return const SizedBox();
-//   }
-// }

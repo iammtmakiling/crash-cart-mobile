@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dashboard/core/provider/user_provider.dart';
 import 'package:dashboard/screens/_screens.dart';
-import 'package:dashboard/screens/widgets/bottomnavbar.dart';
+import 'package:dashboard/main/widgets/bottomnavbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../core/models/_models.dart';
