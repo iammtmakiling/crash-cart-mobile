@@ -1,9 +1,11 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:dashboard/core/theme/app_colors.dart';
 import 'package:dashboard/features/addFeature/add_info.dart';
 import 'package:dashboard/features/addFeature/add_info_er.dart';
 import 'package:dashboard/globals.dart';
 import 'package:dashboard/main/main_navigation.dart';
+import 'package:dashboard/widgets/main_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
@@ -15,123 +17,110 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          const HeaderSection(),
-          TotalPatientsCard(total: status['total']),
-          const SizedBox(height: 10),
-          Expanded(
-            child: GridView.count(
-              crossAxisCount: 2,
-              crossAxisSpacing: 10,
-              mainAxisSpacing: 10,
-              padding: const EdgeInsets.all(16),
-              children: [
-                StatusCard(
-                  count: status['er'],
-                  title: 'Emergency Room',
-                  color: Colors.lightBlue.shade100,
-                  icon: LucideIcons.alertCircle,
-                ),
-                StatusCard(
-                  count: status['in'],
-                  title: 'Admission Ward',
-                  color: Colors.purple.shade100,
-                  icon: LucideIcons.bed,
-                ),
-                StatusCard(
-                  count: status['sur_pen'],
-                  title: 'Needs Surgery',
-                  color: Colors.red.shade100,
-                  icon: LucideIcons.heart,
-                ),
-                StatusCard(
-                  count: status['sur'],
-                  title: 'Operation Room',
-                  color: Colors.green.shade100,
-                  icon: LucideIcons.heartPulse,
-                ),
-                StatusCard(
-                  count: status['dis_pen'],
-                  title: 'For Discharge',
-                  color: Colors.amber.shade100,
-                  icon: LucideIcons.doorOpen,
-                ),
-                StatusCard(
-                  count: 0, // Replace with actual data for old records
-                  title: 'View Old Records',
-                  color: Colors.grey.shade300,
-                  icon: LucideIcons.archive,
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-      floatingActionButton: RoleBasedFAB(),
-    );
-  }
-}
-
-class HeaderSection extends StatelessWidget {
-  const HeaderSection({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 32, 16, 16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            "Wednesday, 5 Oct",
-            style: Theme.of(context).textTheme.displaySmall,
-          ),
-          Text(
-            "Good day, Doc Makiling!",
-            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: Colors.grey.shade600,
-                ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class TotalPatientsCard extends StatelessWidget {
-  final int total;
-
-  const TotalPatientsCard({super.key, required this.total});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 16),
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.blue.shade100,
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+      appBar: mainAppBar(context),
+      body: Padding(
+        padding: const EdgeInsets.all(32.0),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
-                '$total',
-                style: Theme.of(context).textTheme.displayMedium,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  RichText(
+                    text: TextSpan(
+                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                            fontSize: 20,
+                          ),
+                      children: [
+                        TextSpan(text: "Good day, "),
+                        TextSpan(
+                          text: "Doc Makiling!",
+                          style: TextStyle(
+                            color: AppColors.primary,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    "Wednesday, 5 Oct",
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: AppColors.textSecondary,
+                        ),
+                  ),
+                ],
               ),
-              Text(
-                "Total Patients",
-                style: Theme.of(context).textTheme.bodyLarge,
+              const SizedBox(height: 16),
+              Row(
+                children: [
+                  Text("Hospital Status",
+                      style: Theme.of(context).textTheme.bodyLarge),
+                  const Spacer(),
+                  Icon(LucideIcons.refreshCcw,
+                      color: Theme.of(context).iconTheme.color),
+                ],
+              ),
+              const SizedBox(height: 16),
+              GridView.count(
+                physics: NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                crossAxisCount: 2,
+                crossAxisSpacing: 10,
+                mainAxisSpacing: 10,
+                padding: EdgeInsets.zero,
+                children: [
+                  StatusCard(
+                    count: status['total'],
+                    title: 'Total Patients',
+                    color: const Color(0xFFBDEBF6),
+                    iconColor: const Color(0xFF2FADC7),
+                    icon: LucideIcons.users,
+                  ),
+                  StatusCard(
+                    count: status['er'],
+                    title: 'Emergency Room',
+                    color: const Color(0xFFFFF6CF), //FFF6CF
+                    iconColor: const Color(0xFFF7D326), //F7D326
+                    icon: LucideIcons.siren,
+                  ),
+                  StatusCard(
+                    count: status['in'],
+                    title: 'Admission Ward',
+                    color: const Color(0xFFC2ADFF),
+                    icon: LucideIcons.bed,
+                    iconColor: const Color(0xFF6A48CC),
+                  ),
+                  StatusCard(
+                    count: status['sur_pen'],
+                    title: 'Needs Surgery',
+                    color: const Color(0xFFF6BEBE),
+                    icon: LucideIcons.activity,
+                    iconColor: const Color(0xFFE57777),
+                  ),
+                  StatusCard(
+                    count: status['sur'],
+                    title: 'Operation Room',
+                    color: const Color(0xFFFFE1B6),
+                    icon: LucideIcons.heartPulse,
+                    iconColor: const Color(0xFFFFB752),
+                  ),
+                  StatusCard(
+                    count: status['dis_pen'],
+                    title: 'For Discharge',
+                    color: Colors.green.shade100,
+                    icon: LucideIcons.doorOpen,
+                    iconColor: Colors.green.shade600,
+                  ),
+                ],
               ),
             ],
           ),
-          Icon(LucideIcons.arrowRightCircle, color: Colors.blue.shade600),
-        ],
+        ),
       ),
+      // floatingActionButton: RoleBasedFAB(),
     );
   }
 }
@@ -141,6 +130,7 @@ class StatusCard extends StatelessWidget {
   final String title;
   final Color color;
   final IconData icon;
+  final Color iconColor;
 
   const StatusCard({
     super.key,
@@ -148,6 +138,7 @@ class StatusCard extends StatelessWidget {
     required this.title,
     required this.color,
     required this.icon,
+    required this.iconColor,
   });
 
   @override
@@ -159,22 +150,21 @@ class StatusCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(icon, size: 28, color: Theme.of(context).iconTheme.color),
-          const SizedBox(height: 8),
+          Icon(icon, size: 32, color: iconColor),
+          const SizedBox(height: 16),
           Text(
             title,
-            style: Theme.of(context).textTheme.titleLarge,
+            style: Theme.of(context)
+                .textTheme
+                .titleSmall!
+                .copyWith(fontWeight: FontWeight.bold),
           ),
           Text(
             '$count patients',
             style: Theme.of(context).textTheme.bodyMedium,
-          ),
-          Spacer(),
-          const Align(
-            alignment: Alignment.bottomRight,
-            child: Icon(LucideIcons.arrowRightCircle, color: Colors.black54),
           ),
         ],
       ),
@@ -182,43 +172,43 @@ class StatusCard extends StatelessWidget {
   }
 }
 
-class RoleBasedFAB extends StatelessWidget {
-  const RoleBasedFAB({super.key});
+// class RoleBasedFAB extends StatelessWidget {
+//   const RoleBasedFAB({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    if (role == 'Pre-Hospital Staff' || role == 'ER Staff') {
-      return FloatingActionButton(
-        onPressed: () {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (context) {
-                if (role == 'Pre-Hospital Staff') {
-                  return addInfo(
-                    onBack: () => Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const MainNavigation()),
-                    ),
-                  );
-                } else {
-                  return addInfoER(
-                    onBack: () => Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const MainNavigation()),
-                    ),
-                  );
-                }
-              },
-            ),
-          );
-        },
-        backgroundColor: Colors.cyan,
-        child: const Icon(LucideIcons.plus, color: Colors.white, size: 36),
-      );
-    }
-    return const SizedBox();
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     if (role == 'Pre-Hospital Staff' || role == 'ER Staff') {
+//       return FloatingActionButton(
+//         onPressed: () {
+//           Navigator.pushReplacement(
+//             context,
+//             MaterialPageRoute(
+//               builder: (context) {
+//                 if (role == 'Pre-Hospital Staff') {
+//                   return addInfo(
+//                     onBack: () => Navigator.pushReplacement(
+//                       context,
+//                       MaterialPageRoute(
+//                           builder: (context) => const MainNavigation()),
+//                     ),
+//                   );
+//                 } else {
+//                   return addInfoER(
+//                     onBack: () => Navigator.pushReplacement(
+//                       context,
+//                       MaterialPageRoute(
+//                           builder: (context) => const MainNavigation()),
+//                     ),
+//                   );
+//                 }
+//               },
+//             ),
+//           );
+//         },
+//         backgroundColor: Colors.cyan,
+//         child: const Icon(LucideIcons.plus, color: Colors.white, size: 36),
+//       );
+//     }
+//     return const SizedBox();
+//   }
+// }

@@ -73,7 +73,7 @@ class AppTheme {
 
       // Icon Theme
       iconTheme: const IconThemeData(
-        color: AppColors.primary,
+        color: AppColors.textPrimary,
       ),
 
       // Divider Theme
