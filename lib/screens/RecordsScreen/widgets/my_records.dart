@@ -169,6 +169,7 @@ class MyRecordsState extends State<MyRecords> {
                                   key: UniqueKey(),
                                   patient: filteredPatients[index],
                                   viewMoreStatus: false,
+                                  isTile: true,
                                 );
                               },
                             ),

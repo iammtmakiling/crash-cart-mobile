@@ -16,11 +16,11 @@ Map<String, dynamic> parseRecord(Map<String, dynamic> json) {
     "patientType":
         json['patientType'] != null ? decryp(json['patientType']) : null,
     "recordID": json['recordID'] != null ? decryp(json['recordID']) : null,
-    "preHospital": parsePreHospitalRecord(preHospital),
-    "er": parseERRecord(er),
-    "inHospital": parseInHospitalRecord(inHospital),
-    "surgery": parseSurgeryRecord(surgery),
-    "discharge": parseDischargeRecord(discharge),
+    "preHospital": preHospital,
+    "er": er,
+    "inHospital": inHospital,
+    "surgery": surgery,
+    "discharge": discharge,
   };
   return record;
 }

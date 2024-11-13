@@ -155,6 +155,7 @@ class HistoryScreenState extends State<HistoryScreen> {
                                 key: UniqueKey(),
                                 patient: filteredPatients[index],
                                 viewMoreStatus: false,
+                                isTile: true,
                               );
                             },
                           ),

@@ -6,7 +6,6 @@ export 'searchbar.dart';
 export 'patient_box.dart';
 export 'mini_appbar.dart';
 export 'userDetail.dart';
-export 'expand.dart';
 export 'info.dart';
 export 'miniAppBarBack.dart';
 export 'infoCol.dart';

@@ -1,3 +1,4 @@
+import 'package:dashboard/features/viewFeature/components/view_info_row.dart';
 import 'package:flutter/material.dart';
 
 import '../../core/models/_models.dart';
@@ -22,208 +23,126 @@ class ViewPreHospital extends StatelessWidget {
           '${dateTimeOfInjury.month.toString().padLeft(2, '0')}/${dateTimeOfInjury.day.toString().padLeft(2, '0')}/${dateTimeOfInjury.year}';
       timeOfInjury =
           '${dateTimeOfInjury.hour.toString().padLeft(2, '0')}:${dateTimeOfInjury.minute.toString().padLeft(2, '0')}';
-    } else {
-      dateOfInjury = "";
-      timeOfInjury = "";
     }
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Wrap(
-          spacing: 48.0,
-          runSpacing: 20.0,
-          children: [
-            // Place of Injury
-            if (record['placeOfInjury']?['cityMun'] != null ||
-                record['placeOfInjury']?['region'] != null ||
-                record['placeOfInjury']?['province'] != null)
-              _buildPlaceOfInjury(record['placeOfInjury']),
-
-            // Date and Time of Injury
-            if (dateOfInjury.isNotEmpty)
-              _buildDateTimeOfInjury(dateOfInjury, timeOfInjury),
-
-            // Injury Intent
-            if (record['injuryIntent'] != null)
-              Info(
-                label: "Injury Intent",
-                value: record['injuryIntent'],
+        Text(
+          "Injury Details",
+          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                color: Colors.black.withOpacity(0.8),
+                fontWeight: FontWeight.w700,
               ),
-
-            // First Aid Given
-            if (record['firstAid']?['isGiven'] == "yes")
-              _buildFirstAid(record['firstAid']),
-
-            // External Causes of Injury
-            if (record['externalCauses'].isNotEmpty)
-              InfoCol(
-                title: "External Cause/s of Injury",
-                itemList: record['externalCauses'],
-              ),
-
-            // Nature of Injury
-            if (record['natureOfInjury'].isNotEmpty)
-              InfoCol(
-                title: "Nature of Injury/ies",
-                itemList: record['natureOfInjury'],
-              ),
-
-            // Additional Nature of Injury Info
-            if (record['natureOfInjuryExtraInfo'] != null)
-              Info(
-                label: "Additional Nature of Injury Info",
-                value: record['natureOfInjuryExtraInfo'],
-              ),
-
-            // Vehicular Accident Details
-            if (vehicularAccident['preInjuryActivity'].isNotEmpty ||
-                vehicularAccident['isVehicular'] == "yes")
-              _buildVehicularAccidentDetails(vehicularAccident),
-
-            // Medicolegal
-            if (record['medicolegal']?['medicolegalCategory'] != null)
-              Info(
-                label: "Medicolegal Category",
-                value: record['medicolegal']['medicolegalCategory'],
-              ),
-          ],
         ),
+        const SizedBox(height: 4),
+        if (dateOfInjury.isNotEmpty)
+          viewInfoRow("Date of Injury", dateOfInjury),
+        viewInfoRow("Time of Injury", "$timeOfInjury hr"),
+        if (record['injuryIntent'] != null)
+          viewInfoRow("Injury Intent", record['injuryIntent']),
+        if (record['externalCauses'].isNotEmpty)
+          viewInfoRow("External Cause/s of Injury", record['externalCauses']),
+        if (record['natureOfInjury'].isNotEmpty)
+          viewInfoRow("Nature of Injury/ies", record['natureOfInjury']),
+        if (record['natureOfInjuryExtraInfo'] != null)
+          viewInfoRow("Additional Nature of Injury Info",
+              record['natureOfInjuryExtraInfo']),
+        if (record['medicolegal']?['medicolegalCategory'] != null)
+          viewInfoRow("Medicolegal Category",
+              record['medicolegal']['medicolegalCategory']),
+        const SizedBox(height: 16),
+        if (record['firstAid']?['isGiven'] == "yes")
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "First Aid Given",
+                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                      color: Colors.black.withOpacity(0.8),
+                      fontWeight: FontWeight.w700,
+                    ),
+              ),
+              const SizedBox(height: 4),
+              if (record['firstAid']['methodGiven'] != null)
+                viewInfoRow("Method Given", record['firstAid']['methodGiven']),
+              if (record['firstAid']['firstAider'] != null)
+                viewInfoRow("First Aider ID", record['firstAid']['firstAider']),
+            ],
+          ),
+        if (record['placeOfInjury']?['cityMun'] != null ||
+            record['placeOfInjury']?['region'] != null ||
+            record['placeOfInjury']?['province'] != null)
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Place of Injury",
+                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                      color: Colors.black.withOpacity(0.8),
+                      fontWeight: FontWeight.w700,
+                    ),
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  if (record['placeOfInjury']['region'] != null)
+                    viewInfoRow("Region", record['placeOfInjury']['region']),
+                  if (record['placeOfInjury']['province'] != null)
+                    viewInfoRow(
+                        "Province", record['placeOfInjury']['province']),
+                  if (record['placeOfInjury']['cityMun'] != null)
+                    viewInfoRow("City/Municipality",
+                        record['placeOfInjury']['cityMun']),
+                ],
+              ),
+            ],
+          ),
+        if (vehicularAccident['preInjuryActivity'].isNotEmpty ||
+            vehicularAccident['isVehicular'] == "yes")
+          _buildVehicularAccidentDetails(context, vehicularAccident),
       ],
     );
   }
-}
 
-// Helper method for Place of Injury
-Widget _buildPlaceOfInjury(Map<String, dynamic> placeOfInjury) {
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      const Text(
-        "Place of Injury:",
-        style: TextStyle(
-          color: Colors.black,
-          fontSize: 14,
-          fontWeight: FontWeight.bold,
+  Widget _buildVehicularAccidentDetails(
+      BuildContext context, Map<String, dynamic> vehicularAccident) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const SizedBox(height: 16),
+        Text(
+          "Vehicular Accident Details",
+          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                color: Colors.black.withOpacity(0.8),
+                fontWeight: FontWeight.w700,
+              ),
         ),
-      ),
-      Wrap(
-        spacing: 20.0,
-        runSpacing: 20.0,
-        alignment: WrapAlignment.start,
-        children: [
-          if (placeOfInjury['region'] != null)
-            Info(label: "Region", value: placeOfInjury['region']),
-          if (placeOfInjury['province'] != null)
-            Info(label: "Province", value: placeOfInjury['province']),
-          if (placeOfInjury['cityMun'] != null)
-            Info(label: "City/Municipality", value: placeOfInjury['cityMun']),
-        ],
-      ),
-    ],
-  );
-}
-
-// Helper method for Date and Time of Injury
-Widget _buildDateTimeOfInjury(String dateOfInjury, String timeOfInjury) {
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      Info(
-        label: "Date of Injury",
-        value: dateOfInjury,
-      ),
-      const SizedBox(height: 20),
-      Info(
-        label: "Time of Injury",
-        value: "$timeOfInjury hr", // Military Time
-      ),
-    ],
-  );
-}
-
-// Helper method for First Aid details
-Widget _buildFirstAid(Map<String, dynamic> firstAid) {
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      const Text(
-        "First Aid Given:",
-        style: TextStyle(
-          color: Colors.black,
-          fontSize: 14,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-      if (firstAid['methodGiven'] != null)
-        Info(
-          label: "Method Given",
-          value: firstAid['methodGiven'],
-        ),
-      if (firstAid['firstAider'] != null)
-        Info(
-          label: "First Aider ID",
-          value: firstAid['firstAider'],
-        ),
-    ],
-  );
-}
-
-// Helper method for Vehicular Accident details
-Widget _buildVehicularAccidentDetails(Map<String, dynamic> vehicularAccident) {
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      if (vehicularAccident['preInjuryActivity'].isNotEmpty)
-        InfoCol(
-          title: "Activity at the Time of the Incident",
-          itemList: vehicularAccident['preInjuryActivity'],
-        ),
-      if (vehicularAccident['isVehicular'] == "yes") ...[
-        const Text(
-          "For Transport/Vehicular Accident Only:",
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 14,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
+        const SizedBox(height: 4),
+        if (vehicularAccident['preInjuryActivity'].isNotEmpty)
+          viewInfoRow("Activity at the Time of the Incident",
+              vehicularAccident['preInjuryActivity']),
         if (vehicularAccident['type'] != null)
-          Info(
-            label: "Type of Vehicle",
-            value: vehicularAccident['type'],
-          ),
+          viewInfoRow("Type of Vehicle", vehicularAccident['type']),
         if (vehicularAccident['collision'] != null)
-          Info(
-            label: "Collision",
-            value: vehicularAccident['collision'],
-          ),
+          viewInfoRow("Collision", vehicularAccident['collision']),
         if (vehicularAccident['vehiclesInvolved']?['patientVehicle'] != null)
-          Info(
-            label: "Patient's Vehicle",
-            value: vehicularAccident['vehiclesInvolved']['patientVehicle'],
-          ),
+          viewInfoRow("Patient's Vehicle",
+              vehicularAccident['vehiclesInvolved']['patientVehicle']),
         if (vehicularAccident['vehiclesInvolved']?['otherVehicle'] != null)
-          Info(
-            label: "Other Vehicle",
-            value: vehicularAccident['vehiclesInvolved']['otherVehicle'],
-          ),
+          viewInfoRow("Other Vehicle",
+              vehicularAccident['vehiclesInvolved']['otherVehicle']),
         if (vehicularAccident['position'] != null)
-          Info(
-            label: "Position",
-            value: vehicularAccident['position'],
-          ),
+          viewInfoRow("Position", vehicularAccident['position']),
         if (vehicularAccident['placeOfOccurrence'] != null)
-          Info(
-            label: "Place of Occurrence",
-            value: vehicularAccident['placeOfOccurrence'],
-          ),
+          viewInfoRow(
+              "Place of Occurrence", vehicularAccident['placeOfOccurrence']),
         if (vehicularAccident['safetyIssues'].isNotEmpty)
           InfoCol(
             title: "Safety Issues",
             itemList: vehicularAccident['safetyIssues'],
           ),
       ],
-    ],
-  );
+    );
+  }
 }

@@ -1,6 +1,6 @@
 export 'vewDischarge.dart';
-export 'viewER.dart';
+export 'view_er.dart';
 export 'viewPreHospital.dart';
-export 'viewGeneral.dart';
+export 'view_general.dart';
 export 'viewInHospital.dart';
 export 'viewSurgery.dart';

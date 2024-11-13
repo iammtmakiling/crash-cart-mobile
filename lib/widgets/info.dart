@@ -16,17 +16,21 @@ class Info extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.start,
+    return Row(
       children: [
         Text(
           "$label: ",
-          style: TextStyle(fontSize: fontSize, fontWeight: FontWeight.bold),
+          style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                color: Colors.black.withOpacity(0.6),
+                fontWeight: FontWeight.bold,
+              ),
         ),
+        const Spacer(),
         Text(
           value,
-          style: TextStyle(fontSize: fontSize, fontWeight: fontWeight),
+          style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                color: Colors.black.withOpacity(0.8),
+              ),
         ),
       ],
     );

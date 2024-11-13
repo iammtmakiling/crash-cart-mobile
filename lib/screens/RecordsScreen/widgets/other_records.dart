@@ -185,6 +185,7 @@ class OtherRecordsState extends State<OtherRecords> {
                                 key: UniqueKey(),
                                 patient: filteredPatients[index],
                                 viewMoreStatus: false,
+                                isTile: true,
                               );
                             },
                           ),

@@ -25,7 +25,6 @@ class EditButton extends StatelessWidget {
   Widget build(BuildContext context) {
     VoidCallback? onPressedAction;
 
-    // Determine onPressed action based on the role
     switch (role) {
       case 'Pre-Hospital Staff':
         onPressedAction = () {
@@ -48,17 +47,6 @@ class EditButton extends StatelessWidget {
               ),
             ),
           );
-          // Get.to(
-          //   editPreHospital(
-          //     patientData: patient!,
-          //     onBack: () {
-          //       Navigator.pop(context);
-          //     },
-          //     record: unparsedRecord,
-          //     preHospitalData: record['preHospital'].cast<String, dynamic>(),
-          //     fullRecord: record,
-          //   ),
-          // );
         };
         break;
       case 'ER Staff':
@@ -82,17 +70,6 @@ class EditButton extends StatelessWidget {
               ),
             ),
           );
-          // Get.to(
-          //   editER(
-          //     onBack: () {
-          //       Navigator.pop(context);
-          //     },
-          //     patientData: patient!,
-          //     record: unparsedRecord,
-          //     fullRecord: record,
-          //     erData: record['er'].cast<String, dynamic>(),
-          //   ),
-          // );
         };
         break;
       case 'Surgery Staff':
@@ -139,17 +116,6 @@ class EditButton extends StatelessWidget {
               ),
             ),
           );
-          // Get.to(
-          //   editInHospital(
-          //     onBack: () {
-          //       Navigator.pop(context);
-          //     },
-          //     record: unparsedRecord,
-          //     patientData: patient!,
-          //     fullRecord: record,
-          //     inHospitalData: record['inHospital'].cast<String, dynamic>(),
-          //   ),
-          // );
         };
         break;
       case 'Discharge Staff':
@@ -173,17 +139,6 @@ class EditButton extends StatelessWidget {
               ),
             ),
           );
-          // Get.to(
-          //   editDischarge(
-          //     onBack: () {
-          //       Navigator.pop(context);
-          //     },
-          //     record: unparsedRecord,
-          //     patientData: patient!,
-          //     fullRecord: record,
-          //     dischargeData: record['discharge'].cast<String, dynamic>(),
-          //   ),
-          // );
         };
         break;
       default:

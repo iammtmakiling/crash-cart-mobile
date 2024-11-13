@@ -1,7 +1,8 @@
+import 'package:dashboard/features/viewFeature/components/view_expand.dart';
 import 'package:flutter/material.dart';
 
 import '../../widgets/widgets.dart';
-import 'view.dart';
+import '_view.dart';
 
 class ViewSummary extends StatefulWidget {
   final Map<String, dynamic> patient;
