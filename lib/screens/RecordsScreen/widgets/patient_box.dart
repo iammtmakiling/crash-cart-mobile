@@ -2,7 +2,6 @@ import 'package:dashboard/core/utils/helper_utils.dart';
 import 'package:dashboard/features/viewFeature/view_main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:get/get.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
 class PatientBox extends StatelessWidget {

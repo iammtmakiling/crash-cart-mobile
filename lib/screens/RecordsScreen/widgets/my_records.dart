@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:dashboard/core/api_requests/getPatient.dart';
 import 'package:dashboard/core/provider/user_provider.dart';
 import 'package:dashboard/core/utils/helper_utils.dart';
-import 'package:dashboard/widgets/patient_box.dart';
 import 'package:dashboard/widgets/searchbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
