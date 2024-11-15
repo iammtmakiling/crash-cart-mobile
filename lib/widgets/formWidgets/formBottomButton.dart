@@ -19,34 +19,44 @@ class FormBottomButton extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          // Expanded(
-          //   child: OutlinedButton(
-          //     style: ButtonStyle(
-          //       side: WidgetStateProperty.all(
-          //         const BorderSide(color: Colors.cyan),
-          //       ),
-          //     ),
-          //     onPressed: () {
-          //       formKey.currentState!.save();
-          //       formKey.currentState!.reset();
-          //     },
-          //     child: const Text(
-          //       "Reset",
-          //       style: TextStyle(color: Colors.cyan),
-          //     ),
-          //   ),
-          // ),
-          // const SizedBox(width: 20),
+          Expanded(
+            child: OutlinedButton(
+              style: ButtonStyle(
+                padding: WidgetStateProperty.all(
+                  const EdgeInsets.symmetric(vertical: 8.0),
+                ),
+                shape: WidgetStateProperty.all(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(0),
+                  ),
+                ),
+                side: WidgetStateProperty.all(
+                  BorderSide(color: Theme.of(context).primaryColor),
+                ),
+              ),
+              child: Text(
+                "Reset",
+                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                      color: Theme.of(context).primaryColor,
+                    ),
+              ),
+              onPressed: () {
+                formKey.currentState!.save();
+                formKey.currentState!.reset();
+              },
+            ),
+          ),
+          const SizedBox(width: 8),
           Expanded(
             child: MaterialButton(
-              color: Colors.cyan,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20.0),
-              ),
+              color: Theme.of(context).primaryColor,
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
               onPressed: onSubmitPressed,
-              child: const Text(
+              child: Text(
                 "Submit",
-                style: TextStyle(color: Colors.white),
+                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                      color: Colors.white,
+                    ),
               ),
             ),
           ),

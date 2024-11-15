@@ -1,5 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
-import 'package:dashboard/main/main_navigation.dart';
+import 'package:dashboard/core/theme/app_colors.dart';
+import 'package:dashboard/core/theme/app_text_theme.dart';
+import 'package:lucide_icons/lucide_icons.dart';
 
 import '../../core/api_requests/_api.dart';
 import 'package:dashboard/globals.dart';
@@ -10,8 +12,6 @@ import 'package:dashboard/screens/screens.dart';
 import 'package:dashboard/widgets/formWidgets/formTextArea.dart';
 
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -29,55 +29,14 @@ import 'package:flutter/services.dart';
 
 import '../../widgets/widgets.dart';
 
-// DateTime current = DateTime.now();
-
-// ignore: camel_case_types
-class addInfoER extends StatelessWidget {
-  final VoidCallback onBack;
-  const addInfoER({super.key, required this.onBack});
-
-  // const addInfoER({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    initializeDateFormatting('az');
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      supportedLocales: const [
-        Locale('de'),
-        Locale('en'),
-        Locale('es'),
-        Locale('fr'),
-        Locale('it'),
-      ],
-      localizationsDelegates: const [
-        FormBuilderLocalizations.delegate,
-      ],
-      theme: ThemeData(
-          primarySwatch: Colors.cyan,
-          visualDensity: VisualDensity.adaptivePlatformDensity,
-          textTheme: GoogleFonts.poppinsTextTheme().apply(
-            bodyColor: Colors.black,
-            fontSizeFactor: 1.0,
-            decoration: TextDecoration.none,
-          )),
-      // home: addPatient(onBack: onBack),
-      home: AddInfoER(onBack: onBack),
-    );
-  }
-}
-
-// ignore: camel_case_types
 class AddInfoER extends StatefulWidget {
   final VoidCallback onBack;
   const AddInfoER({super.key, required this.onBack});
 
   @override
-  // ignore: library_private_types_in_public_api
   AddInfoERState createState() => AddInfoERState();
 }
 
-// ignore: camel_case_types
 class AddInfoERState extends State<AddInfoER>
     with SingleTickerProviderStateMixin {
   // Form Key
@@ -261,135 +220,101 @@ class AddInfoERState extends State<AddInfoER>
 
   Padding patientName() {
     return Padding(
-        padding: const EdgeInsets.fromLTRB(16.0, 0, 16, 0),
+        padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text("Patient Full Name",
-                style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold)),
-            const SizedBox(height: 5),
+            Text("Patient Full Name",
+                style: Theme.of(context).textTheme.titleMedium),
+            const SizedBox(height: 8),
             Padding(
-              padding: const EdgeInsets.fromLTRB(0, 0, 0, 16.0),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Column(
-                      children: [
-                        FormTextField(
-                          name: 'lastName',
-                          labelName: 'Last Name',
-                          enabled: !ifPatientExist,
-                          validator: FormBuilderValidators.required(),
-                          onChanged: (value) async {
-                            if (ifPatientExist == false) {
-                              _formKey.currentState!.save();
+                padding: const EdgeInsets.fromLTRB(0, 0, 0, 16.0),
+                child: Column(
+                  children: [
+                    FormTextField(
+                      name: 'lastName',
+                      labelName: 'Last Name',
+                      enabled: !ifPatientExist,
+                      validator: FormBuilderValidators.required(),
+                      onChanged: (value) async {
+                        if (ifPatientExist == false) {
+                          _formKey.currentState!.save();
 
-                              Map<String, dynamic>? patientData =
-                                  await checkIfPatientExist(
-                                      _formKey.currentState!.value);
+                          Map<String, dynamic>? patientData =
+                              await checkIfPatientExist(
+                                  _formKey.currentState!.value);
 
-                              if (patientData['isFound'] == true) {
-                                showExistingPatient(
-                                    context, patientData['patient']);
-                              }
-                            }
-                          },
-                        ),
-                      ],
+                          if (patientData['isFound'] == true) {
+                            showExistingPatient(
+                                context, patientData['patient']);
+                          }
+                        }
+                      },
                     ),
-                  ),
-                  const SizedBox(width: 4),
-                  Expanded(
-                    child: Column(
-                      children: [
-                        FormTextField(
-                          name: 'firstName',
-                          labelName: 'First Name',
-                          enabled: !ifPatientExist,
-                          validator: FormBuilderValidators.required(),
-                          onChanged: (value) async {
-                            if (ifPatientExist == false) {
-                              _formKey.currentState!.save();
+                    const SizedBox(height: 8),
+                    FormTextField(
+                      name: 'firstName',
+                      labelName: 'First Name',
+                      enabled: !ifPatientExist,
+                      validator: FormBuilderValidators.required(),
+                      onChanged: (value) async {
+                        if (ifPatientExist == false) {
+                          _formKey.currentState!.save();
 
-                              Map<String, dynamic>? patientData =
-                                  await checkIfPatientExist(
-                                      _formKey.currentState!.value);
+                          Map<String, dynamic>? patientData =
+                              await checkIfPatientExist(
+                                  _formKey.currentState!.value);
 
-                              if (patientData['isFound'] == true) {
-                                showExistingPatient(
-                                    context, patientData['patient']);
-                              }
-                            }
-                          },
-                        ),
-                      ],
+                          if (patientData['isFound'] == true) {
+                            showExistingPatient(
+                                context, patientData['patient']);
+                          }
+                        }
+                      },
                     ),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(0, 0, 0, 16.0),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Column(
-                      children: [
-                        FormTextField(
-                          name: 'middleName',
-                          labelName: 'Middle Name',
-                          enabled: !ifPatientExist,
-                          onChanged: (value) async {
-                            if (ifPatientExist == false) {
-                              _formKey.currentState!.save();
+                    const SizedBox(height: 8),
+                    FormTextField(
+                      name: 'middleName',
+                      labelName: 'Middle Name',
+                      enabled: !ifPatientExist,
+                      onChanged: (value) async {
+                        if (ifPatientExist == false) {
+                          _formKey.currentState!.save();
 
-                              Map<String, dynamic>? patientData =
-                                  await checkIfPatientExist(
-                                      _formKey.currentState!.value);
+                          Map<String, dynamic>? patientData =
+                              await checkIfPatientExist(
+                                  _formKey.currentState!.value);
 
-                              if (patientData['isFound'] == true) {
-                                showExistingPatient(
-                                    context, patientData['patient']);
-                              }
-                            }
-                          },
-                        ),
-                      ],
+                          if (patientData['isFound'] == true) {
+                            showExistingPatient(
+                                context, patientData['patient']);
+                          }
+                        }
+                      },
                     ),
-                  ),
-                  const SizedBox(width: 4),
-                  Expanded(
-                    child: Column(
-                      children: [
-                        FormTextField(
-                          name: 'suffix',
-                          labelName: 'Suffix',
-                          enabled: !ifPatientExist,
-                          onChanged: (value) async {
-                            if (ifPatientExist == false) {
-                              _formKey.currentState!.save();
+                    const SizedBox(height: 8),
+                    FormTextField(
+                      name: 'suffix',
+                      labelName: 'Suffix',
+                      enabled: !ifPatientExist,
+                      onChanged: (value) async {
+                        if (ifPatientExist == false) {
+                          _formKey.currentState!.save();
 
-                              Map<String, dynamic>? patientData =
-                                  await checkIfPatientExist(
-                                      _formKey.currentState!.value);
+                          Map<String, dynamic>? patientData =
+                              await checkIfPatientExist(
+                                  _formKey.currentState!.value);
 
-                              if (patientData['isFound'] == true) {
-                                showExistingPatient(
-                                    context, patientData['patient']);
-                              }
-                            }
-                          },
-                        ),
-                      ],
+                          if (patientData['isFound'] == true) {
+                            showExistingPatient(
+                                context, patientData['patient']);
+                          }
+                        }
+                      },
                     ),
-                  ),
-                ],
-              ),
-            ),
+                  ],
+                )),
           ],
         ));
   }
@@ -400,18 +325,18 @@ class AddInfoERState extends State<AddInfoER>
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text("Type of Patient",
-              style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold)),
-          FormRadio(
-            name: 'patientType',
-            initialValue: 'ER',
-            enabled: true,
-            values: const ['ER', 'OPD', 'In-Patient', 'BHS', 'RHU'],
-            texts: const ['ER', 'OPD', 'In-Patient', 'BHS', 'RHU'],
-            validator: FormBuilderValidators.required(),
+          Text("Type of Patient",
+              style: Theme.of(context).textTheme.bodyMedium),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: FormRadio(
+              name: 'patientType',
+              initialValue: 'ER',
+              enabled: true,
+              values: const ['ER', 'OPD', 'In-Patient', 'BHS', 'RHU'],
+              texts: const ['ER', 'OPD', 'In-Patient', 'BHS', 'RHU'],
+              validator: FormBuilderValidators.required(),
+            ),
           ),
         ],
       ),
@@ -420,15 +345,11 @@ class AddInfoERState extends State<AddInfoER>
 
   Padding genderPick() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 0, 0, 0),
+      padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text("Sex",
-              style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold)),
+          Text("Sex", style: Theme.of(context).textTheme.bodyMedium),
           FormRadio(
             name: 'gender',
             enabled: !ifPatientExist,
@@ -626,89 +547,110 @@ class AddInfoERState extends State<AddInfoER>
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
+            Text(
               "Birthday & Age",
-              style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold),
+              style: Theme.of(context).textTheme.bodyMedium,
             ),
-            const SizedBox(height: 5),
-            Row(
-              children: [
-                Expanded(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      FormBuilderDateTimePicker(
-                        inputType: InputType.date,
-                        name: 'birthday',
-                        enabled: !ifPatientExist,
-                        firstDate: DateTime(1900),
-                        lastDate: DateTime.now(),
-                        format: DateFormat('yyyy-MM-dd'),
-                        onChanged: (DateTime? value) async {
-                          // ignore: prefer_typing_uninitialized_variables
-                          var patientAge;
+            const SizedBox(height: 8),
+            FormBuilderDateTimePicker(
+              inputType: InputType.date,
+              name: 'birthday',
+              enabled: !ifPatientExist,
+              firstDate: DateTime(1900),
+              lastDate: DateTime.now(),
+              format: DateFormat('yyyy-MM-dd'),
+              onChanged: (DateTime? value) async {
+                // ignore: prefer_typing_uninitialized_variables
+                var patientAge;
 
-                          if (ifPatientExist == false) {
-                            _formKey.currentState!.save();
-                            Map<String, dynamic>? patientData =
-                                await checkIfPatientExist(
-                                    _formKey.currentState!.value);
+                if (ifPatientExist == false) {
+                  _formKey.currentState!.save();
+                  Map<String, dynamic>? patientData =
+                      await checkIfPatientExist(_formKey.currentState!.value);
 
-                            if (patientData['isFound'] == true) {
-                              showExistingPatient(
-                                  context, patientData['patient']);
-                            } else {}
-                          }
+                  if (patientData['isFound'] == true) {
+                    showExistingPatient(context, patientData['patient']);
+                  } else {}
+                }
 
-                          setState(() {
-                            // ignore: unnecessary_null_comparison
-                            if (value == null) {
-                            } else {
-                              patientAge = calculateAge(value);
-                              _formKey.currentState!.fields['age']!
-                                  .didChange(patientAge.toString());
-                            }
-                          });
-                        },
-                        decoration: const InputDecoration(
-                          labelText: 'Birthday',
-                          contentPadding: EdgeInsets.symmetric(
-                              horizontal: 20.0, vertical: 10.0),
-                          border: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(30.0)),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                setState(() {
+                  // ignore: unnecessary_null_comparison
+                  if (value == null) {
+                  } else {
+                    patientAge = calculateAge(value);
+                    _formKey.currentState!.fields['age']!
+                        .didChange(patientAge.toString());
+                  }
+                });
+              },
+              decoration: InputDecoration(
+                labelText: 'Birthday',
+                filled: true,
+                fillColor: AppColors.primaryVariant.withOpacity(0.1),
+                labelStyle: AppTextTheme.textTheme.bodySmall?.copyWith(
+                  color: AppColors.textSecondary,
                 ),
-                const SizedBox(width: 4),
-                Expanded(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      FormBuilderTextField(
-                        enabled: false,
-                        name: 'age',
-                        decoration: const InputDecoration(
-                          labelText: 'Age',
-                          // hintStyle: TextStyle(color: Colors.grey),
-                          contentPadding: EdgeInsets.symmetric(
-                              horizontal: 20.0, vertical: 10.0),
-                          border: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(30.0)),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                hintStyle: AppTextTheme.textTheme.bodySmall?.copyWith(
+                  color: AppColors.textTertiary,
                 ),
-              ],
+                enabledBorder: OutlineInputBorder(
+                  borderSide:
+                      BorderSide(color: AppColors.primary.withOpacity(0.1)),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide:
+                      BorderSide(color: AppColors.primary.withOpacity(0.5)),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                errorBorder: OutlineInputBorder(
+                  borderSide: const BorderSide(color: AppColors.error),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                focusedErrorBorder: OutlineInputBorder(
+                  borderSide: const BorderSide(color: AppColors.error),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+            ),
+            const SizedBox(height: 8),
+            FormBuilderTextField(
+              enabled: false,
+              name: 'age',
+              decoration: InputDecoration(
+                labelText: 'Age',
+                filled: true,
+                fillColor: AppColors.textTertiary.withOpacity(0.01),
+                labelStyle: AppTextTheme.textTheme.bodySmall?.copyWith(
+                  color: AppColors.textSecondary,
+                ),
+                hintStyle: AppTextTheme.textTheme.bodySmall?.copyWith(
+                  color: AppColors.textTertiary,
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderSide:
+                      BorderSide(color: AppColors.primary.withOpacity(0.1)),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                disabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                      color: AppColors.textTertiary.withOpacity(0.5)),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide:
+                      BorderSide(color: AppColors.primary.withOpacity(0.5)),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                errorBorder: OutlineInputBorder(
+                  borderSide: const BorderSide(color: AppColors.error),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                focusedErrorBorder: OutlineInputBorder(
+                  borderSide: const BorderSide(color: AppColors.error),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
             ),
           ],
         ),
@@ -722,10 +664,9 @@ class AddInfoERState extends State<AddInfoER>
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
+          Text(
             "Present Address",
-            style: TextStyle(
-                color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
+            style: Theme.of(context).textTheme.bodyMedium,
           ),
           const SizedBox(height: 5),
           FormAddress(
@@ -768,10 +709,9 @@ class AddInfoERState extends State<AddInfoER>
             },
           ),
           const SizedBox(height: 16),
-          const Text(
+          Text(
             "Permanent Address",
-            style: TextStyle(
-                color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
+            style: Theme.of(context).textTheme.bodyMedium,
           ),
           const SizedBox(height: 5),
           if (!ifPatientExist)
@@ -855,10 +795,9 @@ class AddInfoERState extends State<AddInfoER>
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
+          Text(
             "PhilHealth ID",
-            style: TextStyle(
-                color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
+            style: Theme.of(context).textTheme.bodyMedium,
           ),
           const SizedBox(height: 5),
           Padding(
@@ -897,15 +836,37 @@ class AddInfoERState extends State<AddInfoER>
               format: DateFormat('yyyy-MM-dd HH:mm:ss'),
               validator: FormBuilderValidators.required(),
               onChanged: (DateTime? value) {},
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(30.0)),
+              decoration: InputDecoration(
+                filled: true,
+                fillColor: AppColors.textTertiary.withOpacity(0.01),
+                labelStyle: AppTextTheme.textTheme.bodySmall?.copyWith(
+                  color: AppColors.textSecondary,
                 ),
-                labelText: "Date and Time of Injury",
-                hintStyle: TextStyle(color: Colors.grey),
-                contentPadding: EdgeInsets.symmetric(
-                  horizontal: 20.0,
-                  vertical: 10.0,
+                hintStyle: AppTextTheme.textTheme.bodySmall?.copyWith(
+                  color: AppColors.textTertiary,
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderSide:
+                      BorderSide(color: AppColors.primary.withOpacity(0.1)),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                disabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                      color: AppColors.textTertiary.withOpacity(0.5)),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide:
+                      BorderSide(color: AppColors.primary.withOpacity(0.5)),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                errorBorder: OutlineInputBorder(
+                  borderSide: const BorderSide(color: AppColors.error),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                focusedErrorBorder: OutlineInputBorder(
+                  borderSide: const BorderSide(color: AppColors.error),
+                  borderRadius: BorderRadius.circular(8),
                 ),
               ),
             ),
@@ -923,19 +884,17 @@ class AddInfoERState extends State<AddInfoER>
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
+          Text(
             "First Aider ID:",
-            style: TextStyle(
-                color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
+            style: Theme.of(context).textTheme.bodyMedium,
           ),
           const SizedBox(height: 8),
           FormTextField(
               initialValue: userID, name: "firstAider", labelName: ""),
           const SizedBox(height: 16),
-          const Text(
+          Text(
             "Is first aid given properly?",
-            style: TextStyle(
-                color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
+            style: Theme.of(context).textTheme.bodyMedium,
           ),
           FormRadio(
             enabled: true,
@@ -943,11 +902,10 @@ class AddInfoERState extends State<AddInfoER>
             values: yesNoList,
             texts: yesNoList,
           ),
-          const SizedBox(height: 16),
-          const Text(
+          const SizedBox(height: 8),
+          Text(
             "Method given:",
-            style: TextStyle(
-                color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
+            style: Theme.of(context).textTheme.bodyMedium,
           ),
           FormSearchableDropdown(
             formKey: _formKey,
@@ -972,22 +930,23 @@ class AddInfoERState extends State<AddInfoER>
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
+          Text(
             "Type of Vehicular Accident?",
-            style: TextStyle(
-                color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
+            style: Theme.of(context).textTheme.bodyMedium,
           ),
-          FormRadio(
-            enabled: true,
-            name: 'typeVehicularAccident',
-            values: vehicleAccidentType,
-            texts: vehicleAccidentType,
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: FormRadio(
+              enabled: true,
+              name: 'typeVehicularAccident',
+              values: vehicleAccidentType,
+              texts: vehicleAccidentType,
+            ),
           ),
           const SizedBox(height: 16),
-          const Text(
+          Text(
             "Collision or Non-Collision",
-            style: TextStyle(
-                color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
+            style: Theme.of(context).textTheme.bodyMedium,
           ),
           FormRadio(
             enabled: true,
@@ -1007,10 +966,9 @@ class AddInfoERState extends State<AddInfoER>
             },
           ),
           const SizedBox(height: 8),
-          const Text(
+          Text(
             "Patient's Vehicle",
-            style: TextStyle(
-                color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
+            style: Theme.of(context).textTheme.bodyMedium,
           ),
           FormRadio(
             enabled: true,
@@ -1020,12 +978,9 @@ class AddInfoERState extends State<AddInfoER>
           ),
           const SizedBox(height: 8),
           if (visibleCollision)
-            const Text(
+            Text(
               "Other Party's Vehicle",
-              style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold),
+              style: Theme.of(context).textTheme.bodyMedium,
             ),
           if (visibleCollision) const SizedBox(height: 8),
           if (visibleCollision)
@@ -1036,10 +991,9 @@ class AddInfoERState extends State<AddInfoER>
               texts: ['(none) Pedestrian', ...vehiclesList],
             ),
           const SizedBox(height: 8),
-          const Text(
+          Text(
             "Position of Patient?",
-            style: TextStyle(
-                color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
+            style: Theme.of(context).textTheme.bodyMedium,
           ),
           FormRadio(
               enabled: true,
@@ -1047,10 +1001,9 @@ class AddInfoERState extends State<AddInfoER>
               values: positionOfPatientList,
               texts: positionOfPatientList),
           const SizedBox(height: 8),
-          const Text(
+          Text(
             "Place of Occurence?",
-            style: TextStyle(
-                color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
+            style: Theme.of(context).textTheme.bodyMedium,
           ),
           const SizedBox(height: 8),
           FormSearchableDropdown(
@@ -1067,28 +1020,25 @@ class AddInfoERState extends State<AddInfoER>
             textFieldLabel: "Specify Place",
           ),
           const SizedBox(height: 16),
-          const Text(
+          Text(
             "Activity During Injury?",
-            style: TextStyle(
-                color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
+            style: Theme.of(context).textTheme.bodyMedium,
           ),
           const FormCheckbox(
             name: 'activityDuringAccident',
             options: ['Sports', 'Leisure', 'Work-related', 'Unknown'],
           ),
           const SizedBox(height: 16),
-          const Text(
+          Text(
             "Other risk factors at the time of the incident:",
-            style: TextStyle(
-                color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
+            style: Theme.of(context).textTheme.bodyMedium,
           ),
           const SizedBox(height: 8),
           FormCheckbox(name: "otherRisksFactors", options: otherRisksFactors),
           const SizedBox(height: 16),
-          const Text(
+          Text(
             "Safety Issues? (Select all that apply)",
-            style: TextStyle(
-                color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
+            style: Theme.of(context).textTheme.bodyMedium,
           ),
           FormCheckbox(name: 'safetyIssues', options: safetyIssues)
         ],
@@ -1103,11 +1053,11 @@ class AddInfoERState extends State<AddInfoER>
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            "Cetegory",
-            style: TextStyle(
-                color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
+          Text(
+            "Category",
+            style: Theme.of(context).textTheme.bodyMedium,
           ),
+          const SizedBox(height: 8),
           FormSearchableDropdown(
             formKey: _formKey,
             name: "medicolegalCategory",
@@ -1129,10 +1079,9 @@ class AddInfoERState extends State<AddInfoER>
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        const Text(
+        Text(
           "Place of Injury",
-          style: TextStyle(
-              color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
+          style: Theme.of(context).textTheme.bodyMedium,
         ),
         FormAddress(
           enabled: true,
@@ -1171,17 +1120,15 @@ class AddInfoERState extends State<AddInfoER>
           },
         ),
         const SizedBox(height: 16),
-        const Text(
+        Text(
           "Date and Time of Injury",
-          style: TextStyle(
-              color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
+          style: Theme.of(context).textTheme.bodyMedium,
         ),
         dateTimeInjury(),
         const SizedBox(height: 16),
-        const Text(
+        Text(
           "Injury Intent",
-          style: TextStyle(
-              color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
+          style: Theme.of(context).textTheme.bodyMedium,
         ),
         FormRadio(
             enabled: true,
@@ -1196,10 +1143,9 @@ class AddInfoERState extends State<AddInfoER>
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        const Text(
+        Text(
           "First Aid Given",
-          style: TextStyle(
-              color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
+          style: Theme.of(context).textTheme.bodyMedium,
         ),
         FormRadio(
           enabled: true,
@@ -1227,9 +1173,8 @@ class AddInfoERState extends State<AddInfoER>
         Visibility(
           visible: visibleFirstAidGiven,
           child: Card(
-            // // // elevation: 5,
             shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
             color: Colors.white,
             child: condFirstAiderDetails(),
           ),
@@ -1244,59 +1189,95 @@ class AddInfoERState extends State<AddInfoER>
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
+          Text(
             "Nature of Injury",
-            style: TextStyle(
-                color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
-          ),
-          MultiSelectBottomSheetField(
-            initialValue: naturesOfInjuryList,
-            chipDisplay: MultiSelectChipDisplay(
-              height: 50,
-              scroll: true,
-            ),
-            listType: MultiSelectListType.LIST,
-            title: const Text("Add"),
-            searchable: true,
-            searchIcon: const Icon(Icons.search),
-            items: naturesOfInjury.map((e) => MultiSelectItem(e, e)).toList(),
-            onConfirm: (selectedItems) {
-              setState(
-                () {
-                  naturesOfInjuryList = selectedItems;
-                },
-              );
-            },
-          ),
-          const SizedBox(height: 12),
-          const FormTextArea(
-              name: "natureOfInjuryExtraInfo", labelName: "Additional Details"),
-          const SizedBox(height: 16),
-          const Text(
-            "External Cause of Injury",
-            style: TextStyle(
-                color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
+            style: Theme.of(context).textTheme.bodyMedium,
           ),
           const SizedBox(height: 8),
-          MultiSelectBottomSheetField(
-            initialValue: externalCauses,
-            chipDisplay: MultiSelectChipDisplay(
-              height: 50,
-              scroll: true,
+          Container(
+            padding: EdgeInsets.fromLTRB(12, 9, 12, 9),
+            decoration: BoxDecoration(
+              color: AppColors.primaryVariant.withOpacity(0.1),
+              borderRadius: BorderRadius.circular(8),
+              border: Border.all(
+                color: AppColors.primary.withOpacity(0.1),
+                width: 1.0,
+              ),
             ),
-            listType: MultiSelectListType.LIST,
-            title: const Text("Add"),
-            searchable: true,
-            searchIcon: const Icon(Icons.search),
-            items:
-                externalCausesInjury.map((e) => MultiSelectItem(e, e)).toList(),
-            onConfirm: (selectedItems) {
-              setState(
-                () {
-                  externalCauses = selectedItems;
-                },
-              );
-            },
+            child: MultiSelectBottomSheetField(
+              initialValue: naturesOfInjuryList,
+              searchTextStyle: Theme.of(context).textTheme.bodyMedium,
+              selectedItemsTextStyle: Theme.of(context).textTheme.bodyMedium,
+              selectedColor: AppColors.primary,
+              buttonIcon: const Icon(LucideIcons.chevronDown),
+              chipDisplay: MultiSelectChipDisplay(
+                height: 50,
+                scroll: true,
+              ),
+              listType: MultiSelectListType.LIST,
+              title: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12),
+                child: Text(
+                  "Add",
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
+              ),
+              searchable: true,
+              searchIcon: const Icon(Icons.search),
+              items: naturesOfInjury.map((e) => MultiSelectItem(e, e)).toList(),
+              onConfirm: (selectedItems) {
+                setState(
+                  () {
+                    naturesOfInjuryList = selectedItems;
+                  },
+                );
+              },
+            ),
+          ),
+          const SizedBox(height: 12),
+          FormTextArea(
+              name: "natureOfInjuryExtraInfo", labelName: "Additional Details"),
+          const SizedBox(height: 16),
+          Text(
+            "External Cause of Injury",
+            style: Theme.of(context).textTheme.bodyMedium,
+          ),
+          const SizedBox(height: 8),
+          Container(
+            padding: EdgeInsets.fromLTRB(12, 9, 12, 9),
+            decoration: BoxDecoration(
+              color: AppColors.primaryVariant.withOpacity(0.1),
+              borderRadius: BorderRadius.circular(8),
+              border: Border.all(
+                color: AppColors.primary.withOpacity(0.1),
+                width: 1.0,
+              ),
+            ),
+            child: MultiSelectBottomSheetField(
+              initialValue: externalCauses,
+              searchTextStyle: Theme.of(context).textTheme.bodyMedium,
+              selectedItemsTextStyle: Theme.of(context).textTheme.bodyMedium,
+              selectedColor: AppColors.primary,
+              buttonIcon: const Icon(LucideIcons.chevronDown),
+              chipDisplay: MultiSelectChipDisplay(
+                height: 50,
+                scroll: true,
+              ),
+              listType: MultiSelectListType.LIST,
+              title: const Text("Add"),
+              searchable: true,
+              searchIcon: const Icon(Icons.search),
+              items: externalCausesInjury
+                  .map((e) => MultiSelectItem(e, e))
+                  .toList(),
+              onConfirm: (selectedItems) {
+                setState(
+                  () {
+                    externalCauses = selectedItems;
+                  },
+                );
+              },
+            ),
           ),
         ],
       ),
@@ -1310,12 +1291,9 @@ class AddInfoERState extends State<AddInfoER>
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
+            Text(
               "Vehicular Accident?",
-              style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold),
+              style: Theme.of(context).textTheme.bodyMedium,
             ),
             FormRadio(
               enabled: true,
@@ -1337,9 +1315,8 @@ class AddInfoERState extends State<AddInfoER>
             Visibility(
               visible: visibleVehicularAccident,
               child: Card(
-                // // elevation: 5,
                 shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10)),
+                    borderRadius: BorderRadius.circular(8)),
                 color: Colors.white,
                 child: condVehicularAccident(),
               ),
@@ -1353,10 +1330,9 @@ class AddInfoERState extends State<AddInfoER>
       padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         const SizedBox(height: 16),
-        const Text(
+        Text(
           "Medicolegal Case?",
-          style: TextStyle(
-              color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
+          style: Theme.of(context).textTheme.bodyMedium,
         ),
         FormRadio(
           enabled: true,
@@ -1378,9 +1354,8 @@ class AddInfoERState extends State<AddInfoER>
         Visibility(
           visible: visibleMedicolegal,
           child: Card(
-            // // elevation: 5,
             shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
             color: Colors.white,
             child: condMedicolegal(),
           ),
@@ -1396,10 +1371,9 @@ class AddInfoERState extends State<AddInfoER>
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
+          Text(
             "Chief Complaint",
-            style: TextStyle(
-                color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
+            style: Theme.of(context).textTheme.bodyMedium,
           ),
           const SizedBox(height: 8),
           FormSearchableDropdown(
@@ -1420,15 +1394,15 @@ class AddInfoERState extends State<AddInfoER>
   }
 
   Padding massInjuryTF() {
-    return const Padding(
-      padding: EdgeInsets.fromLTRB(16, 0, 0, 0),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          const SizedBox(height: 16),
           Text(
             "Mass Injury",
-            style: TextStyle(
-                color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
+            style: Theme.of(context).textTheme.bodyMedium,
           ),
           FormRadio(
             enabled: true,
@@ -1669,10 +1643,9 @@ class AddInfoERState extends State<AddInfoER>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SizedBox(height: 16),
-          const Text(
+          Text(
             "Patient Transferred?",
-            style: TextStyle(
-                color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
+            style: Theme.of(context).textTheme.bodyMedium,
           ),
           FormRadio(
             enabled: true,
@@ -1696,9 +1669,8 @@ class AddInfoERState extends State<AddInfoER>
           Visibility(
             visible: visibleTransferDetails,
             child: Card(
-              // // elevation: 5,
               shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10)),
+                  borderRadius: BorderRadius.circular(8)),
               color: Colors.white,
               child: condTransferDetails(),
             ),
@@ -1713,10 +1685,9 @@ class AddInfoERState extends State<AddInfoER>
       padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         const SizedBox(height: 16),
-        const Text(
+        Text(
           "Status on Arrival?",
-          style: TextStyle(
-              color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
+          style: Theme.of(context).textTheme.bodyMedium,
         ),
         FormRadio(
           enabled: true,
@@ -1741,9 +1712,8 @@ class AddInfoERState extends State<AddInfoER>
         Visibility(
           visible: visiblePatientArrivalStatus,
           child: Card(
-            // // elevation: 5,
             shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
             color: Colors.white,
             child: condArrivalStatus(),
           ),
@@ -1758,10 +1728,10 @@ class AddInfoERState extends State<AddInfoER>
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
+          const SizedBox(height: 16),
+          Text(
             "Model of Transportation",
-            style: TextStyle(
-                color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
+            style: Theme.of(context).textTheme.bodyMedium,
           ),
           const SizedBox(height: 8),
           FormDropdown(
@@ -1787,10 +1757,9 @@ class AddInfoERState extends State<AddInfoER>
         const FormTextArea(
             name: 'initialImpression', labelName: "Initial Impression"),
         const SizedBox(height: 16),
-        const Text(
+        Text(
           "Outcome",
-          style: TextStyle(
-              color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
+          style: Theme.of(context).textTheme.bodyMedium,
         ),
         FormRadio(
           enabled: patientStatus == 'Deceased' ? false : true,
@@ -1812,10 +1781,9 @@ class AddInfoERState extends State<AddInfoER>
       padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         const SizedBox(height: 16),
-        const Text(
+        Text(
           "Outright Surgery",
-          style: TextStyle(
-              color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
+          style: Theme.of(context).textTheme.bodyMedium,
         ),
         FormRadio(
           enabled: true,
@@ -1843,9 +1811,8 @@ class AddInfoERState extends State<AddInfoER>
         Visibility(
           visible: visibleOutrightSurgery,
           child: Card(
-            // // elevation: 5,
             shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
             color: Colors.white,
             child: condSurgicalDetails(),
           ),
@@ -1855,18 +1822,15 @@ class AddInfoERState extends State<AddInfoER>
   }
 
   Padding condTransferDetails() {
-    return const Padding(
-      padding: EdgeInsets.all(16),
+    return Padding(
+      padding: const EdgeInsets.all(16),
       child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               "Is Referred?",
-              style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold),
+              style: Theme.of(context).textTheme.bodyMedium,
             ),
             FormRadio(
               enabled: true,
@@ -1877,20 +1841,14 @@ class AddInfoERState extends State<AddInfoER>
             SizedBox(height: 16),
             Text(
               "Originating Hospital (ID)",
-              style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold),
+              style: Theme.of(context).textTheme.bodyMedium,
             ),
             SizedBox(height: 8),
             FormTextField(name: "originatingHospitalID", labelName: ""),
             SizedBox(height: 16),
             Text(
               "Previous Physician (ID)",
-              style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold),
+              style: Theme.of(context).textTheme.bodyMedium,
             ),
             SizedBox(height: 8),
             FormTextField(name: "previousPhysicianID", labelName: ''),
@@ -1899,19 +1857,15 @@ class AddInfoERState extends State<AddInfoER>
   }
 
   Padding condArrivalStatus() {
-    return const Padding(
-      padding: EdgeInsets.all(16),
+    return Padding(
+      padding: const EdgeInsets.all(16),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             "State on Arrival?",
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-            ),
+            style: Theme.of(context).textTheme.bodyMedium,
           ),
           FormRadio(
             enabled: true,
@@ -1931,17 +1885,11 @@ class AddInfoERState extends State<AddInfoER>
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
+          Text(
             "Cavity for surgery:",
-            style: TextStyle(
-                color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
+            style: Theme.of(context).textTheme.bodyMedium,
           ),
-          // FormRadio(
-          //   enabled: true,
-          //   name: "cavityForSurgery",
-          //   values: cavitiesForSurgery,
-          //   texts: cavitiesForSurgery,
-          // ),
+          const SizedBox(height: 8),
           FormSearchableDropdown(
             formKey: _formKey,
             name: "cavityForSurgery",
@@ -1955,10 +1903,9 @@ class AddInfoERState extends State<AddInfoER>
             textFieldLabel: "Specify Cavity",
           ),
           const SizedBox(height: 16),
-          const Text(
+          Text(
             "Services on Board",
-            style: TextStyle(
-                color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
+            style: Theme.of(context).textTheme.bodyMedium,
           ),
           FormCheckbox(name: "servicesOnboardSurgery", options: servicesOnboard)
         ],
@@ -2207,248 +2154,219 @@ class AddInfoERState extends State<AddInfoER>
       child: Scaffold(
         body: Column(
           children: [
-            if (!isSending && !isSentSuccessfully)
-              MiniAppBarBack(onBack: widget.onBack),
-            isSending
-                ? const SendingWidget()
-                : isSentSuccessfully
-                    ? SuccessfulWidget(
-                        message: "Successful!",
-                        onPressed: () {
-                          Navigator.of(context).pushReplacement(
-                            MaterialPageRoute(
-                              builder: (context) => const MainNavigation(),
-                            ),
-                          );
-                        },
-                      )
-                    : Expanded(
-                        child: DefaultTabController(
-                          initialIndex: 0,
-                          length: 3,
-                          child: Scaffold(
-                            appBar: AppBar(
-                              centerTitle: true,
-                              title: const Text(
-                                "Adding Patient Data",
-                                style: TextStyle(
-                                    color: Colors.cyan,
-                                    fontWeight: FontWeight.bold),
-                                textAlign: TextAlign.start,
+            // isSending
+            //     ? const SendingWidget()
+            //     : isSentSuccessfully
+            //         ? SuccessfulWidget(
+            //             message: "Successful!",
+            //             onPressed: () {
+            //               Navigator.of(context).pushReplacement(
+            //                 MaterialPageRoute(
+            //                   builder: (context) => const MainNavigation(),
+            //                 ),
+            //               );
+            //             },
+            //           )
+            //         :
+            Expanded(
+              child: DefaultTabController(
+                initialIndex: 0,
+                length: 3,
+                child: Scaffold(
+                  appBar: AppBar(
+                    automaticallyImplyLeading: false,
+                    title: Text("Adding Patient Data",
+                        style: Theme.of(context).textTheme.titleLarge),
+                    leading: IconButton(
+                      onPressed: widget.onBack,
+                      icon: const Icon(LucideIcons.arrowLeft),
+                    ),
+                    centerTitle: true,
+                    bottom: TabBar(
+                      isScrollable: false,
+                      labelStyle:
+                          Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                color: AppColors.primary,
+                                fontWeight: FontWeight.bold,
                               ),
-                              bottom: TabBar(
-                                isScrollable: false,
-                                labelStyle: const TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.cyan),
-                                unselectedLabelStyle: const TextStyle(
-                                    fontWeight: FontWeight.normal,
-                                    color: Colors.black87),
-                                indicator: const UnderlineTabIndicator(
-                                  borderSide:
-                                      BorderSide(color: Colors.blue, width: 2),
-                                  insets: EdgeInsets.zero,
-                                ),
-                                controller: _controller,
-                                tabs: const <Widget>[
-                                  Tab(text: "General"),
-                                  Tab(text: "Pre-Hospital"),
-                                  Tab(text: "ER"),
-                                ],
-                              ),
-                            ),
-                            body: FormBuilder(
-                              key: _formKey,
-                              // autovalidateMode:
-                              //     AutovalidateMode.onUserInteraction,
-                              child: TabBarView(
-                                controller: _controller,
+                      unselectedLabelStyle: Theme.of(context)
+                          .textTheme
+                          .bodyMedium
+                          ?.copyWith(color: AppColors.textSecondary),
+                      indicator: const UnderlineTabIndicator(
+                        borderSide:
+                            BorderSide(color: AppColors.primary, width: 2),
+                        insets: EdgeInsets.zero,
+                      ),
+                      controller: _controller,
+                      tabs: const <Widget>[
+                        Tab(text: "General"),
+                        Tab(text: "Pre-Hospital"),
+                        Tab(text: "ER"),
+                      ],
+                    ),
+                  ),
+                  body: FormBuilder(
+                    key: _formKey,
+                    child: TabBarView(
+                      controller: _controller,
+                      children: [
+                        // General Data
+                        Scaffold(
+                          persistentFooterButtons: [buttonNav(context)],
+                          body: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 8),
+                            child: SingleChildScrollView(
+                              child: Column(
                                 children: [
-                                  // General Data
-                                  Scaffold(
-                                    persistentFooterButtons: [
-                                      buttonNav(context)
-                                    ],
-                                    body: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 8),
-                                      child: SingleChildScrollView(
-                                        child: Column(
-                                          children: [
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      vertical: 4.0,
-                                                      horizontal: 8.0),
-                                              child: Column(
-                                                children: [
-                                                  ifUnknown(),
-                                                  const Divider(),
-                                                  Visibility(
-                                                    visible: isUnkown,
-                                                    child:
-                                                        unknownPatientDetails(),
-                                                  ),
-                                                  Visibility(
-                                                    visible: !isUnkown,
-                                                    child:
-                                                        knownPatientDetails(),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ],
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 4.0, horizontal: 8.0),
+                                    child: Column(
+                                      children: [
+                                        ifUnknown(),
+                                        const Divider(),
+                                        Visibility(
+                                          visible: isUnkown,
+                                          child: unknownPatientDetails(),
                                         ),
-                                      ),
-                                    ),
-                                  ),
-
-                                  // PreHospital Data
-                                  Scaffold(
-                                    persistentFooterButtons: [
-                                      buttonNav(context)
-                                    ],
-                                    body: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 8),
-                                      child: SingleChildScrollView(
-                                        child: Column(
-                                          children: [
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      vertical: 4.0,
-                                                      horizontal: 8.0),
-                                              child: Column(
-                                                children: [
-                                                  patientType(),
-                                                  injuryDetails(),
-                                                  firstAidDetails(),
-                                                  chiefComplaint(),
-                                                  vehicularDetails(),
-                                                  medicolegalDetails(),
-                                                  massInjuryTF(),
-                                                  natureOfInjuryDetails(),
-                                                ],
-                                              ),
-                                            ),
-                                          ],
+                                        Visibility(
+                                          visible: !isUnkown,
+                                          child: knownPatientDetails(),
                                         ),
-                                      ),
+                                      ],
                                     ),
-                                  ),
-
-                                  //ER Data
-                                  Scaffold(
-                                    body: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: SingleChildScrollView(
-                                          child: Column(
-                                        children: [
-                                          patientTransferDetails(),
-                                          patientArrivalDetails(),
-                                          patientTransportationDetails(),
-                                          patientStatusDetails(),
-                                          patientOutrightSurgeryDetails(),
-                                        ],
-                                      )),
-                                    ),
-                                    persistentFooterButtons: [
-                                      FormBottomButton(
-                                        formKey: _formKey,
-                                        onSubmitPressed: () async {
-                                          _formKey.currentState!.save();
-                                          var value =
-                                              _formKey.currentState!.value;
-
-                                          // Helper function to check and add errors
-                                          void checkField(dynamic fieldValue,
-                                              String fieldName) {
-                                            if (fieldValue == null ||
-                                                fieldValue == "") {
-                                              errorFields.add(fieldName);
-                                            }
-                                          }
-
-                                          // General Infos
-                                          if (isUnkown) {
-                                            checkField(value['gender'], 'Sex');
-                                          } else {
-                                            checkField(value['gender'], 'Sex');
-                                            checkField(value['firstName'],
-                                                'firstName');
-                                            checkField(
-                                                value['lastName'], 'lastName');
-                                            checkField(
-                                                value['birthday'], 'birthday');
-                                            checkField(presentCitiesId,
-                                                'present address');
-                                            checkField(permanentCitiesId,
-                                                'permanent address');
-                                          }
-
-                                          // Emergency Room Infos
-                                          checkField(value['patientType'],
-                                              'patient type');
-                                          checkField(
-                                              externalCauses.isNotEmpty
-                                                  ? true
-                                                  : "",
-                                              'external causes');
-                                          checkField(
-                                              naturesOfInjuryList.isNotEmpty
-                                                  ? true
-                                                  : "",
-                                              'natures of injury');
-                                          if (regionId == "" &&
-                                              provincesId == "" &&
-                                              citiesId == "") {
-                                            errorFields.add('place of injury');
-                                          }
-
-                                          // Medicolegal
-                                          if (value["medicolegalCase"] ==
-                                              "yes") {
-                                            checkField(ddMedicolegal,
-                                                'Is Medicolegal');
-                                          }
-
-                                          // Vehicular accident-specific checks
-                                          if (value['vehicularAccidentBool'] ==
-                                              "yes") {
-                                            checkField(
-                                                value[
-                                                    'collisionOrNonCollision'],
-                                                'collision');
-                                            checkField(
-                                                value['typeVehicularAccident'],
-                                                'Vehicular Accident Type');
-                                            checkField(ddPlaceofOccurence,
-                                                'Vehicular Place of Occurrence');
-                                            checkField(
-                                                value['positionOfPatient'],
-                                                'Vehicular Patient Position');
-                                            checkField(
-                                                value['activityDuringAccident'],
-                                                'Vehicular Patient PreInjury Activity');
-                                          }
-
-                                          // Show confirmation or missing fields dialog
-                                          if (errorFields.isEmpty) {
-                                            _showConfirmationDialog();
-                                          } else {
-                                            _showMissingDialog();
-                                          }
-                                        },
-                                      )
-                                    ],
                                   ),
                                 ],
                               ),
                             ),
                           ),
                         ),
-                      ),
+
+                        // PreHospital Data
+                        Scaffold(
+                          persistentFooterButtons: [buttonNav(context)],
+                          body: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 8),
+                            child: SingleChildScrollView(
+                              child: Column(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 4.0, horizontal: 8.0),
+                                    child: Column(
+                                      children: [
+                                        patientType(),
+                                        injuryDetails(),
+                                        firstAidDetails(),
+                                        chiefComplaint(),
+                                        vehicularDetails(),
+                                        medicolegalDetails(),
+                                        massInjuryTF(),
+                                        natureOfInjuryDetails(),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+
+                        //ER Data
+                        Scaffold(
+                          body: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: SingleChildScrollView(
+                                child: Column(
+                              children: [
+                                patientTransferDetails(),
+                                patientArrivalDetails(),
+                                patientTransportationDetails(),
+                                patientStatusDetails(),
+                                patientOutrightSurgeryDetails(),
+                              ],
+                            )),
+                          ),
+                          persistentFooterButtons: [
+                            FormBottomButton(
+                              formKey: _formKey,
+                              onSubmitPressed: () async {
+                                _formKey.currentState!.save();
+                                var value = _formKey.currentState!.value;
+
+                                // Helper function to check and add errors
+                                void checkField(
+                                    dynamic fieldValue, String fieldName) {
+                                  if (fieldValue == null || fieldValue == "") {
+                                    errorFields.add(fieldName);
+                                  }
+                                }
+
+                                // General Infos
+                                if (isUnkown) {
+                                  checkField(value['gender'], 'Sex');
+                                } else {
+                                  checkField(value['gender'], 'Sex');
+                                  checkField(value['firstName'], 'firstName');
+                                  checkField(value['lastName'], 'lastName');
+                                  checkField(value['birthday'], 'birthday');
+                                  checkField(
+                                      presentCitiesId, 'present address');
+                                  checkField(
+                                      permanentCitiesId, 'permanent address');
+                                }
+
+                                // Emergency Room Infos
+                                checkField(
+                                    value['patientType'], 'patient type');
+                                checkField(
+                                    externalCauses.isNotEmpty ? true : "",
+                                    'external causes');
+                                checkField(
+                                    naturesOfInjuryList.isNotEmpty ? true : "",
+                                    'natures of injury');
+                                if (regionId == "" &&
+                                    provincesId == "" &&
+                                    citiesId == "") {
+                                  errorFields.add('place of injury');
+                                }
+
+                                // Medicolegal
+                                if (value["medicolegalCase"] == "yes") {
+                                  checkField(ddMedicolegal, 'Is Medicolegal');
+                                }
+
+                                // Vehicular accident-specific checks
+                                if (value['vehicularAccidentBool'] == "yes") {
+                                  checkField(value['collisionOrNonCollision'],
+                                      'collision');
+                                  checkField(value['typeVehicularAccident'],
+                                      'Vehicular Accident Type');
+                                  checkField(ddPlaceofOccurence,
+                                      'Vehicular Place of Occurrence');
+                                  checkField(value['positionOfPatient'],
+                                      'Vehicular Patient Position');
+                                  checkField(value['activityDuringAccident'],
+                                      'Vehicular Patient PreInjury Activity');
+                                }
+
+                                // Show confirmation or missing fields dialog
+                                if (errorFields.isEmpty) {
+                                  _showConfirmationDialog();
+                                } else {
+                                  _showMissingDialog();
+                                }
+                              },
+                            )
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),

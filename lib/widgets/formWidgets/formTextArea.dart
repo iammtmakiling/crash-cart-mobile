@@ -40,8 +40,8 @@ class FormTextArea extends StatelessWidget {
       decoration: InputDecoration(
         labelText: labelName,
         floatingLabelBehavior: FloatingLabelBehavior.always,
-        labelStyle: const TextStyle(color: Colors.grey),
-        hintStyle: const TextStyle(color: Colors.grey),
+        labelStyle: Theme.of(context).textTheme.bodyMedium,
+        hintStyle: Theme.of(context).textTheme.bodyMedium,
         contentPadding: const EdgeInsets.symmetric(
           horizontal: 20.0,
           vertical: 15.0,

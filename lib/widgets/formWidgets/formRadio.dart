@@ -1,3 +1,4 @@
+import 'package:dashboard/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
@@ -22,27 +23,58 @@ class FormRadio extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<FormBuilderFieldOption> options = [];
-    for (int i = 0; i < values.length; i++) {
-      options
-          .add(FormBuilderFieldOption(value: values[i], child: Text(texts[i])));
-    }
+    return Container(
+      alignment: Alignment.centerLeft,
+      child: Wrap(
+        spacing: 8,
+        runSpacing: 0,
+        children: List.generate(values.length, (i) {
+          final textSpan = TextSpan(
+            text: texts[i],
+            style: Theme.of(context).textTheme.bodySmall,
+          );
+          final textPainter = TextPainter(
+            text: textSpan,
+            textDirection: TextDirection.ltr,
+            maxLines: 1,
+          )..layout();
 
-    return FormBuilderRadioGroup(
-        name: name,
-        onChanged: onChanged,
-        // ignore: unnecessary_null_comparison
-        enabled: enabled != null ? true : enabled,
-        initialValue: initialValue,
-        decoration: const InputDecoration(
-          border: InputBorder.none,
-          focusedBorder: InputBorder.none,
-          enabledBorder: InputBorder.none,
-          errorBorder: InputBorder.none,
-          disabledBorder: InputBorder.none,
-          labelStyle: TextStyle(fontSize: 18),
-        ),
-        options: options,
-        validator: validator);
+          final shouldUseFullWidth =
+              textPainter.width > MediaQuery.of(context).size.width * 0.25;
+
+          return SizedBox(
+            width: shouldUseFullWidth
+                ? MediaQuery.of(context).size.width - 16
+                : MediaQuery.of(context).size.width / 2.7,
+            child: FormBuilderRadioGroup(
+              name: name + i.toString(),
+              onChanged: (value) {
+                if (value != null) {
+                  onChanged!(values[i]);
+                }
+              },
+              initialValue: initialValue == values[i] ? values[i] : null,
+              activeColor: AppColors.primary,
+              orientation: OptionsOrientation.horizontal,
+              decoration: const InputDecoration(
+                filled: false,
+                border: InputBorder.none,
+                enabledBorder: InputBorder.none,
+                focusedBorder: InputBorder.none,
+              ),
+              options: [
+                FormBuilderFieldOption(
+                  value: values[i],
+                  child: Text(
+                    texts[i],
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                ),
+              ],
+            ),
+          );
+        }),
+      ),
+    );
   }
 }

@@ -10,18 +10,28 @@ class ResetButton extends StatelessWidget {
     return Expanded(
       child: OutlinedButton(
         style: ButtonStyle(
+          padding: WidgetStateProperty.all(
+            const EdgeInsets.symmetric(vertical: 8.0),
+          ),
+          shape: WidgetStateProperty.all(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(0),
+            ),
+          ),
           side: WidgetStateProperty.all(
-            const BorderSide(color: Colors.cyan),
+            BorderSide(color: Theme.of(context).primaryColor),
           ),
         ),
-        child: const Text(
+        child: Text(
           "Reset",
-          style: TextStyle(color: Colors.cyan),
+          style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                color: Theme.of(context).primaryColor,
+              ),
         ),
         onPressed: () async {
           bool shouldReset = await _showResetConfirmationDialog(context);
           if (shouldReset) {
-            onReset(); // Call the reset logic passed from the parent widget
+            onReset();
           }
         },
       ),
@@ -68,9 +78,6 @@ class ResetButton extends StatelessWidget {
                     Expanded(
                       child: MaterialButton(
                         color: Colors.cyan,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                        ),
                         onPressed: () {
                           Navigator.of(context).pop(true); // Confirm reset
                         },

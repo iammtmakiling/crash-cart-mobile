@@ -1,3 +1,4 @@
+import 'package:dashboard/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:snippet_coder_utils/FormHelper.dart';
 import 'dart:convert';
@@ -195,10 +196,12 @@ class _FormAddressState extends State<FormAddress> {
           optionLabel: "regDesc",
           optionValue: "regCode",
           labelBold: false,
-          labelFontSize: 14,
-          borderFocusColor: Colors.blue,
-          borderColor: Colors.grey,
-          borderRadius: 10,
+          labelFontSize: 12,
+          hintFontSize: 12,
+          borderFocusColor: AppColors.primary.withOpacity(0.5),
+          borderWidth: 1,
+          borderColor: AppColors.primary.withOpacity(0.1),
+          borderRadius: 4,
         ),
         FormHelper.dropDownWidgetWithLabel(
           context,
@@ -238,10 +241,12 @@ class _FormAddressState extends State<FormAddress> {
           optionLabel: "provDesc",
           optionValue: "provCode",
           labelBold: false,
-          labelFontSize: 14,
-          borderFocusColor: Colors.blue,
-          borderColor: Colors.grey,
-          borderRadius: 10,
+          labelFontSize: 12,
+          hintFontSize: 12,
+          borderFocusColor: AppColors.primary.withOpacity(0.5),
+          borderWidth: 1,
+          borderColor: AppColors.primary.withOpacity(0.1),
+          borderRadius: 4,
         ),
         FormHelper.dropDownWidgetWithLabel(
           context,
@@ -271,10 +276,12 @@ class _FormAddressState extends State<FormAddress> {
           optionLabel: "citymunDesc",
           optionValue: "citymunCode",
           labelBold: false,
-          labelFontSize: 14,
-          borderFocusColor: Colors.blue,
-          borderColor: Colors.grey,
-          borderRadius: 10,
+          labelFontSize: 12,
+          hintFontSize: 12,
+          borderFocusColor: AppColors.primary.withOpacity(0.5),
+          borderWidth: 1,
+          borderColor: AppColors.primary.withOpacity(0.1),
+          borderRadius: 4,
         ),
       ],
     );

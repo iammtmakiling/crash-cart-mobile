@@ -190,8 +190,7 @@ class SignInScreenState extends State<SignInScreen> {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: _isLoading
                           ? const Color(0xFFE0E0E0)
-                          : Theme.of(context)
-                              .primaryColor, // Change color to lightGray when loading
+                          : Theme.of(context).primaryColor,
                       padding: const EdgeInsets.symmetric(vertical: 16.0),
                     ),
                     child: _isLoading

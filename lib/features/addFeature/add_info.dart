@@ -1,3 +1,7 @@
+import 'package:dashboard/core/theme/app_colors.dart';
+import 'package:dashboard/core/theme/app_theme.dart';
+import 'package:dashboard/widgets/main_appbar.dart';
+
 import '../../core/api_requests/_api.dart';
 import 'package:dashboard/globals.dart';
 import 'package:dashboard/screens/pincode.dart';
@@ -1822,8 +1826,6 @@ class AddInfoState extends State<AddInfo> with SingleTickerProviderStateMixin {
       child: Scaffold(
         body: Column(
           children: [
-            if (!isSending && !isSentSuccessfully)
-              MiniAppBarBack(onBack: widget.onBack),
             isSending
                 ? const SendingWidget()
                 : isSentSuccessfully
@@ -1835,25 +1837,21 @@ class AddInfoState extends State<AddInfo> with SingleTickerProviderStateMixin {
                           length: 2,
                           child: Scaffold(
                             appBar: AppBar(
-                              centerTitle: true,
-                              title: const Text(
-                                "Adding Patient Data",
-                                style: TextStyle(
-                                    color: Colors.cyan,
-                                    fontWeight: FontWeight.bold),
-                                textAlign: TextAlign.start,
-                              ),
+                              automaticallyImplyLeading: false,
+                              title: mainAppBar(context, 'Add Patient Data s'),
                               bottom: TabBar(
                                 isScrollable: false,
-                                labelStyle: const TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.cyan),
-                                unselectedLabelStyle: const TextStyle(
-                                    fontWeight: FontWeight.normal,
-                                    color: Colors.black87),
+                                labelStyle: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium
+                                    ?.copyWith(color: AppColors.primary),
+                                unselectedLabelStyle: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium
+                                    ?.copyWith(color: AppColors.textSecondary),
                                 indicator: const UnderlineTabIndicator(
-                                  borderSide:
-                                      BorderSide(color: Colors.blue, width: 2),
+                                  borderSide: BorderSide(
+                                      color: AppColors.primary, width: 2),
                                   insets: EdgeInsets.zero,
                                 ),
                                 controller: _controller,

@@ -111,7 +111,7 @@ class HistoryScreenState extends State<HistoryScreen> {
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         appBar: mainAppBar(context, "HISTORY"),
         body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 32.0),
+          padding: const EdgeInsets.fromLTRB(32, 20, 32, 0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

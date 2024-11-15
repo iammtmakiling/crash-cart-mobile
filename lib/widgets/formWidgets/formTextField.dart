@@ -1,3 +1,5 @@
+import 'package:dashboard/core/theme/app_colors.dart';
+import 'package:dashboard/core/theme/app_text_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
@@ -31,17 +33,33 @@ class FormTextField extends StatelessWidget {
           enabled: isEnabled,
           onChanged: onChanged,
           decoration: InputDecoration(
-              labelText: labelName,
-              labelStyle: const TextStyle(color: Colors.grey),
-              hintStyle: const TextStyle(color: Colors.grey),
-              contentPadding: const EdgeInsets.symmetric(
-                horizontal: 20.0,
-                vertical: 10.0,
-              ),
-              border: const OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(30.0)),
-              ),
-              prefixIcon: prefixIcon),
+            labelText: labelName,
+            filled: true,
+            fillColor: AppColors.primaryVariant.withOpacity(0.1),
+            labelStyle: AppTextTheme.textTheme.bodySmall?.copyWith(
+              color: AppColors.textSecondary,
+            ),
+            hintStyle: AppTextTheme.textTheme.bodySmall?.copyWith(
+              color: AppColors.textTertiary,
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: AppColors.primary.withOpacity(0.1)),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: AppColors.primary.withOpacity(0.5)),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            errorBorder: OutlineInputBorder(
+              borderSide: const BorderSide(color: AppColors.error),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            focusedErrorBorder: OutlineInputBorder(
+              borderSide: const BorderSide(color: AppColors.error),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            prefixIcon: prefixIcon,
+          ),
           validator: validator),
     );
   }

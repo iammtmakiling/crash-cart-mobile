@@ -113,40 +113,40 @@ class BottomNavBar extends StatelessWidget {
 
   Widget _buildAddButton(BuildContext context) {
     final userProvider = Provider.of<UserProvider>(context);
-    if (userProvider.role == 'Pre-Hospital Staff' ||
-        userProvider.role == 'ER Staff') {
-      return FloatingActionButton(
-        onPressed: () {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (context) {
-                if (userProvider.role == 'Pre-Hospital Staff') {
-                  return addInfo(
-                    onBack: () => Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const MainNavigation()),
-                    ),
-                  );
-                } else {
-                  return addInfoER(
-                    onBack: () => Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const MainNavigation()),
-                    ),
-                  );
-                }
-              },
-            ),
-          );
-        },
-        backgroundColor: Theme.of(context).primaryColor,
-        shape: const CircleBorder(),
-        child: const Icon(LucideIcons.plus, color: Colors.white, size: 32),
-      );
-    }
-    return SizedBox.shrink();
+    // if (userProvider.role == 'Pre-Hospital Staff' ||
+    //     userProvider.role == 'ER Staff') {
+    return FloatingActionButton(
+      onPressed: () {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) {
+              if (userProvider.role == 'Pre-Hospital Staff') {
+                return addInfo(
+                  onBack: () => Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const MainNavigation()),
+                  ),
+                );
+              } else {
+                return AddInfoER(
+                  onBack: () => Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const MainNavigation()),
+                  ),
+                );
+              }
+            },
+          ),
+        );
+      },
+      backgroundColor: Theme.of(context).primaryColor,
+      shape: const CircleBorder(),
+      child: const Icon(LucideIcons.plus, color: Colors.white, size: 32),
+    );
   }
+  //   return SizedBox.shrink();
+  // }
 }
