@@ -46,14 +46,7 @@ void main() async {
         title: 'Navigation Basics',
         debugShowCheckedModeBanner: false,
         theme: AppTheme.lightTheme,
-        home: SafeArea(
-          child: addInHospital(
-            record: {},
-            onBack: () {},
-            patientData: {},
-            fullRecord: {},
-          ),
-        ),
+        home: SignInScreen(),
       ),
     ),
   );

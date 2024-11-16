@@ -42,15 +42,14 @@ class ProfileScreen extends StatelessWidget {
                 userProvider.email,
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
-              const SizedBox(height: 32),
+              const SizedBox(height: 16),
               Container(
                 padding: const EdgeInsets.all(16.0),
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey.shade200),
-                  borderRadius: BorderRadius.circular(8.0),
-                ),
                 child: Column(
                   children: [
+                    Divider(
+                      color: AppColors.primary.withOpacity(0.1),
+                    ),
                     AccountInfoRow(
                       title: "Username:",
                       info: userProvider.username,

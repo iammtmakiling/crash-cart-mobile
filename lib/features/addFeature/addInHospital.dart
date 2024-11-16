@@ -64,15 +64,6 @@ class addInHospital extends StatelessWidget {
       localizationsDelegates: const [
         FormBuilderLocalizations.delegate,
       ],
-      // title: 'Add Patient',
-      theme: ThemeData(
-          primarySwatch: Colors.cyan,
-          visualDensity: VisualDensity.adaptivePlatformDensity,
-          textTheme: GoogleFonts.poppinsTextTheme().apply(
-            bodyColor: Colors.black,
-            fontSizeFactor: 1.0,
-            decoration: TextDecoration.none,
-          )),
       home: AddInHospital(
           record: record,
           onBack: onBack,
@@ -660,28 +651,11 @@ class AddInHospitalState extends State<AddInHospital>
     return Scaffold(
       body: Column(
         children: [
-          // if (!isSending && !isSentSuccessfully)
-          //   MiniAppBarBack(
-          //     onBack: widget.onBack,
-          //   ),
-          // isSending
-          //     ? const SendingWidget()
-          //     : isSentSuccessfully
-          //         ? SuccessfulWidget(
-          //             message: "Successful!",
-          //             onPressed: () {
-          //               Navigator.of(context).pushReplacement(
-          //                 MaterialPageRoute(
-          //                   builder: (context) => const MainNavigation(),
-          //                 ),
-          //               );
-          //             },
-          //           )
-          //         :
           Expanded(
             child: DefaultTabController(
               length: 2, // Number of tabs
               child: Scaffold(
+                backgroundColor: Colors.white,
                 appBar: AppBar(
                   backgroundColor: Colors.white,
                   toolbarHeight: 10,
@@ -735,7 +709,7 @@ class AddInHospitalState extends State<AddInHospital>
   }
 
   Widget firstPage(BuildContext context) {
-    var widthScreen = MediaQuery.of(context).size.width;
+    // var widthScreen = MediaQuery.of(context).size.width;
 
     return Scaffold(
       persistentFooterButtons: [
@@ -759,175 +733,173 @@ class AddInHospitalState extends State<AddInHospital>
       body: Column(
         children: [
           Expanded(
-            // child: Scaffold(
-            //   body: FormBuilder(
-            //     key: _formKey,
-            //     autovalidateMode: AutovalidateMode.onUserInteraction,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                vertical: 8.0,
-                horizontal: 16.0,
-              ),
-              child: SingleChildScrollView(
-                controller: _scrollController,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Caprini Score",
-                      style: Theme.of(context).textTheme.bodyMedium,
-                    ),
-                    const SizedBox(height: 8),
-                    const FormTextField(name: "capriniScore", labelName: ""),
-                    const SizedBox(height: 8),
-                    Text(
-                      "VTE Prophylaxis",
-                      style: Theme.of(context).textTheme.bodyMedium,
-                    ),
-                    FormRadio(
-                      enabled: true,
-                      name: 'vteInclusion',
-                      onChanged: (inclusionValue) {
-                        setState(() {
-                          visibleVTE = inclusionValue == "yes";
-                        });
-                      },
-                      values: const ['yes', 'no'],
-                      texts: const ['Yes', 'No'],
-                    ),
-                    Text(
-                      "VTE Type",
-                      style: Theme.of(context).textTheme.bodyMedium,
-                    ),
-                    const SizedBox(height: 8),
-                    FormTextField(
-                        name: "vteType", labelName: "", enabled: visibleVTE),
-                    const SizedBox(height: 8),
-                    Text(
-                      "Life Support Withdrawal",
-                      style: Theme.of(context).textTheme.bodyMedium,
-                    ),
-                    FormRadio(
-                      enabled: true,
-                      name: 'lswBoolean',
-                      onChanged: (lswValue) {
-                        if (lswValue == "yes") {
-                          setState(() {
-                            visibleLSW = true;
-                          });
-                        } else {
-                          setState(() {
-                            visibleLSW = false;
-                          });
-                        }
-                      },
-                      values: const ['yes', 'no'],
-                      texts: const ['Yes', 'No'],
-                    ),
-                    const SizedBox(height: 8),
-                    Text("LSW Date and Time",
-                        style: Theme.of(context).textTheme.bodyMedium),
-                    const SizedBox(height: 8),
-                    FormBuilderDateTimePicker(
-                      name: 'lswTimestamp',
-                      firstDate: DateTime(1900),
-                      lastDate: DateTime(
-                          DateTime.now().year,
-                          DateTime.now().month,
-                          DateTime.now().day,
-                          DateTime.now().hour,
-                          DateTime.now().minute),
-                      format: DateFormat('yyyy-MM-dd HH:mm:ss'),
-                      onChanged: (DateTime? value) {},
-                      decoration: AppInputDecoration.withCustomColor(
-                        fillColor: visibleLSW
-                            ? AppColors.primaryVariant.withOpacity(0.1)
-                            : AppColors.textTertiary.withOpacity(0.05),
+            child: Scaffold(
+              backgroundColor: Colors.white,
+              body: Padding(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 8.0,
+                  horizontal: 16.0,
+                ),
+                child: SingleChildScrollView(
+                  controller: _scrollController,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Caprini Score",
+                        style: Theme.of(context).textTheme.bodyMedium,
                       ),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      "Is in ICU",
-                      style: Theme.of(context).textTheme.titleMedium,
-                    ),
-                    FormRadio(
-                      enabled: true,
-                      name: 'inICU',
-                      onChanged: (icuValue) {
-                        if (icuValue == "yes") {
+                      const SizedBox(height: 8),
+                      const FormTextField(name: "capriniScore", labelName: ""),
+                      const SizedBox(height: 8),
+                      Text(
+                        "VTE Prophylaxis",
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                      FormRadio(
+                        enabled: true,
+                        name: 'vteInclusion',
+                        onChanged: (inclusionValue) {
                           setState(() {
-                            visibleICU = true;
+                            visibleVTE = inclusionValue == "yes";
                           });
-                        } else {
-                          setState(() {
-                            visibleICU = false;
-                          });
-                        }
-                      },
-                      values: const ['yes', 'no'],
-                      texts: const ['Yes', 'No'],
-                    ),
-                    Visibility(
-                      visible: visibleICU,
-                      child: Card(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8)),
-                          color: Colors.white,
-                          child: condICU()),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      "Comorbidities",
-                      style: Theme.of(context).textTheme.bodyMedium,
-                    ),
-                    const SizedBox(height: 4),
-                    comorbidityTemplate(context),
-                    const SizedBox(height: 16),
-                    Text(
-                      "Complications",
-                      style: Theme.of(context).textTheme.bodyMedium,
-                    ),
-                    const SizedBox(height: 4),
-                    hospitalEventTemplate(context),
-                    const SizedBox(height: 8),
-                    Divider(
-                      color: AppColors.textPrimary,
-                    ),
-                    Row(
-                      children: [
-                        Text(
-                          "Consultations",
-                          style: Theme.of(context).textTheme.bodyMedium,
-                        ),
-                        const Spacer(),
-                        IconButton(
-                          onPressed: () {
-                            addInreferralsWidget(context);
-                          },
-                          icon: const Icon(LucideIcons.plusCircle, size: 16),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 8),
-                    if (inreferralsList.isEmpty)
-                      Center(
-                        child: Text(
-                          "No Consultations yet",
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodySmall!
-                              .copyWith(color: AppColors.textSecondary),
+                        },
+                        values: const ['yes', 'no'],
+                        texts: const ['Yes', 'No'],
+                      ),
+                      Text(
+                        "VTE Type",
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                      const SizedBox(height: 8),
+                      FormTextField(
+                          name: "vteType", labelName: "", enabled: visibleVTE),
+                      const SizedBox(height: 8),
+                      Text(
+                        "Life Support Withdrawal",
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                      FormRadio(
+                        enabled: true,
+                        name: 'lswBoolean',
+                        onChanged: (lswValue) {
+                          if (lswValue == "yes") {
+                            setState(() {
+                              visibleLSW = true;
+                            });
+                          } else {
+                            setState(() {
+                              visibleLSW = false;
+                            });
+                          }
+                        },
+                        values: const ['yes', 'no'],
+                        texts: const ['Yes', 'No'],
+                      ),
+                      const SizedBox(height: 8),
+                      Text("LSW Date and Time",
+                          style: Theme.of(context).textTheme.bodyMedium),
+                      const SizedBox(height: 8),
+                      FormBuilderDateTimePicker(
+                        name: 'lswTimestamp',
+                        firstDate: DateTime(1900),
+                        lastDate: DateTime(
+                            DateTime.now().year,
+                            DateTime.now().month,
+                            DateTime.now().day,
+                            DateTime.now().hour,
+                            DateTime.now().minute),
+                        format: DateFormat('yyyy-MM-dd HH:mm:ss'),
+                        onChanged: (DateTime? value) {},
+                        decoration: AppInputDecoration.withCustomColor(
+                          fillColor: visibleLSW
+                              ? AppColors.primaryVariant.withOpacity(0.1)
+                              : AppColors.textTertiary.withOpacity(0.05),
                         ),
                       ),
-                    if (inreferralsList.isNotEmpty) ...inreferralsList,
-                    const SizedBox(height: 16)
-                  ],
+                      const SizedBox(height: 8),
+                      Text(
+                        "Is in ICU",
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                      FormRadio(
+                        enabled: true,
+                        name: 'inICU',
+                        onChanged: (icuValue) {
+                          if (icuValue == "yes") {
+                            setState(() {
+                              visibleICU = true;
+                            });
+                          } else {
+                            setState(() {
+                              visibleICU = false;
+                            });
+                          }
+                        },
+                        values: const ['yes', 'no'],
+                        texts: const ['Yes', 'No'],
+                      ),
+                      Visibility(
+                        visible: visibleICU,
+                        child: Card(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8)),
+                            color: Colors.white,
+                            child: condICU()),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        "Comorbidities",
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                      const SizedBox(height: 4),
+                      comorbidityTemplate(context),
+                      const SizedBox(height: 16),
+                      Text(
+                        "Complications",
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                      const SizedBox(height: 4),
+                      hospitalEventTemplate(context),
+                      const SizedBox(height: 8),
+                      Divider(
+                        color: AppColors.textPrimary,
+                      ),
+                      Row(
+                        children: [
+                          Text(
+                            "Consultations",
+                            style: Theme.of(context).textTheme.bodyMedium,
+                          ),
+                          const Spacer(),
+                          IconButton(
+                            onPressed: () {
+                              addInreferralsWidget(context);
+                            },
+                            icon: const Icon(LucideIcons.plusCircle, size: 16),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 8),
+                      if (inreferralsList.isEmpty)
+                        Center(
+                          child: Text(
+                            "No Consultations yet",
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodySmall!
+                                .copyWith(color: AppColors.textSecondary),
+                          ),
+                        ),
+                      if (inreferralsList.isNotEmpty) ...inreferralsList,
+                      const SizedBox(height: 16)
+                    ],
+                  ),
                 ),
               ),
             ),
           ),
-          //   ),
           // ),
         ],
       ),

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:dashboard/core/theme/app_colors.dart';
 import 'package:dashboard/core/utils/helper_utils.dart';
 import 'package:dashboard/globals.dart';
 import 'package:dashboard/screens/RecordsScreen/widgets/patient_box.dart';
@@ -132,7 +133,9 @@ class HistoryScreenState extends State<HistoryScreen> {
               Expanded(
                 child: isLoading
                     ? const Center(
-                        child: CircularProgressIndicator(),
+                        child: CircularProgressIndicator(
+                          color: AppColors.primary,
+                        ),
                       )
                     : filteredPatients.isEmpty
                         ? Center(

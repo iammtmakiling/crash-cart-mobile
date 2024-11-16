@@ -1,6 +1,7 @@
 import 'package:dashboard/core/enums/auth_status.dart';
 import 'package:dashboard/core/exceptions/auth_exceptions.dart';
 import 'package:dashboard/core/provider/user_provider.dart';
+import 'package:dashboard/core/theme/app_colors.dart';
 import 'package:dashboard/main/main_navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -99,7 +100,7 @@ class SignInScreenState extends State<SignInScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.surface,
+      backgroundColor: AppColors.background,
       body: Center(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 32.0),
@@ -189,15 +190,19 @@ class SignInScreenState extends State<SignInScreen> {
                         : _signIn, // Disable button when loading
                     style: ElevatedButton.styleFrom(
                       backgroundColor: _isLoading
-                          ? const Color(0xFFE0E0E0)
+                          ? AppColors.textPrimary.withOpacity(0.5)
                           : Theme.of(context).primaryColor,
                       padding: const EdgeInsets.symmetric(vertical: 16.0),
                     ),
                     child: _isLoading
                         ? const Center(
-                            child: CircularProgressIndicator(
-                              color: Colors
-                                  .white, // Optional: change the loading color
+                            child: SizedBox(
+                              width: 20,
+                              height: 20,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2,
+                                color: Colors.white,
+                              ),
                             ),
                           )
                         : Text(

@@ -1,3 +1,4 @@
+import 'package:dashboard/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
@@ -17,7 +18,10 @@ AppBar mainAppBar(BuildContext context, String title) {
     ],
     bottom: PreferredSize(
       preferredSize: Size.fromHeight(1.0),
-      child: Divider(height: 1.0),
+      child: Divider(
+        height: 1.0,
+        color: AppColors.textPrimary.withOpacity(0.08),
+      ),
     ),
   );
 }

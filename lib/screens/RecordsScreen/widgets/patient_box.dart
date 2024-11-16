@@ -1,3 +1,4 @@
+import 'package:dashboard/core/theme/app_colors.dart';
 import 'package:dashboard/core/utils/helper_utils.dart';
 import 'package:dashboard/features/viewFeature/view_main.dart';
 import 'package:flutter/material.dart';
@@ -32,6 +33,13 @@ class PatientBox extends StatelessWidget {
       decoration: BoxDecoration(
         color: isTile ? Colors.white : Colors.transparent,
         borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: AppColors.primary.withOpacity(0.08)),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.primary.withOpacity(0.08),
+            blurRadius: 1,
+          ),
+        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

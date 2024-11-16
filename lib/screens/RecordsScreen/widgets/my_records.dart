@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:dashboard/core/api_requests/getPatient.dart';
 import 'package:dashboard/core/provider/user_provider.dart';
+import 'package:dashboard/core/theme/app_colors.dart';
 import 'package:dashboard/core/utils/helper_utils.dart';
 import 'package:dashboard/widgets/searchbar.dart';
 import 'package:flutter/material.dart';
@@ -149,7 +150,9 @@ class MyRecordsState extends State<MyRecords> {
               isLoading
                   ? const Expanded(
                       child: Center(
-                        child: CircularProgressIndicator(),
+                        child: CircularProgressIndicator(
+                          color: AppColors.primary,
+                        ),
                       ),
                     )
                   : Expanded(
