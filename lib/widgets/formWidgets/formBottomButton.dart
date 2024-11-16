@@ -1,3 +1,5 @@
+import 'package:dashboard/core/theme/app_colors.dart';
+import 'package:dashboard/core/theme/app_text_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
@@ -31,14 +33,14 @@ class FormBottomButton extends StatelessWidget {
                   ),
                 ),
                 side: WidgetStateProperty.all(
-                  BorderSide(color: Theme.of(context).primaryColor),
+                  BorderSide(color: AppColors.primary),
                 ),
               ),
               child: Text(
                 "Reset",
-                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                      color: Theme.of(context).primaryColor,
-                    ),
+                style: AppTextTheme.textTheme.bodyMedium!.copyWith(
+                  color: AppColors.primary,
+                ),
               ),
               onPressed: () {
                 formKey.currentState!.save();
@@ -49,14 +51,14 @@ class FormBottomButton extends StatelessWidget {
           const SizedBox(width: 8),
           Expanded(
             child: MaterialButton(
-              color: Theme.of(context).primaryColor,
+              color: AppColors.primary,
               padding: const EdgeInsets.symmetric(vertical: 8.0),
               onPressed: onSubmitPressed,
               child: Text(
                 "Submit",
-                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                      color: Colors.white,
-                    ),
+                style: AppTextTheme.textTheme.bodyMedium!.copyWith(
+                  color: Colors.white,
+                ),
               ),
             ),
           ),

@@ -1,3 +1,6 @@
+import 'package:dashboard/core/theme/app_colors.dart';
+import 'package:lucide_icons/lucide_icons.dart';
+
 import '../../core/api_requests/_api.dart';
 import 'package:dashboard/features/viewFeature/viewSummary.dart';
 import 'package:dashboard/globals.dart';
@@ -605,71 +608,72 @@ class AddSurgeryState extends State<AddSurgery>
       child: Scaffold(
         body: Column(
           children: [
-            if (!isSending && !isSentSuccessfully)
-              MiniAppBarBack(
-                onBack: widget.onBack,
-              ),
-            isSending
-                ? const SendingWidget()
-                : isSentSuccessfully
-                    ? SuccessfulWidget(
-                        message: "Successful!",
-                        onPressed: () {
-                          Navigator.of(context).pushReplacement(
-                            MaterialPageRoute(
-                              builder: (context) => const MainNavigation(),
-                            ),
-                          );
-                        },
-                      )
-                    : Expanded(
-                        child: DefaultTabController(
-                          length: 2, // Number of tabs
-                          child: Scaffold(
-                            appBar: AppBar(
-                              backgroundColor: Colors.white,
-                              toolbarHeight: 10,
-                              bottom: TabBar(
-                                controller: _tabController,
-                                tabs: const [
-                                  Tab(
-                                    child: Text(
-                                      "Adding",
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        color: Colors.cyan,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ),
-                                  Tab(
-                                    child: Text(
-                                      'View Docs',
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        color: Colors.cyan,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ),
-                                ],
+            // if (!isSending && !isSentSuccessfully)
+            //   MiniAppBarBack(
+            //     onBack: widget.onBack,
+            //   ),
+            // isSending
+            //     ? const SendingWidget()
+            //     : isSentSuccessfully
+            //         ? SuccessfulWidget(
+            //             message: "Successful!",
+            //             onPressed: () {
+            //               Navigator.of(context).pushReplacement(
+            //                 MaterialPageRoute(
+            //                   builder: (context) => const MainNavigation(),
+            //                 ),
+            //               );
+            //             },
+            //           )
+            //         :
+            Expanded(
+              child: DefaultTabController(
+                length: 2, // Number of tabs
+                child: Scaffold(
+                  appBar: AppBar(
+                    backgroundColor: Colors.white,
+                    toolbarHeight: 10,
+                    bottom: TabBar(
+                      controller: _tabController,
+                      labelStyle:
+                          Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                color: AppColors.primary,
+                                fontWeight: FontWeight.bold,
                               ),
-                            ),
-                            body: FormBuilder(
-                              key: _formKey,
-                              child: TabBarView(
-                                controller: _tabController,
-                                children: [
-                                  firstPage(context),
-                                  ViewSummary(
-                                      patientData: widget.patientData,
-                                      patient: widget.fullRecord),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
+                      unselectedLabelStyle: Theme.of(context)
+                          .textTheme
+                          .bodyMedium
+                          ?.copyWith(color: AppColors.textSecondary),
+                      indicator: const UnderlineTabIndicator(
+                        borderSide:
+                            BorderSide(color: AppColors.primary, width: 2),
+                        insets: EdgeInsets.zero,
                       ),
+                      tabs: [
+                        Tab(
+                          text: "Adding",
+                        ),
+                        Tab(
+                          text: 'View Docs',
+                        ),
+                      ],
+                    ),
+                  ),
+                  body: FormBuilder(
+                    key: _formKey,
+                    child: TabBarView(
+                      controller: _tabController,
+                      children: [
+                        firstPage(context),
+                        ViewSummary(
+                            patientData: widget.patientData,
+                            patient: widget.fullRecord),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),
@@ -726,6 +730,76 @@ class AddSurgeryState extends State<AddSurgery>
                   mainAxisAlignment: MainAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min, // Set mainAxisSize to min
                   children: [
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        children: [
+                          Row(
+                            children: [
+                              Text(
+                                "List of Surgeries",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleMedium
+                                    ?.copyWith(fontWeight: FontWeight.bold),
+                              ),
+                              Spacer(),
+                              Icon(LucideIcons.plusCircle,
+                                  color: AppColors.textPrimary, size: 24),
+                            ],
+                          ),
+                          Divider(
+                            color: AppColors.textSecondary,
+                          ),
+                          Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: AppColors.background,
+                            ),
+                            padding: const EdgeInsets.all(16.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    Text("1. Procedure",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium),
+                                    Spacer(),
+                                    Text(
+                                      "Date: 11/01/2024",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodySmall
+                                          ?.copyWith(
+                                              color: AppColors.textSecondary),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 8),
+                                Row(
+                                  children: [
+                                    Text(
+                                      "Outcome: Improved",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodySmall
+                                          ?.copyWith(
+                                              color: AppColors.textSecondary),
+                                    ),
+                                    Spacer(),
+                                    Icon(LucideIcons.chevronDown,
+                                        color: AppColors.textSecondary,
+                                        size: 24),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                     if (surgeryCardList.isNotEmpty)
                       Flexible(
                         child: ListView.builder(
@@ -740,12 +814,8 @@ class AddSurgeryState extends State<AddSurgery>
                     if (surgeryCardList.isEmpty)
                       Expanded(
                           child: Center(
-                        child: Text(
-                          "Surgery Data is Empty",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.blueGrey[900]),
-                        ),
+                        child: Text("Surgery Data is Empty",
+                            style: Theme.of(context).textTheme.bodyMedium),
                       ))
                   ],
                 ),

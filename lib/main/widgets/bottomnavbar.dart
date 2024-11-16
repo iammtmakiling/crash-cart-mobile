@@ -130,7 +130,7 @@ class BottomNavBar extends StatelessWidget {
                   ),
                 );
               } else {
-                return AddInfoER(
+                return addInfo(
                   onBack: () => Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(

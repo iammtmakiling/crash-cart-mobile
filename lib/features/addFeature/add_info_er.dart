@@ -84,7 +84,7 @@ class AddInfoERState extends State<AddInfoER>
   String provincesDesc = "";
   String citiesDesc = "";
 
-  bool? isSameAddress = false;
+  bool isSameAddress = false;
 
   // General Data
   String patientStatus = 'In-Hospital';
@@ -179,6 +179,10 @@ class AddInfoERState extends State<AddInfoER>
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Checkbox(
+            fillColor: isUnkown
+                ? WidgetStateProperty.all(AppColors.primary)
+                : WidgetStateProperty.all(AppColors.primary.withOpacity(0.1)),
+            side: BorderSide(color: AppColors.primary.withOpacity(0.1)),
             value: isUnkown,
             onChanged: (value) {
               setState(() {
@@ -718,6 +722,11 @@ class AddInfoERState extends State<AddInfoER>
             Row(
               children: [
                 Checkbox(
+                  fillColor: isSameAddress
+                      ? WidgetStateProperty.all(AppColors.primary)
+                      : WidgetStateProperty.all(
+                          AppColors.primary.withOpacity(0.1)),
+                  side: BorderSide(color: AppColors.primary.withOpacity(0.1)),
                   value: isSameAddress,
                   onChanged: (value) {
                     setState(() {
@@ -1239,7 +1248,7 @@ class AddInfoERState extends State<AddInfoER>
               name: "natureOfInjuryExtraInfo", labelName: "Additional Details"),
           const SizedBox(height: 16),
           Text(
-            "External Cause of Injury",
+            "External Causes of Injury",
             style: Theme.of(context).textTheme.bodyMedium,
           ),
           const SizedBox(height: 8),
@@ -2199,10 +2208,16 @@ class AddInfoERState extends State<AddInfoER>
                         insets: EdgeInsets.zero,
                       ),
                       controller: _controller,
-                      tabs: const <Widget>[
-                        Tab(text: "General"),
-                        Tab(text: "Pre-Hospital"),
-                        Tab(text: "ER"),
+                      tabs: <Widget>[
+                        Tab(
+                          text: "General",
+                        ),
+                        Tab(
+                          text: "Pre-Hospital",
+                        ),
+                        Tab(
+                          text: "ER",
+                        ),
                       ],
                     ),
                   ),
@@ -2225,7 +2240,9 @@ class AddInfoERState extends State<AddInfoER>
                                     child: Column(
                                       children: [
                                         ifUnknown(),
-                                        const Divider(),
+                                        Divider(
+                                            color: AppColors.primary
+                                                .withOpacity(0.1)),
                                         Visibility(
                                           visible: isUnkown,
                                           child: unknownPatientDetails(),

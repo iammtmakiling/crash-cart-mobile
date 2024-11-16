@@ -1,5 +1,9 @@
 import 'package:dashboard/core/provider/user_provider.dart';
 import 'package:dashboard/core/theme/app_theme.dart';
+import 'package:dashboard/features/addFeature/addInHospital.dart';
+import 'package:dashboard/features/addFeature/add_info.dart';
+import 'package:dashboard/features/addFeature/add_info_er.dart';
+import 'package:dashboard/features/addFeature/add_surgery.dart';
 import 'package:dashboard/screens/SigninScreen/signin_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -42,8 +46,13 @@ void main() async {
         title: 'Navigation Basics',
         debugShowCheckedModeBanner: false,
         theme: AppTheme.lightTheme,
-        home: const SafeArea(
-          child: SignInScreen(),
+        home: SafeArea(
+          child: addInHospital(
+            record: {},
+            onBack: () {},
+            patientData: {},
+            fullRecord: {},
+          ),
         ),
       ),
     ),

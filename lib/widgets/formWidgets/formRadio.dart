@@ -25,10 +25,19 @@ class FormRadio extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.centerLeft,
-      child: Wrap(
-        spacing: 8,
-        runSpacing: 0,
-        children: List.generate(values.length, (i) {
+      child: FormBuilderRadioGroup(
+        name: name,
+        onChanged: onChanged,
+        initialValue: initialValue,
+        activeColor: AppColors.primary,
+        orientation: OptionsOrientation.horizontal,
+        decoration: const InputDecoration(
+          border: InputBorder.none,
+          enabledBorder: InputBorder.none,
+          focusedBorder: InputBorder.none,
+          contentPadding: EdgeInsets.zero,
+        ),
+        options: List.generate(values.length, (i) {
           final textSpan = TextSpan(
             text: texts[i],
             style: Theme.of(context).textTheme.bodySmall,
@@ -40,37 +49,18 @@ class FormRadio extends StatelessWidget {
           )..layout();
 
           final shouldUseFullWidth =
-              textPainter.width > MediaQuery.of(context).size.width * 0.25;
+              textPainter.width > MediaQuery.of(context).size.width * 0.2;
 
-          return SizedBox(
-            width: shouldUseFullWidth
-                ? MediaQuery.of(context).size.width - 16
-                : MediaQuery.of(context).size.width / 2.7,
-            child: FormBuilderRadioGroup(
-              name: name + i.toString(),
-              onChanged: (value) {
-                if (value != null) {
-                  onChanged!(values[i]);
-                }
-              },
-              initialValue: initialValue == values[i] ? values[i] : null,
-              activeColor: AppColors.primary,
-              orientation: OptionsOrientation.horizontal,
-              decoration: const InputDecoration(
-                filled: false,
-                border: InputBorder.none,
-                enabledBorder: InputBorder.none,
-                focusedBorder: InputBorder.none,
+          return FormBuilderFieldOption(
+            value: values[i],
+            child: SizedBox(
+              width: shouldUseFullWidth
+                  ? MediaQuery.of(context).size.width - 32
+                  : MediaQuery.of(context).size.width / 5,
+              child: Text(
+                texts[i],
+                style: Theme.of(context).textTheme.bodySmall,
               ),
-              options: [
-                FormBuilderFieldOption(
-                  value: values[i],
-                  child: Text(
-                    texts[i],
-                    style: Theme.of(context).textTheme.bodySmall,
-                  ),
-                ),
-              ],
             ),
           );
         }),

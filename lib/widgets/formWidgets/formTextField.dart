@@ -32,15 +32,22 @@ class FormTextField extends StatelessWidget {
           autocorrect: false,
           enabled: isEnabled,
           onChanged: onChanged,
+          style: Theme.of(context).textTheme.bodySmall,
           decoration: InputDecoration(
             labelText: labelName,
             filled: true,
-            fillColor: AppColors.primaryVariant.withOpacity(0.1),
+            fillColor: isEnabled
+                ? AppColors.primaryVariant.withOpacity(0.1)
+                : AppColors.textTertiary.withOpacity(0.05),
             labelStyle: AppTextTheme.textTheme.bodySmall?.copyWith(
               color: AppColors.textSecondary,
             ),
             hintStyle: AppTextTheme.textTheme.bodySmall?.copyWith(
               color: AppColors.textTertiary,
+            ),
+            disabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: AppColors.primary.withOpacity(0.1)),
+              borderRadius: BorderRadius.circular(8),
             ),
             enabledBorder: OutlineInputBorder(
               borderSide: BorderSide(color: AppColors.primary.withOpacity(0.1)),

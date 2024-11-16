@@ -1,3 +1,9 @@
+import 'package:dashboard/core/theme/app_colors.dart';
+import 'package:dashboard/core/theme/app_input_decoration.dart';
+import 'package:dashboard/core/theme/app_text_theme.dart';
+import 'package:dashboard/core/theme/app_theme.dart';
+import 'package:lucide_icons/lucide_icons.dart';
+
 import '../../core/api_requests/_api.dart';
 import 'package:dashboard/features/viewFeature/viewSummary.dart';
 import 'package:dashboard/globals.dart';
@@ -190,111 +196,44 @@ class AddInHospitalState extends State<AddInHospital>
     });
   }
 
-  Padding condVTE() {
-    // need validators for ID format
-    return const Padding(
-      padding: EdgeInsets.fromLTRB(8, 8, 8, 8),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            "VTE Type",
-            style: TextStyle(
-                color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
-          ),
-          // FormBuilderSearchableDropdown(
-          //   name: "vteType",
-          //   decoration: const InputDecoration(
-          //     contentPadding:
-          //         EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-          //     border: OutlineInputBorder(
-          //       borderRadius: BorderRadius.all(Radius.circular(30.0)),
-          //     ),
-          //   ),
-          //   items: vteTypes,
-          // ),
-          FormTextField(name: "vteType", labelName: ""),
-          // const SizedBox(height: 8),
-          // const Text(
-          //   "VTE Date",
-          //   style: TextStyle(
-          //       color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
-          // ),
-          // FormBuilderDateTimePicker(
-          //   inputType: InputType.date,
-          //   format: DateFormat('yyyy-MM-dd'),
-          //   name: "dateTimeVte",
-          //   firstDate: DateTime(2000),
-          //   lastDate: DateTime(DateTime.now().year, DateTime.now().month,
-          //       DateTime.now().day, DateTime.now().hour, DateTime.now().minute),
-          //   decoration: const InputDecoration(
-          //     contentPadding:
-          //         EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-          //     border: OutlineInputBorder(
-          //       borderRadius: BorderRadius.all(Radius.circular(30.0)),
-          //     ),
-          //   ),
-          //   onChanged: (DateTime? value) {
-          //     setState(() {
-          //       icuArrivalDate = value!;
-          //     });
-          //   },
-          // ),
-        ],
-      ),
-    );
-  }
+  // Padding condVTE() {
+  //   // need validators for ID format
+  //   return Padding(
+  //     padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
+  //     child: Column(
+  //       mainAxisAlignment: MainAxisAlignment.start,
+  //       crossAxisAlignment: CrossAxisAlignment.start,
+  //       children: [
 
-  Padding condLSW() {
-    // need validators for ID format
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text(
-            "Date and Time",
-            style: TextStyle(
-                color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
-          ),
-          FormBuilderDateTimePicker(
-            name: 'lswTimestamp',
-            firstDate: DateTime(1900),
-            lastDate: DateTime(DateTime.now().year, DateTime.now().month,
-                DateTime.now().day, DateTime.now().hour, DateTime.now().minute),
-            format: DateFormat('yyyy-MM-dd HH:mm:ss'),
-            onChanged: (DateTime? value) {},
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(30.0)),
-              ),
-              hintStyle: TextStyle(color: Colors.grey),
-              contentPadding: EdgeInsets.symmetric(
-                horizontal: 20.0,
-                vertical: 10.0,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+  //       ],
+  //     ),
+  //   );
+  // }
+
+  // Padding condLSW() {
+  //   // need validators for ID format
+  //   return Padding(
+  //     padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
+  //     child: Column(
+  //       mainAxisAlignment: MainAxisAlignment.start,
+  //       crossAxisAlignment: CrossAxisAlignment.start,
+  //       children: [
+
+  //       ],
+  //     ),
+  //   );
+  // }
 
   Padding condICU() {
     // need validators for ID format
     return Padding(
-      padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
+      padding: const EdgeInsets.all(16),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            "ICU Arrival",
-            style: TextStyle(
-                color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
-          ),
+          Text("ICU Arrival", style: Theme.of(context).textTheme.bodyMedium),
+          const SizedBox(height: 8),
           FormBuilderDateTimePicker(
             inputType: InputType.date,
             format: DateFormat('yyyy-MM-dd'),
@@ -302,14 +241,7 @@ class AddInHospitalState extends State<AddInHospital>
             firstDate: DateTime(2000),
             lastDate: DateTime(DateTime.now().year, DateTime.now().month,
                 DateTime.now().day, DateTime.now().hour, DateTime.now().minute),
-            decoration: const InputDecoration(
-              // labelText: 'Date',
-              contentPadding:
-                  EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(30.0)),
-              ),
-            ),
+            decoration: AppInputDecoration.standard,
             onChanged: (DateTime? value) {
               setState(
                 () {
@@ -325,12 +257,12 @@ class AddInHospitalState extends State<AddInHospital>
               );
             },
           ),
-          const SizedBox(height: 16),
-          const Text(
+          const SizedBox(height: 8),
+          Text(
             "ICU Exit",
-            style: TextStyle(
-                color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
+            style: Theme.of(context).textTheme.bodyMedium,
           ),
+          const SizedBox(height: 8),
           FormBuilderDateTimePicker(
             inputType: InputType.date,
             format: DateFormat('yyyy-MM-dd'),
@@ -338,14 +270,7 @@ class AddInHospitalState extends State<AddInHospital>
             firstDate: DateTime(2000),
             lastDate: DateTime(DateTime.now().year, DateTime.now().month,
                 DateTime.now().day, DateTime.now().hour, DateTime.now().minute),
-            decoration: const InputDecoration(
-              // labelText: 'Date',
-              contentPadding:
-                  EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(30.0)),
-              ),
-            ),
+            decoration: AppInputDecoration.standard,
             onChanged: (DateTime? value) {
               setState(() {
                 if (icuArrivalDate != null) {
@@ -358,28 +283,17 @@ class AddInHospitalState extends State<AddInHospital>
               });
             },
           ),
-          const SizedBox(height: 16),
-          const Text(
+          const SizedBox(height: 8),
+          Text(
             "ICU Length of Stay",
-            style: TextStyle(
-                color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
+            style: Theme.of(context).textTheme.bodyMedium,
           ),
-          const FormTextField(
+          const SizedBox(height: 8),
+          FormTextField(
             name: 'icuLengthStay',
             enabled: false,
             labelName: "",
           ),
-          // FormBuilderTextField(
-          //   decoration: const InputDecoration(
-          //     // labelText: 'ICU Length of Stay',
-          //     // hintStyle: TextStyle(color: Colors.grey),
-          //     contentPadding:
-          //         EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-          //     border: OutlineInputBorder(
-          //       borderRadius: BorderRadius.all(Radius.circular(30.0)),
-          //     ),
-          //   ),
-          // ),
         ],
       ),
     );
@@ -396,7 +310,7 @@ class AddInHospitalState extends State<AddInHospital>
 
     return Card(
       // elevation: 5,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       color: Colors.white,
       child: SizedBox(
         width: widthScreen,
@@ -409,6 +323,7 @@ class AddInHospitalState extends State<AddInHospital>
                 // you may want to use an aspect ratio here for tablet support
                 height: 100.0,
                 child: MultiSelectBottomSheetField(
+                  buttonIcon: const Icon(LucideIcons.chevronDown),
                   initialValue: complications,
                   chipDisplay: MultiSelectChipDisplay(
                     height: 50,
@@ -436,10 +351,22 @@ class AddInHospitalState extends State<AddInHospital>
     );
   }
 
+  // Add this controller at class level
+  final ScrollController _scrollController = ScrollController();
+
   void addInreferralsWidget(BuildContext context) {
     setState(() {
       int newIndex = inreferralsList.length;
       inreferralsList.add(inreferralsTemplate(index: newIndex));
+    });
+
+    // Scroll to bottom after widget is added
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _scrollController.animateTo(
+        _scrollController.position.maxScrollExtent,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeOut,
+      );
     });
   }
 
@@ -457,30 +384,19 @@ class AddInHospitalState extends State<AddInHospital>
             children: [
               Text(
                 "Consultation ${index + 1}",
-                style: const TextStyle(
-                    color: Colors.black,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold),
+                style: Theme.of(context).textTheme.bodyMedium,
               ),
               const SizedBox(height: 8),
               FormBuilderSearchableDropdown(
                 name: "consultationService${index + 1}",
-                decoration: const InputDecoration(
-                  contentPadding:
-                      EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(30.0)),
-                  ),
-                ),
+                decoration: AppInputDecoration.standard,
+                dropdownSearchTextStyle: Theme.of(context).textTheme.bodySmall,
                 items: consultationServices,
               ),
               const SizedBox(height: 8),
-              const Text(
+              Text(
                 "Physician",
-                style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold),
+                style: Theme.of(context).textTheme.bodyMedium,
               ),
               const SizedBox(height: 8),
               FormTextField(
@@ -489,12 +405,9 @@ class AddInHospitalState extends State<AddInHospital>
                 labelName: "",
               ),
               const SizedBox(height: 8),
-              const Text(
+              Text(
                 "Consultation Date and Time",
-                style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold),
+                style: Theme.of(context).textTheme.bodyMedium,
               ),
               const SizedBox(height: 8),
               FormBuilderDateTimePicker(
@@ -514,14 +427,8 @@ class AddInHospitalState extends State<AddInHospital>
                     DateTime.now().minute),
                 name: "consultationDate${index + 1}",
                 firstDate: DateTime(2000),
-                decoration: const InputDecoration(
-                  // labelText: 'Consultation Date',
-                  contentPadding:
-                      EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(30.0)),
-                  ),
-                ),
+                style: Theme.of(context).textTheme.bodySmall,
+                decoration: AppInputDecoration.standard,
               ),
             ],
           ),
@@ -537,7 +444,7 @@ class AddInHospitalState extends State<AddInHospital>
       width: widthScreen,
       child: Card(
         // elevation: 5,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         color: Colors.white,
         child: SizedBox(
           width: widthScreen,
@@ -550,13 +457,20 @@ class AddInHospitalState extends State<AddInHospital>
                   // you may want to use an aspect ratio here for tablet support
                   height: 100.0,
                   child: MultiSelectBottomSheetField(
+                    buttonIcon: const Icon(LucideIcons.chevronDown),
                     initialValue: comorbidities,
                     chipDisplay: MultiSelectChipDisplay(
                       height: 50,
                       scroll: true,
                     ),
                     listType: MultiSelectListType.LIST,
-                    title: const Text("Add"),
+                    title: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        "Add",
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                    ),
                     searchHint: "Add Comorbidity",
                     searchable: true,
                     searchIcon: const Icon(Icons.search),
@@ -736,6 +650,7 @@ class AddInHospitalState extends State<AddInHospital>
 
   @override
   void dispose() {
+    _scrollController.dispose();
     _tabController.dispose();
     super.dispose();
   }
@@ -745,71 +660,75 @@ class AddInHospitalState extends State<AddInHospital>
     return Scaffold(
       body: Column(
         children: [
-          if (!isSending && !isSentSuccessfully)
-            MiniAppBarBack(
-              onBack: widget.onBack,
-            ),
-          isSending
-              ? const SendingWidget()
-              : isSentSuccessfully
-                  ? SuccessfulWidget(
-                      message: "Successful!",
-                      onPressed: () {
-                        Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(
-                            builder: (context) => const MainNavigation(),
-                          ),
-                        );
-                      },
-                    )
-                  : Expanded(
-                      child: DefaultTabController(
-                        length: 2, // Number of tabs
-                        child: Scaffold(
-                          appBar: AppBar(
-                            backgroundColor: Colors.white,
-                            toolbarHeight: 10,
-                            bottom: TabBar(
-                              controller: _tabController,
-                              tabs: const [
-                                Tab(
-                                  child: Text(
-                                    "Adding",
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      color: Colors.cyan,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                                Tab(
-                                  child: Text(
-                                    'View Docs',
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      color: Colors.cyan,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                              ],
+          // if (!isSending && !isSentSuccessfully)
+          //   MiniAppBarBack(
+          //     onBack: widget.onBack,
+          //   ),
+          // isSending
+          //     ? const SendingWidget()
+          //     : isSentSuccessfully
+          //         ? SuccessfulWidget(
+          //             message: "Successful!",
+          //             onPressed: () {
+          //               Navigator.of(context).pushReplacement(
+          //                 MaterialPageRoute(
+          //                   builder: (context) => const MainNavigation(),
+          //                 ),
+          //               );
+          //             },
+          //           )
+          //         :
+          Expanded(
+            child: DefaultTabController(
+              length: 2, // Number of tabs
+              child: Scaffold(
+                appBar: AppBar(
+                  backgroundColor: Colors.white,
+                  toolbarHeight: 10,
+                  bottom: TabBar(
+                    labelStyle:
+                        Theme.of(context).textTheme.bodyMedium?.copyWith(
+                              color: AppColors.primary,
+                              fontWeight: FontWeight.bold,
                             ),
-                          ),
-                          body: FormBuilder(
-                            key: _formKey,
-                            child: TabBarView(
-                              controller: _tabController,
-                              children: [
-                                firstPage(context),
-                                ViewSummary(
-                                    patientData: widget.patientData,
-                                    patient: widget.fullRecord),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
+                    unselectedLabelStyle: Theme.of(context)
+                        .textTheme
+                        .bodyMedium
+                        ?.copyWith(color: AppColors.textSecondary),
+                    indicator: const UnderlineTabIndicator(
+                      borderSide:
+                          BorderSide(color: AppColors.primary, width: 2),
+                      insets: EdgeInsets.zero,
                     ),
+                    controller: _tabController,
+                    tabs: [
+                      Tab(
+                        text: "Adding",
+                      ),
+                      Tab(
+                        text: 'View Docs',
+                      ),
+                    ],
+                  ),
+                ),
+                body: FormBuilder(
+                  key: _formKey,
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: TabBarView(
+                      controller: _tabController,
+                      children: [
+                        firstPage(context),
+                        ViewSummary(
+                            patientData: widget.patientData,
+                            patient: widget.fullRecord),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
         ],
       ),
     );
@@ -850,61 +769,44 @@ class AddInHospitalState extends State<AddInHospital>
                 horizontal: 16.0,
               ),
               child: SingleChildScrollView(
+                controller: _scrollController,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    const Text(
+                    Text(
                       "Caprini Score",
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold),
+                      style: Theme.of(context).textTheme.bodyMedium,
                     ),
                     const SizedBox(height: 8),
                     const FormTextField(name: "capriniScore", labelName: ""),
-                    const SizedBox(height: 16),
-                    const Text(
+                    const SizedBox(height: 8),
+                    Text(
                       "VTE Prophylaxis",
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold),
+                      style: Theme.of(context).textTheme.bodyMedium,
                     ),
                     FormRadio(
                       enabled: true,
                       name: 'vteInclusion',
                       onChanged: (inclusionValue) {
-                        if (inclusionValue == "yes") {
-                          setState(() {
-                            visibleVTE = true;
-                          });
-                        } else {
-                          setState(() {
-                            visibleVTE = false;
-                          });
-                        }
+                        setState(() {
+                          visibleVTE = inclusionValue == "yes";
+                        });
                       },
-                      values: yesNoList,
-                      texts: yesNoList,
+                      values: const ['yes', 'no'],
+                      texts: const ['Yes', 'No'],
+                    ),
+                    Text(
+                      "VTE Type",
+                      style: Theme.of(context).textTheme.bodyMedium,
                     ),
                     const SizedBox(height: 8),
-                    Visibility(
-                      visible: visibleVTE,
-                      child: Card(
-                          // elevation: 5,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10)),
-                          color: Colors.white,
-                          child: condVTE()),
-                    ),
-                    const SizedBox(height: 16),
-                    const Text(
+                    FormTextField(
+                        name: "vteType", labelName: "", enabled: visibleVTE),
+                    const SizedBox(height: 8),
+                    Text(
                       "Life Support Withdrawal",
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold),
+                      style: Theme.of(context).textTheme.bodyMedium,
                     ),
                     FormRadio(
                       enabled: true,
@@ -924,22 +826,30 @@ class AddInHospitalState extends State<AddInHospital>
                       texts: const ['Yes', 'No'],
                     ),
                     const SizedBox(height: 8),
-                    Visibility(
-                      visible: visibleLSW,
-                      child: Card(
-                          // elevation: 5,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10)),
-                          color: Colors.white,
-                          child: condLSW()),
+                    Text("LSW Date and Time",
+                        style: Theme.of(context).textTheme.bodyMedium),
+                    const SizedBox(height: 8),
+                    FormBuilderDateTimePicker(
+                      name: 'lswTimestamp',
+                      firstDate: DateTime(1900),
+                      lastDate: DateTime(
+                          DateTime.now().year,
+                          DateTime.now().month,
+                          DateTime.now().day,
+                          DateTime.now().hour,
+                          DateTime.now().minute),
+                      format: DateFormat('yyyy-MM-dd HH:mm:ss'),
+                      onChanged: (DateTime? value) {},
+                      decoration: AppInputDecoration.withCustomColor(
+                        fillColor: visibleLSW
+                            ? AppColors.primaryVariant.withOpacity(0.1)
+                            : AppColors.textTertiary.withOpacity(0.05),
+                      ),
                     ),
-                    const SizedBox(height: 16),
-                    const Text(
+                    const SizedBox(height: 8),
+                    Text(
                       "Is in ICU",
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold),
+                      style: Theme.of(context).textTheme.titleMedium,
                     ),
                     FormRadio(
                       enabled: true,
@@ -961,77 +871,56 @@ class AddInHospitalState extends State<AddInHospital>
                     Visibility(
                       visible: visibleICU,
                       child: Card(
-                          // elevation: 5,
                           shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10)),
+                              borderRadius: BorderRadius.circular(8)),
                           color: Colors.white,
                           child: condICU()),
                     ),
-                    const Text(
+                    const SizedBox(height: 8),
+                    Text(
                       "Comorbidities",
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold),
+                      style: Theme.of(context).textTheme.bodyMedium,
                     ),
                     const SizedBox(height: 4),
                     comorbidityTemplate(context),
                     const SizedBox(height: 16),
-                    const Text(
+                    Text(
                       "Complications",
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold),
+                      style: Theme.of(context).textTheme.bodyMedium,
                     ),
                     const SizedBox(height: 4),
                     hospitalEventTemplate(context),
-                    const SizedBox(height: 16),
-                    const Text(
-                      "Consultations",
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold),
+                    const SizedBox(height: 8),
+                    Divider(
+                      color: AppColors.textPrimary,
                     ),
-                    ElevatedButton(
-                      onPressed: () {
-                        addInreferralsWidget(context);
-                      },
-                      style: ButtonStyle(
-                        backgroundColor:
-                            WidgetStateProperty.all<Color>(Colors.grey[200]!),
-                      ),
-                      child: const Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text('Add',
-                              style: TextStyle(
-                                  color: Color.fromARGB(255, 66, 66, 66))),
-                          SizedBox(width: 8),
-                          Icon(Icons.add,
-                              color: Color.fromARGB(255, 66, 66, 66)),
-                        ],
-                      ),
+                    Row(
+                      children: [
+                        Text(
+                          "Consultations",
+                          style: Theme.of(context).textTheme.bodyMedium,
+                        ),
+                        const Spacer(),
+                        IconButton(
+                          onPressed: () {
+                            addInreferralsWidget(context);
+                          },
+                          icon: const Icon(LucideIcons.plusCircle, size: 16),
+                        ),
+                      ],
                     ),
                     const SizedBox(height: 8),
                     if (inreferralsList.isEmpty)
-                      const Text("No Consultations yet"),
-                    if (inreferralsList.isNotEmpty)
-                      SizedBox(
-                        // you may want to use an aspect ratio here for tablet support
-                        height: 290.0,
-                        width: widthScreen,
-                        child: ListView.builder(
-                          // store this controller in a State to save the carousel scroll position
-                          // controller: PageController(viewportFraction: 0.9),
-                          itemCount: inreferralsList.length,
-                          padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
-                          itemBuilder: (context, index) {
-                            return inreferralsList[index];
-                          },
+                      Center(
+                        child: Text(
+                          "No Consultations yet",
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodySmall!
+                              .copyWith(color: AppColors.textSecondary),
                         ),
                       ),
+                    if (inreferralsList.isNotEmpty) ...inreferralsList,
                     const SizedBox(height: 16)
                   ],
                 ),

@@ -1,3 +1,4 @@
+import 'package:dashboard/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
@@ -38,6 +39,14 @@ class FormTextArea extends StatelessWidget {
       maxLines: maxLines,
       keyboardType: TextInputType.multiline,
       decoration: InputDecoration(
+        filled: true,
+        fillColor: AppColors.primaryVariant.withOpacity(0.1),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+          borderSide: BorderSide(
+            color: AppColors.primaryVariant.withOpacity(0.1),
+          ),
+        ),
         labelText: labelName,
         floatingLabelBehavior: FloatingLabelBehavior.always,
         labelStyle: Theme.of(context).textTheme.bodyMedium,
@@ -45,9 +54,6 @@ class FormTextArea extends StatelessWidget {
         contentPadding: const EdgeInsets.symmetric(
           horizontal: 20.0,
           vertical: 15.0,
-        ),
-        border: const OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(15.0)),
         ),
         prefixIcon: prefixIcon,
       ),

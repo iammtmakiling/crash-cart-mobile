@@ -1,6 +1,8 @@
 import 'package:dashboard/core/theme/app_colors.dart';
+import 'package:dashboard/core/theme/app_text_theme.dart';
 import 'package:dashboard/core/theme/app_theme.dart';
 import 'package:dashboard/widgets/main_appbar.dart';
+import 'package:lucide_icons/lucide_icons.dart';
 
 import '../../core/api_requests/_api.dart';
 import 'package:dashboard/globals.dart';
@@ -38,16 +40,16 @@ class addInfo extends StatelessWidget {
     initializeDateFormatting('az');
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      supportedLocales: const [
-        Locale('de'),
-        Locale('en'),
-        Locale('es'),
-        Locale('fr'),
-        Locale('it'),
-      ],
-      localizationsDelegates: const [
-        FormBuilderLocalizations.delegate,
-      ],
+      // supportedLocales: const [
+      //   Locale('de'),
+      //   Locale('en'),
+      //   Locale('es'),
+      //   Locale('fr'),
+      //   Locale('it'),
+      // ],
+      // localizationsDelegates: const [
+      //   FormBuilderLocalizations.delegate,
+      // ],
       theme: ThemeData(
           primarySwatch: Colors.cyan,
           visualDensity: VisualDensity.adaptivePlatformDensity,
@@ -113,7 +115,7 @@ class AddInfoState extends State<AddInfo> with SingleTickerProviderStateMixin {
   String provincesDesc = "";
   String citiesDesc = "";
 
-  bool? isSameAddress = false;
+  bool isSameAddress = false;
 
   // Lists
   List<dynamic> externalCauses = [];
@@ -197,145 +199,103 @@ class AddInfoState extends State<AddInfo> with SingleTickerProviderStateMixin {
   // General Indo Widgets
   Padding patientName() {
     return Padding(
-        padding: const EdgeInsets.fromLTRB(16.0, 0, 16, 0),
+        padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text("Patient Full Name",
-                style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold)),
-            const SizedBox(height: 5),
+            Text("Patient Full Name",
+                style: Theme.of(context).textTheme.bodyMedium),
+            const SizedBox(height: 8),
             Padding(
-              padding: const EdgeInsets.fromLTRB(0, 0, 0, 16.0),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Column(
-                      children: [
-                        FormTextField(
-                          name: 'lastName',
-                          labelName: 'Last Name',
-                          enabled: !ifPatientExist,
-                          validator: FormBuilderValidators.required(),
-                          onChanged: (value) async {
-                            if (ifPatientExist == false) {
-                              _formKey.currentState!.save();
+                padding: const EdgeInsets.fromLTRB(0, 0, 0, 16.0),
+                child: Column(
+                  children: [
+                    FormTextField(
+                      name: 'lastName',
+                      labelName: 'Last Name',
+                      enabled: !ifPatientExist,
+                      validator: FormBuilderValidators.required(),
+                      onChanged: (value) async {
+                        if (ifPatientExist == false) {
+                          _formKey.currentState!.save();
 
-                              Map<String, dynamic>? patientData =
-                                  await checkIfPatientExist(
-                                      _formKey.currentState!.value);
+                          Map<String, dynamic>? patientData =
+                              await checkIfPatientExist(
+                                  _formKey.currentState!.value);
 
-                              if (patientData['isFound'] == true) {
-                                // ignore: use_build_context_synchronously
-                                showExistingPatient(
-                                    // ignore: use_build_context_synchronously
-                                    context,
-                                    patientData['patient']);
-                              }
-                            }
-                          },
-                        ),
-                      ],
+                          if (patientData['isFound'] == true) {
+                            showExistingPatient(
+                                context, patientData['patient']);
+                          }
+                        }
+                      },
                     ),
-                  ),
-                  const SizedBox(width: 4),
-                  Expanded(
-                    child: Column(
-                      children: [
-                        FormTextField(
-                          name: 'firstName',
-                          labelName: 'First Name',
-                          enabled: !ifPatientExist,
-                          validator: FormBuilderValidators.required(),
-                          onChanged: (value) async {
-                            if (ifPatientExist == false) {
-                              _formKey.currentState!.save();
+                    const SizedBox(height: 8),
+                    FormTextField(
+                      name: 'firstName',
+                      labelName: 'First Name',
+                      enabled: !ifPatientExist,
+                      validator: FormBuilderValidators.required(),
+                      onChanged: (value) async {
+                        if (ifPatientExist == false) {
+                          _formKey.currentState!.save();
 
-                              Map<String, dynamic>? patientData =
-                                  await checkIfPatientExist(
-                                      _formKey.currentState!.value);
+                          Map<String, dynamic>? patientData =
+                              await checkIfPatientExist(
+                                  _formKey.currentState!.value);
 
-                              if (patientData['isFound'] == true) {
-                                // ignore: use_build_context_synchronously
-                                showExistingPatient(
-                                    // ignore: use_build_context_synchronously
-                                    context,
-                                    patientData['patient']);
-                              }
-                            }
-                          },
-                        ),
-                      ],
+                          if (patientData['isFound'] == true) {
+                            showExistingPatient(
+                                context, patientData['patient']);
+                          }
+                        }
+                      },
                     ),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(0, 0, 0, 16.0),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Column(
-                      children: [
-                        FormTextField(
-                          name: 'middleName',
-                          labelName: 'Middle Name',
-                          enabled: !ifPatientExist,
-                          onChanged: (value) async {
-                            if (ifPatientExist == false) {
-                              _formKey.currentState!.save();
+                    const SizedBox(height: 8),
+                    FormTextField(
+                      name: 'middleName',
+                      labelName: 'Middle Name',
+                      enabled: !ifPatientExist,
+                      onChanged: (value) async {
+                        if (ifPatientExist == false) {
+                          _formKey.currentState!.save();
 
-                              Map<String, dynamic>? patientData =
-                                  await checkIfPatientExist(
-                                      _formKey.currentState!.value);
+                          Map<String, dynamic>? patientData =
+                              await checkIfPatientExist(
+                                  _formKey.currentState!.value);
 
-                              if (patientData['isFound'] == true) {
-                                // ignore: use_build_context_synchronously
-                                showExistingPatient(
-                                    // ignore: use_build_context_synchronously
-                                    context,
-                                    patientData['patient']);
-                              }
-                            }
-                          },
-                        ),
-                      ],
+                          if (patientData['isFound'] == true) {
+                            showExistingPatient(
+                                context, patientData['patient']);
+                          }
+                        }
+                      },
                     ),
-                  ),
-                  const SizedBox(width: 4),
-                  Expanded(
-                    child: Column(
-                      children: [
-                        FormTextField(
-                          name: 'suffix',
-                          labelName: 'Suffix',
-                          enabled: !ifPatientExist,
-                          onChanged: (value) async {
-                            if (ifPatientExist == false) {
-                              _formKey.currentState!.save();
+                    const SizedBox(height: 8),
+                    FormTextField(
+                      name: 'suffix',
+                      labelName: 'Suffix',
+                      enabled: !ifPatientExist,
+                      onChanged: (value) async {
+                        if (ifPatientExist == false) {
+                          _formKey.currentState!.save();
 
-                              Map<String, dynamic>? patientData =
-                                  await checkIfPatientExist(
-                                      _formKey.currentState!.value);
+                          Map<String, dynamic>? patientData =
+                              await checkIfPatientExist(
+                                  _formKey.currentState!.value);
 
-                              if (patientData['isFound'] == true) {
+                          if (patientData['isFound'] == true) {
+                            showExistingPatient(
                                 // ignore: use_build_context_synchronously
-                                showExistingPatient(
-                                    context, patientData['patient']);
-                              }
-                            }
-                          },
-                        ),
-                      ],
+                                context,
+                                patientData['patient']);
+                          }
+                        }
+                      },
                     ),
-                  ),
-                ],
-              ),
-            ),
+                  ],
+                )),
           ],
         ));
   }
@@ -348,6 +308,10 @@ class AddInfoState extends State<AddInfo> with SingleTickerProviderStateMixin {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Checkbox(
+            fillColor: isUnkown
+                ? WidgetStateProperty.all(AppColors.primary)
+                : WidgetStateProperty.all(AppColors.primary.withOpacity(0.1)),
+            side: BorderSide(color: AppColors.primary.withOpacity(0.1)),
             value: isUnkown,
             onChanged: (value) {
               setState(() {
@@ -355,7 +319,8 @@ class AddInfoState extends State<AddInfo> with SingleTickerProviderStateMixin {
               });
             },
           ),
-          const Text('Patient is Unkown'),
+          Text('Patient is Unkown',
+              style: Theme.of(context).textTheme.bodySmall),
         ],
       ),
     );
@@ -393,11 +358,8 @@ class AddInfoState extends State<AddInfo> with SingleTickerProviderStateMixin {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text("Type of Patient",
-              style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold)),
+          Text("Type of Patient",
+              style: Theme.of(context).textTheme.bodyMedium),
           FormRadio(
             name: 'patientType',
             initialValue: 'ER',
@@ -417,11 +379,7 @@ class AddInfoState extends State<AddInfo> with SingleTickerProviderStateMixin {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text("Sex",
-              style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold)),
+          Text("Sex", style: Theme.of(context).textTheme.bodyMedium),
           FormRadio(
             name: 'gender',
             enabled: !ifPatientExist,
@@ -620,93 +578,110 @@ class AddInfoState extends State<AddInfo> with SingleTickerProviderStateMixin {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
+            Text(
               "Birthday & Age",
-              style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold),
+              style: Theme.of(context).textTheme.bodyMedium,
             ),
-            const SizedBox(height: 5),
-            Row(
-              children: [
-                Expanded(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      FormBuilderDateTimePicker(
-                        inputType: InputType.date,
-                        name: 'birthday',
-                        enabled: !ifPatientExist,
-                        firstDate: DateTime(1900),
-                        lastDate: DateTime.now(),
-                        format: DateFormat('yyyy-MM-dd'),
-                        onChanged: (DateTime? value) async {
-                          // ignore: prefer_typing_uninitialized_variables
-                          var patientAge;
+            const SizedBox(height: 8),
+            FormBuilderDateTimePicker(
+              inputType: InputType.date,
+              name: 'birthday',
+              enabled: !ifPatientExist,
+              firstDate: DateTime(1900),
+              lastDate: DateTime.now(),
+              format: DateFormat('yyyy-MM-dd'),
+              onChanged: (DateTime? value) async {
+                // ignore: prefer_typing_uninitialized_variables
+                var patientAge;
 
-                          if (ifPatientExist == false) {
-                            _formKey.currentState!.save();
-                            Map<String, dynamic>? patientData =
-                                await checkIfPatientExist(
-                                    _formKey.currentState!.value);
+                if (ifPatientExist == false) {
+                  _formKey.currentState!.save();
+                  Map<String, dynamic>? patientData =
+                      await checkIfPatientExist(_formKey.currentState!.value);
 
-                            if (patientData['isFound'] == true) {
-                              // ignore: use_build_context_synchronously
-                              showExistingPatient(
-                                  // ignore: use_build_context_synchronously
-                                  context,
-                                  patientData['patient']);
-                            }
-                          }
+                  if (patientData['isFound'] == true) {
+                    showExistingPatient(context, patientData['patient']);
+                  } else {}
+                }
 
-                          setState(() {
-                            // ignore: unnecessary_null_comparison
-                            if (value == null) {
-                            } else {
-                              // print(value);
-                              patientAge = calculateAge(value);
-                              _formKey.currentState!.fields['age']!
-                                  .didChange(patientAge.toString());
-                            }
-                          });
-                        },
-                        decoration: const InputDecoration(
-                          labelText: 'Birthday',
-                          contentPadding: EdgeInsets.symmetric(
-                              horizontal: 20.0, vertical: 10.0),
-                          border: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(30.0)),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                setState(() {
+                  // ignore: unnecessary_null_comparison
+                  if (value == null) {
+                  } else {
+                    patientAge = calculateAge(value);
+                    _formKey.currentState!.fields['age']!
+                        .didChange(patientAge.toString());
+                  }
+                });
+              },
+              decoration: InputDecoration(
+                labelText: 'Birthday',
+                filled: true,
+                fillColor: AppColors.primaryVariant.withOpacity(0.1),
+                labelStyle: AppTextTheme.textTheme.bodySmall?.copyWith(
+                  color: AppColors.textSecondary,
                 ),
-                const SizedBox(width: 4),
-                Expanded(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      FormBuilderTextField(
-                        enabled: false,
-                        name: 'age',
-                        decoration: const InputDecoration(
-                          labelText: 'Age',
-                          // hintStyle: TextStyle(color: Colors.grey),
-                          contentPadding: EdgeInsets.symmetric(
-                              horizontal: 20.0, vertical: 10.0),
-                          border: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(30.0)),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                hintStyle: AppTextTheme.textTheme.bodySmall?.copyWith(
+                  color: AppColors.textTertiary,
                 ),
-              ],
+                enabledBorder: OutlineInputBorder(
+                  borderSide:
+                      BorderSide(color: AppColors.primary.withOpacity(0.1)),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide:
+                      BorderSide(color: AppColors.primary.withOpacity(0.5)),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                errorBorder: OutlineInputBorder(
+                  borderSide: const BorderSide(color: AppColors.error),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                focusedErrorBorder: OutlineInputBorder(
+                  borderSide: const BorderSide(color: AppColors.error),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+            ),
+            const SizedBox(height: 8),
+            FormBuilderTextField(
+              enabled: false,
+              name: 'age',
+              decoration: InputDecoration(
+                labelText: 'Age',
+                filled: true,
+                fillColor: AppColors.textTertiary.withOpacity(0.01),
+                labelStyle: AppTextTheme.textTheme.bodySmall?.copyWith(
+                  color: AppColors.textSecondary,
+                ),
+                hintStyle: AppTextTheme.textTheme.bodySmall?.copyWith(
+                  color: AppColors.textTertiary,
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderSide:
+                      BorderSide(color: AppColors.primary.withOpacity(0.1)),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                disabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                      color: AppColors.textTertiary.withOpacity(0.5)),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide:
+                      BorderSide(color: AppColors.primary.withOpacity(0.5)),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                errorBorder: OutlineInputBorder(
+                  borderSide: const BorderSide(color: AppColors.error),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                focusedErrorBorder: OutlineInputBorder(
+                  borderSide: const BorderSide(color: AppColors.error),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
             ),
           ],
         ),
@@ -720,10 +695,9 @@ class AddInfoState extends State<AddInfo> with SingleTickerProviderStateMixin {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
+          Text(
             "Present Address",
-            style: TextStyle(
-                color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
+            style: Theme.of(context).textTheme.bodyMedium,
           ),
           const SizedBox(height: 5),
           FormAddress(
@@ -766,16 +740,21 @@ class AddInfoState extends State<AddInfo> with SingleTickerProviderStateMixin {
             },
           ),
           const SizedBox(height: 16),
-          const Text(
+          Text(
             "Permanent Address",
-            style: TextStyle(
-                color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
+            style: Theme.of(context).textTheme.bodyMedium,
           ),
           const SizedBox(height: 5),
           if (!ifPatientExist)
             Row(
               children: [
                 Checkbox(
+                  checkColor: Colors.white,
+                  fillColor: isSameAddress
+                      ? WidgetStateProperty.all(AppColors.primary)
+                      : WidgetStateProperty.all(
+                          AppColors.primary.withOpacity(0.1)),
+                  side: BorderSide(color: AppColors.primary.withOpacity(0.1)),
                   value: isSameAddress,
                   onChanged: (value) {
                     setState(() {
@@ -798,7 +777,10 @@ class AddInfoState extends State<AddInfo> with SingleTickerProviderStateMixin {
                     });
                   },
                 ),
-                const Text('Same as Present Address'),
+                Text(
+                  'Same as Present Address',
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
               ],
             ),
           const SizedBox(height: 5),
@@ -853,10 +835,9 @@ class AddInfoState extends State<AddInfo> with SingleTickerProviderStateMixin {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
+          Text(
             "PhilHealth ID",
-            style: TextStyle(
-                color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
+            style: Theme.of(context).textTheme.bodyMedium,
           ),
           const SizedBox(height: 5),
           Padding(
@@ -895,15 +876,39 @@ class AddInfoState extends State<AddInfo> with SingleTickerProviderStateMixin {
               format: DateFormat('yyyy-MM-dd HH:mm:ss'),
               validator: FormBuilderValidators.required(),
               onChanged: (DateTime? value) {},
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(30.0)),
+              style: Theme.of(context).textTheme.bodySmall,
+              decoration: InputDecoration(
+                labelText: "Date and Time",
+                filled: true,
+                fillColor: AppColors.textTertiary.withOpacity(0.01),
+                labelStyle: AppTextTheme.textTheme.bodySmall?.copyWith(
+                  color: AppColors.textSecondary,
                 ),
-                labelText: "Date and Time of Injury",
-                hintStyle: TextStyle(color: Colors.grey),
-                contentPadding: EdgeInsets.symmetric(
-                  horizontal: 20.0,
-                  vertical: 10.0,
+                hintStyle: AppTextTheme.textTheme.bodySmall?.copyWith(
+                  color: AppColors.textTertiary,
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderSide:
+                      BorderSide(color: AppColors.primary.withOpacity(0.1)),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                disabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                      color: AppColors.textTertiary.withOpacity(0.5)),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide:
+                      BorderSide(color: AppColors.primary.withOpacity(0.5)),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                errorBorder: OutlineInputBorder(
+                  borderSide: const BorderSide(color: AppColors.error),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                focusedErrorBorder: OutlineInputBorder(
+                  borderSide: const BorderSide(color: AppColors.error),
+                  borderRadius: BorderRadius.circular(8),
                 ),
               ),
             ),
@@ -914,26 +919,23 @@ class AddInfoState extends State<AddInfo> with SingleTickerProviderStateMixin {
   }
 
   Padding condFirstAiderDetails() {
-    // need validators for ID format
     return Padding(
       padding: const EdgeInsets.all(16),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
+          Text(
             "First Aider ID:",
-            style: TextStyle(
-                color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
+            style: Theme.of(context).textTheme.bodyMedium,
           ),
           const SizedBox(height: 8),
           FormTextField(
               initialValue: userID, name: "firstAider", labelName: ""),
           const SizedBox(height: 16),
-          const Text(
+          Text(
             "Is first aid given properly?",
-            style: TextStyle(
-                color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
+            style: Theme.of(context).textTheme.bodyMedium,
           ),
           FormRadio(
             enabled: true,
@@ -942,10 +944,9 @@ class AddInfoState extends State<AddInfo> with SingleTickerProviderStateMixin {
             texts: yesNoList,
           ),
           const SizedBox(height: 16),
-          const Text(
+          Text(
             "Method given:",
-            style: TextStyle(
-                color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
+            style: Theme.of(context).textTheme.bodyMedium,
           ),
           FormSearchableDropdown(
             formKey: _formKey,
@@ -970,10 +971,9 @@ class AddInfoState extends State<AddInfo> with SingleTickerProviderStateMixin {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
+          Text(
             "Type of Vehicular Accident?",
-            style: TextStyle(
-                color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
+            style: Theme.of(context).textTheme.bodyMedium,
           ),
           FormRadio(
             enabled: true,
@@ -982,10 +982,9 @@ class AddInfoState extends State<AddInfo> with SingleTickerProviderStateMixin {
             texts: vehicleAccidentType,
           ),
           const SizedBox(height: 16),
-          const Text(
+          Text(
             "Collision or Non-Collision",
-            style: TextStyle(
-                color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
+            style: Theme.of(context).textTheme.bodyMedium,
           ),
           FormRadio(
             enabled: true,
@@ -1005,10 +1004,9 @@ class AddInfoState extends State<AddInfo> with SingleTickerProviderStateMixin {
             },
           ),
           const SizedBox(height: 8),
-          const Text(
+          Text(
             "Patient's Vehicle",
-            style: TextStyle(
-                color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
+            style: Theme.of(context).textTheme.bodyMedium,
           ),
           FormRadio(
             enabled: true,
@@ -1018,12 +1016,9 @@ class AddInfoState extends State<AddInfo> with SingleTickerProviderStateMixin {
           ),
           const SizedBox(height: 8),
           if (visibleCollision)
-            const Text(
+            Text(
               "Other Party's Vehicle",
-              style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold),
+              style: Theme.of(context).textTheme.bodyMedium,
             ),
           if (visibleCollision) const SizedBox(height: 8),
           if (visibleCollision)
@@ -1033,10 +1028,9 @@ class AddInfoState extends State<AddInfo> with SingleTickerProviderStateMixin {
                 values: ['(none) Pedestrian', ...vehiclesList],
                 texts: ['(none) Pedestrian', ...vehiclesList]),
           const SizedBox(height: 8),
-          const Text(
+          Text(
             "Position of Patient?",
-            style: TextStyle(
-                color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
+            style: Theme.of(context).textTheme.bodyMedium,
           ),
           FormRadio(
               enabled: true,
@@ -1044,10 +1038,9 @@ class AddInfoState extends State<AddInfo> with SingleTickerProviderStateMixin {
               values: positionOfPatientList,
               texts: positionOfPatientList),
           const SizedBox(height: 8),
-          const Text(
+          Text(
             "Place of Occurence?",
-            style: TextStyle(
-                color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
+            style: Theme.of(context).textTheme.bodyMedium,
           ),
           const SizedBox(height: 8),
           FormSearchableDropdown(
@@ -1063,28 +1056,25 @@ class AddInfoState extends State<AddInfo> with SingleTickerProviderStateMixin {
             textFieldLabel: "Specify Place",
           ),
           const SizedBox(height: 16),
-          const Text(
+          Text(
             "Activity During Injury?",
-            style: TextStyle(
-                color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
+            style: Theme.of(context).textTheme.bodyMedium,
           ),
           const FormCheckbox(
             name: 'activityDuringAccident',
             options: ['Sports', 'Leisure', 'Work-related', 'Unknown'],
           ),
           const SizedBox(height: 16),
-          const Text(
+          Text(
             "Other risk factors at the time of the incident:",
-            style: TextStyle(
-                color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
+            style: Theme.of(context).textTheme.bodyMedium,
           ),
           const SizedBox(height: 8),
           FormCheckbox(name: "otherRisksFactors", options: otherRisksFactors),
           const SizedBox(height: 16),
-          const Text(
+          Text(
             "Safety Issues? (Select all that apply)",
-            style: TextStyle(
-                color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
+            style: Theme.of(context).textTheme.bodyMedium,
           ),
           FormCheckbox(name: 'safetyIssues', options: safetyIssues)
         ],
@@ -1099,10 +1089,9 @@ class AddInfoState extends State<AddInfo> with SingleTickerProviderStateMixin {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
+          Text(
             "Category",
-            style: TextStyle(
-                color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
+            style: Theme.of(context).textTheme.bodyMedium,
           ),
           FormSearchableDropdown(
             formKey: _formKey,
@@ -1125,10 +1114,9 @@ class AddInfoState extends State<AddInfo> with SingleTickerProviderStateMixin {
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        const Text(
+        Text(
           "Place of Injury",
-          style: TextStyle(
-              color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
+          style: Theme.of(context).textTheme.bodyMedium,
         ),
         FormAddress(
           enabled: true,
@@ -1170,17 +1158,15 @@ class AddInfoState extends State<AddInfo> with SingleTickerProviderStateMixin {
           },
         ),
         const SizedBox(height: 16),
-        const Text(
+        Text(
           "Date and Time of Injury",
-          style: TextStyle(
-              color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
+          style: Theme.of(context).textTheme.bodyMedium,
         ),
         dateTimeInjury(),
         const SizedBox(height: 16),
-        const Text(
+        Text(
           "Injury Intent",
-          style: TextStyle(
-              color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
+          style: Theme.of(context).textTheme.bodyMedium,
         ),
         FormRadio(
             enabled: true,
@@ -1195,10 +1181,9 @@ class AddInfoState extends State<AddInfo> with SingleTickerProviderStateMixin {
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        const Text(
+        Text(
           "First Aid Given",
-          style: TextStyle(
-              color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
+          style: Theme.of(context).textTheme.bodyMedium,
         ),
         FormRadio(
           enabled: true,
@@ -1226,9 +1211,8 @@ class AddInfoState extends State<AddInfo> with SingleTickerProviderStateMixin {
         Visibility(
           visible: visibleFirstAidGiven,
           child: Card(
-            // // elevation: 5,
             shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
             color: Colors.white,
             child: condFirstAiderDetails(),
           ),
@@ -1243,60 +1227,96 @@ class AddInfoState extends State<AddInfo> with SingleTickerProviderStateMixin {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
+          Text(
             "Nature of Injury",
-            style: TextStyle(
-                color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
+            style: Theme.of(context).textTheme.bodyMedium,
           ),
-          MultiSelectBottomSheetField(
-            initialValue: naturesOfInjuryList,
-            chipDisplay: MultiSelectChipDisplay(
-              height: 50,
-              scroll: true,
+          const SizedBox(height: 8),
+          Container(
+            padding: EdgeInsets.fromLTRB(12, 9, 12, 9),
+            decoration: BoxDecoration(
+              color: AppColors.primaryVariant.withOpacity(0.1),
+              borderRadius: BorderRadius.circular(8),
+              border: Border.all(
+                color: AppColors.primary.withOpacity(0.1),
+                width: 1.0,
+              ),
             ),
-            listType: MultiSelectListType.LIST,
-            title: const Text("Add"),
-            searchable: true,
-            searchIcon: const Icon(Icons.search),
-            items: naturesOfInjury.map((e) => MultiSelectItem(e, e)).toList(),
-            onConfirm: (selectedItems) {
-              setState(
-                () {
-                  naturesOfInjuryList = selectedItems;
-                },
-              );
-            },
+            child: MultiSelectBottomSheetField(
+              initialValue: naturesOfInjuryList,
+              searchTextStyle: Theme.of(context).textTheme.bodyMedium,
+              selectedItemsTextStyle: Theme.of(context).textTheme.bodyMedium,
+              selectedColor: AppColors.primary,
+              buttonIcon: const Icon(LucideIcons.chevronDown),
+              chipDisplay: MultiSelectChipDisplay(
+                height: 50,
+                scroll: true,
+              ),
+              listType: MultiSelectListType.LIST,
+              title: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12),
+                child: Text(
+                  "Add",
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
+              ),
+              searchable: true,
+              searchIcon: const Icon(Icons.search),
+              items: naturesOfInjury.map((e) => MultiSelectItem(e, e)).toList(),
+              onConfirm: (selectedItems) {
+                setState(
+                  () {
+                    naturesOfInjuryList = selectedItems;
+                  },
+                );
+              },
+            ),
           ),
           // FormCheckbox(name: "naturesOfInjury", options: naturesOfInjury),
           const SizedBox(height: 12),
           const FormTextArea(
               name: "natureOfInjuryExtraInfo", labelName: "Additional Details"),
           const SizedBox(height: 16),
-          const Text(
+          Text(
             "External Cause of Injury",
-            style: TextStyle(
-                color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
+            style: Theme.of(context).textTheme.bodyMedium,
           ),
           const SizedBox(height: 8),
-          MultiSelectBottomSheetField(
-            initialValue: externalCauses,
-            chipDisplay: MultiSelectChipDisplay(
-              height: 50,
-              scroll: true,
+          Container(
+            padding: EdgeInsets.fromLTRB(12, 9, 12, 9),
+            decoration: BoxDecoration(
+              color: AppColors.primaryVariant.withOpacity(0.1),
+              borderRadius: BorderRadius.circular(8),
+              border: Border.all(
+                color: AppColors.primary.withOpacity(0.1),
+                width: 1.0,
+              ),
             ),
-            listType: MultiSelectListType.LIST,
-            title: const Text("Add"),
-            searchable: true,
-            searchIcon: const Icon(Icons.search),
-            items:
-                externalCausesInjury.map((e) => MultiSelectItem(e, e)).toList(),
-            onConfirm: (selectedItems) {
-              setState(
-                () {
-                  externalCauses = selectedItems;
-                },
-              );
-            },
+            child: MultiSelectBottomSheetField(
+              initialValue: externalCauses,
+              searchTextStyle: Theme.of(context).textTheme.bodyMedium,
+              selectedItemsTextStyle: Theme.of(context).textTheme.bodyMedium,
+              selectedColor: AppColors.primary,
+              buttonIcon: const Icon(LucideIcons.chevronDown),
+              chipDisplay: MultiSelectChipDisplay(
+                height: 50,
+                scroll: true,
+              ),
+              listType: MultiSelectListType.LIST,
+              title: const Text("Add"),
+              searchable: true,
+              searchIcon: const Icon(Icons.search),
+              items: externalCausesInjury
+                  .map((e) => MultiSelectItem(e, e))
+                  .toList(),
+              onConfirm: (selectedItems) {
+                setState(
+                  () {
+                    externalCauses = selectedItems;
+                  },
+                );
+              },
+            ),
           ),
         ],
       ),
@@ -1310,12 +1330,9 @@ class AddInfoState extends State<AddInfo> with SingleTickerProviderStateMixin {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
+            Text(
               "Vehicular Accident?",
-              style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold),
+              style: Theme.of(context).textTheme.bodyMedium,
             ),
             FormRadio(
               enabled: true,
@@ -1337,9 +1354,8 @@ class AddInfoState extends State<AddInfo> with SingleTickerProviderStateMixin {
             Visibility(
               visible: visibleVehicularAccident,
               child: Card(
-                // elevation: 5,
                 shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10)),
+                    borderRadius: BorderRadius.circular(8)),
                 color: Colors.white,
                 child: condVehicularAccident(),
               ),
@@ -1353,10 +1369,9 @@ class AddInfoState extends State<AddInfo> with SingleTickerProviderStateMixin {
       padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         const SizedBox(height: 16),
-        const Text(
+        Text(
           "Medicolegal Case?",
-          style: TextStyle(
-              color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
+          style: Theme.of(context).textTheme.bodyMedium,
         ),
         FormRadio(
           enabled: true,
@@ -1378,9 +1393,8 @@ class AddInfoState extends State<AddInfo> with SingleTickerProviderStateMixin {
         Visibility(
           visible: visibleMedicolegal,
           child: Card(
-            // elevation: 5,
             shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
             color: Colors.white,
             child: condMedicolegal(),
           ),
@@ -1390,18 +1404,14 @@ class AddInfoState extends State<AddInfo> with SingleTickerProviderStateMixin {
   }
 
   Padding chiefComplaint() {
-    // need validators for ID format
     return Padding(
-        padding: const EdgeInsets.fromLTRB(16.0, 0, 16, 16),
+        padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
+            Text(
               "Chief Complaint",
-              style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold),
+              style: Theme.of(context).textTheme.bodyMedium,
             ),
             const SizedBox(height: 8),
             FormSearchableDropdown(
@@ -1421,15 +1431,14 @@ class AddInfoState extends State<AddInfo> with SingleTickerProviderStateMixin {
   }
 
   Padding massInjuryTF() {
-    return const Padding(
-      padding: EdgeInsets.fromLTRB(16, 0, 0, 0),
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 0, 0, 0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             "Mass Injury",
-            style: TextStyle(
-                color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
+            style: Theme.of(context).textTheme.bodyMedium,
           ),
           FormRadio(
             enabled: true,
@@ -1826,198 +1835,80 @@ class AddInfoState extends State<AddInfo> with SingleTickerProviderStateMixin {
       child: Scaffold(
         body: Column(
           children: [
-            isSending
-                ? const SendingWidget()
-                : isSentSuccessfully
-                    ? SuccessfulWidget(
-                        message: "Successful!", onPressed: widget.onBack)
-                    : Expanded(
-                        child: DefaultTabController(
-                          initialIndex: 0,
-                          length: 2,
-                          child: Scaffold(
-                            appBar: AppBar(
-                              automaticallyImplyLeading: false,
-                              title: mainAppBar(context, 'Add Patient Data s'),
-                              bottom: TabBar(
-                                isScrollable: false,
-                                labelStyle: Theme.of(context)
-                                    .textTheme
-                                    .bodyMedium
-                                    ?.copyWith(color: AppColors.primary),
-                                unselectedLabelStyle: Theme.of(context)
-                                    .textTheme
-                                    .bodyMedium
-                                    ?.copyWith(color: AppColors.textSecondary),
-                                indicator: const UnderlineTabIndicator(
-                                  borderSide: BorderSide(
-                                      color: AppColors.primary, width: 2),
-                                  insets: EdgeInsets.zero,
-                                ),
-                                controller: _controller,
-                                tabs: const <Widget>[
-                                  Tab(text: "General"),
-                                  Tab(text: "Pre-Hospital"),
-                                ],
+            // isSending
+            //     ? const SendingWidget()
+            //     : isSentSuccessfully
+            //         ? SuccessfulWidget(
+            //             message: "Successful!", onPressed: widget.onBack)
+            //         :
+            Expanded(
+              child: DefaultTabController(
+                initialIndex: 0,
+                length: 2,
+                child: Scaffold(
+                  appBar: AppBar(
+                    automaticallyImplyLeading: false,
+                    title: Text("Adding Patient Data",
+                        style: Theme.of(context).textTheme.titleLarge),
+                    leading: IconButton(
+                      onPressed: widget.onBack,
+                      icon: const Icon(LucideIcons.arrowLeft),
+                    ),
+                    centerTitle: true,
+                    bottom: TabBar(
+                      isScrollable: false,
+                      labelStyle:
+                          Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                color: AppColors.primary,
+                                fontWeight: FontWeight.bold,
                               ),
-                            ),
-                            body: FormBuilder(
-                              key: _formKey,
-                              child: TabBarView(
-                                controller: _controller,
+                      unselectedLabelStyle: Theme.of(context)
+                          .textTheme
+                          .bodyMedium
+                          ?.copyWith(color: AppColors.textSecondary),
+                      indicator: const UnderlineTabIndicator(
+                        borderSide:
+                            BorderSide(color: AppColors.primary, width: 2),
+                        insets: EdgeInsets.zero,
+                      ),
+                      controller: _controller,
+                      tabs: const <Widget>[
+                        Tab(text: "General"),
+                        Tab(text: "Pre-Hospital"),
+                      ],
+                    ),
+                  ),
+                  body: FormBuilder(
+                    key: _formKey,
+                    child: TabBarView(
+                      controller: _controller,
+                      children: [
+                        // General Data
+                        Scaffold(
+                          persistentFooterButtons: [buttonNav(context)],
+                          body: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 8),
+                            child: SingleChildScrollView(
+                              child: Column(
                                 children: [
-                                  // General Data
-                                  Scaffold(
-                                    persistentFooterButtons: [
-                                      buttonNav(context)
-                                    ],
-                                    body: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 8),
-                                      child: SingleChildScrollView(
-                                        child: Column(
-                                          children: [
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      vertical: 4.0,
-                                                      horizontal: 8.0),
-                                              child: Column(
-                                                children: [
-                                                  ifUnknown(),
-                                                  const Divider(),
-                                                  Visibility(
-                                                    visible: isUnkown,
-                                                    child:
-                                                        unknownPatientDetails(),
-                                                  ),
-                                                  Visibility(
-                                                    visible: !isUnkown,
-                                                    child:
-                                                        knownPatientDetails(),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ],
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 4.0, horizontal: 8.0),
+                                    child: Column(
+                                      children: [
+                                        ifUnknown(),
+                                        Divider(
+                                            color: AppColors.primary
+                                                .withOpacity(0.1)),
+                                        Visibility(
+                                          visible: isUnkown,
+                                          child: unknownPatientDetails(),
                                         ),
-                                      ),
-                                    ),
-                                  ),
-
-                                  // PreHospital Data
-                                  Scaffold(
-                                    persistentFooterButtons: [
-                                      FormBottomButton(
-                                        formKey: _formKey,
-                                        onSubmitPressed: () async {
-                                          _formKey.currentState!.save();
-                                          var value =
-                                              _formKey.currentState!.value;
-
-                                          // Helper function to check and add errors
-                                          void checkField(dynamic fieldValue,
-                                              String fieldName) {
-                                            if (fieldValue == null ||
-                                                fieldValue == "") {
-                                              errorFields.add(fieldName);
-                                            }
-                                          }
-
-                                          // General Infos
-                                          if (isUnkown) {
-                                            checkField(value['gender'], 'Sex');
-                                          } else {
-                                            checkField(value['gender'], 'Sex');
-                                            checkField(value['firstName'],
-                                                'firstName');
-                                            checkField(
-                                                value['lastName'], 'lastName');
-                                            checkField(
-                                                value['birthday'], 'birthday');
-                                            checkField(presentCitiesId,
-                                                'present address');
-                                            checkField(permanentCitiesId,
-                                                'permanent address');
-                                          }
-
-                                          // Emergency Room Infos
-                                          checkField(value['patientType'],
-                                              'patient type');
-                                          checkField(externalCauses.isNotEmpty,
-                                              'external causes');
-                                          checkField(
-                                              naturesOfInjuryList.isNotEmpty,
-                                              'natures of injury');
-                                          if (regionId == "" &&
-                                              provincesId == "" &&
-                                              citiesId == "") {
-                                            errorFields.add('place of injury');
-                                          }
-
-                                          // Medicolegal
-                                          if (value["medicolegalCase"] ==
-                                              "yes") {
-                                            checkField(ddMedicolegal,
-                                                'Is Medicolegal');
-                                          }
-
-                                          // Vehicular accident-specific checks
-                                          if (value['vehicularAccidentBool'] ==
-                                              "yes") {
-                                            checkField(
-                                                value[
-                                                    'collisionOrNonCollision'],
-                                                'collision');
-                                            checkField(
-                                                value['typeVehicularAccident'],
-                                                'Vehicular Accident Type');
-                                            checkField(ddPlaceofOccurence,
-                                                'Vehicular Place of Occurrence');
-                                            checkField(
-                                                value['positionOfPatient'],
-                                                'Vehicular Patient Position');
-                                            checkField(
-                                                value['activityDuringAccident'],
-                                                'Vehicular Patient PreInjury Activity');
-                                          }
-
-                                          // Show confirmation or missing fields dialog
-                                          if (errorFields.isEmpty) {
-                                            _showConfirmationDialog();
-                                          } else {
-                                            _showMissingDialog();
-                                          }
-                                        },
-                                      )
-                                    ],
-                                    body: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 8),
-                                      child: SingleChildScrollView(
-                                        child: Column(
-                                          children: [
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      vertical: 4.0,
-                                                      horizontal: 8.0),
-                                              child: Column(
-                                                children: [
-                                                  patientType(),
-                                                  injuryDetails(),
-                                                  firstAidDetails(),
-                                                  chiefComplaint(),
-                                                  vehicularDetails(),
-                                                  medicolegalDetails(),
-                                                  massInjuryTF(),
-                                                  natureOfInjuryDetails(),
-                                                ],
-                                              ),
-                                            ),
-                                          ],
+                                        Visibility(
+                                          visible: !isUnkown,
+                                          child: knownPatientDetails(),
                                         ),
-                                      ),
+                                      ],
                                     ),
                                   ),
                                 ],
@@ -2025,7 +1916,111 @@ class AddInfoState extends State<AddInfo> with SingleTickerProviderStateMixin {
                             ),
                           ),
                         ),
-                      ),
+
+                        // PreHospital Data
+                        Scaffold(
+                          persistentFooterButtons: [
+                            FormBottomButton(
+                              formKey: _formKey,
+                              onSubmitPressed: () async {
+                                _formKey.currentState!.save();
+                                var value = _formKey.currentState!.value;
+
+                                // Helper function to check and add errors
+                                void checkField(
+                                    dynamic fieldValue, String fieldName) {
+                                  if (fieldValue == null || fieldValue == "") {
+                                    errorFields.add(fieldName);
+                                  }
+                                }
+
+                                // General Infos
+                                if (isUnkown) {
+                                  checkField(value['gender'], 'Sex');
+                                } else {
+                                  checkField(value['gender'], 'Sex');
+                                  checkField(value['firstName'], 'firstName');
+                                  checkField(value['lastName'], 'lastName');
+                                  checkField(value['birthday'], 'birthday');
+                                  checkField(
+                                      presentCitiesId, 'present address');
+                                  checkField(
+                                      permanentCitiesId, 'permanent address');
+                                }
+
+                                // Emergency Room Infos
+                                checkField(
+                                    value['patientType'], 'patient type');
+                                checkField(externalCauses.isNotEmpty,
+                                    'external causes');
+                                checkField(naturesOfInjuryList.isNotEmpty,
+                                    'natures of injury');
+                                if (regionId == "" &&
+                                    provincesId == "" &&
+                                    citiesId == "") {
+                                  errorFields.add('place of injury');
+                                }
+
+                                // Medicolegal
+                                if (value["medicolegalCase"] == "yes") {
+                                  checkField(ddMedicolegal, 'Is Medicolegal');
+                                }
+
+                                // Vehicular accident-specific checks
+                                if (value['vehicularAccidentBool'] == "yes") {
+                                  checkField(value['collisionOrNonCollision'],
+                                      'collision');
+                                  checkField(value['typeVehicularAccident'],
+                                      'Vehicular Accident Type');
+                                  checkField(ddPlaceofOccurence,
+                                      'Vehicular Place of Occurrence');
+                                  checkField(value['positionOfPatient'],
+                                      'Vehicular Patient Position');
+                                  checkField(value['activityDuringAccident'],
+                                      'Vehicular Patient PreInjury Activity');
+                                }
+
+                                // Show confirmation or missing fields dialog
+                                if (errorFields.isEmpty) {
+                                  _showConfirmationDialog();
+                                } else {
+                                  _showMissingDialog();
+                                }
+                              },
+                            )
+                          ],
+                          body: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 8),
+                            child: SingleChildScrollView(
+                              child: Column(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 4.0, horizontal: 8.0),
+                                    child: Column(
+                                      children: [
+                                        patientType(),
+                                        injuryDetails(),
+                                        firstAidDetails(),
+                                        chiefComplaint(),
+                                        vehicularDetails(),
+                                        medicolegalDetails(),
+                                        massInjuryTF(),
+                                        natureOfInjuryDetails(),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),
