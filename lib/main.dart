@@ -1,5 +1,6 @@
 import 'package:dashboard/core/provider/user_provider.dart';
 import 'package:dashboard/core/theme/app_theme.dart';
+import 'package:dashboard/features/addFeature/addDischarge.dart';
 import 'package:dashboard/features/addFeature/addInHospital.dart';
 import 'package:dashboard/features/addFeature/add_info.dart';
 import 'package:dashboard/features/addFeature/add_info_er.dart';
@@ -46,7 +47,7 @@ void main() async {
         title: 'Navigation Basics',
         debugShowCheckedModeBanner: false,
         theme: AppTheme.lightTheme,
-        home: SignInScreen(),
+        home: AddInfo(onBack: () {}),
       ),
     ),
   );

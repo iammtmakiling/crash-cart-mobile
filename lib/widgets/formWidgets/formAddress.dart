@@ -92,9 +92,12 @@ class _FormAddressState extends State<FormAddress> {
   @override
   void initState() {
     super.initState();
-    presentRegionId = widget.regionId.toString();
-    presentProvincesId = widget.provincesId.toString();
-    presentCitiesId = widget.citiesId.toString();
+    presentRegionId = widget.regionId ?? '';
+    presentProvincesId = widget.provincesId ?? '';
+    presentCitiesId = widget.citiesId ?? '';
+    presentRegionDesc = widget.regionDesc ?? '';
+    presentProvincesDesc = widget.provincesDesc ?? '';
+    presentCitiesDesc = widget.citiesDesc ?? '';
     initializeData();
   }
 
@@ -108,12 +111,12 @@ class _FormAddressState extends State<FormAddress> {
         oldWidget.provincesDesc != widget.provincesDesc ||
         oldWidget.citiesDesc != widget.citiesDesc) {
       setState(() {
-        presentRegionId = widget.regionId.toString();
-        presentProvincesId = widget.provincesId.toString();
-        presentCitiesId = widget.citiesId.toString();
-        presentRegionDesc = widget.regionDesc.toString();
-        presentProvincesDesc = widget.provincesDesc.toString();
-        presentCitiesDesc = widget.citiesDesc.toString();
+        presentRegionId = widget.regionId ?? '';
+        presentProvincesId = widget.provincesId ?? '';
+        presentCitiesId = widget.citiesId ?? '';
+        presentRegionDesc = widget.regionDesc ?? '';
+        presentProvincesDesc = widget.provincesDesc ?? '';
+        presentCitiesDesc = widget.citiesDesc ?? '';
         newRegions = [
           {"regDesc": presentRegionDesc, "regCode": presentRegionId}
         ];
@@ -165,15 +168,15 @@ class _FormAddressState extends State<FormAddress> {
           presentRegionId,
           widget.enabled ? regions : newRegions,
           (onChangedVal) {
+            if (onChangedVal == null) return;
             setState(() {
-              presentRegionId = onChangedVal;
-              widget.onRegionIDChanged?.call(onChangedVal);
+              presentRegionId = onChangedVal.toString();
+              widget.onRegionIDChanged?.call(onChangedVal.toString());
 
               for (var region in regions) {
                 if (region["regCode"].toString() == onChangedVal.toString()) {
                   widget.onRegionDescChanged
-                      ?.call(region["regDesc"].toString());
-
+                      ?.call(region["regDesc"]?.toString() ?? '');
                   break;
                 }
               }
@@ -209,22 +212,21 @@ class _FormAddressState extends State<FormAddress> {
           "Select Province",
           presentProvincesId,
           widget.enabled ? provinces : newProvinces,
-          // provinces,
           (onChangedVal) {
+            if (onChangedVal == null) return;
             setState(() {
-              presentProvincesId = onChangedVal;
-              widget.onProvincesIDChanged?.call(onChangedVal);
-              // print("Provinces ID: $presentProvincesId");
+              presentProvincesId = onChangedVal.toString();
+              widget.onProvincesIDChanged?.call(onChangedVal.toString());
+
               for (var province in provinces) {
                 if (province["provCode"].toString() ==
                     onChangedVal.toString()) {
                   widget.onProvincesDescChanged
-                      ?.call(province["provDesc"].toString());
-                  // print(
-                  //     "Province Description: ${province["provDesc"].toString()}");
+                      ?.call(province["provDesc"]?.toString() ?? '');
                   break;
                 }
               }
+
               cities = citiesMaster
                   .where(
                     (citiesItem) =>
@@ -232,7 +234,6 @@ class _FormAddressState extends State<FormAddress> {
                         onChangedVal.toString(),
                   )
                   .toList();
-              // presentCitiesId = '';
             });
           },
           (onValidate) {
@@ -254,17 +255,16 @@ class _FormAddressState extends State<FormAddress> {
           "Select City/Municipality",
           presentCitiesId,
           widget.enabled ? cities : newCities,
-          // cities,
           (onChangedVal) {
+            if (onChangedVal == null) return;
             setState(() {
-              presentCitiesId = onChangedVal;
-              widget.onCitiesIDChanged?.call(onChangedVal);
-              // print("Cities ID: $presentCitiesId");
+              presentCitiesId = onChangedVal.toString();
+              widget.onCitiesIDChanged?.call(onChangedVal.toString());
+
               for (var city in cities) {
                 if (city["citymunCode"].toString() == onChangedVal.toString()) {
                   widget.onCitiesDescChanged
-                      ?.call(city["citymunDesc"].toString());
-                  // print("City Description: ${city["citymunDesc"].toString()}");
+                      ?.call(city["citymunDesc"]?.toString() ?? '');
                   break;
                 }
               }

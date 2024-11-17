@@ -38,6 +38,7 @@ class FormTextArea extends StatelessWidget {
       minLines: minLines,
       maxLines: maxLines,
       keyboardType: TextInputType.multiline,
+      style: Theme.of(context).textTheme.bodySmall,
       decoration: InputDecoration(
         filled: true,
         fillColor: AppColors.primaryVariant.withOpacity(0.1),

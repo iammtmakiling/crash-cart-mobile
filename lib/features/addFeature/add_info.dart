@@ -78,6 +78,10 @@ class AddInfo extends StatefulWidget {
 class AddInfoState extends State<AddInfo> with SingleTickerProviderStateMixin {
   // Form Key
   final GlobalKey<FormBuilderState> _formKey = GlobalKey<FormBuilderState>();
+  final ScrollController _scrollController = ScrollController();
+
+  //Scroll
+  bool isAtBottom = false;
 
   // Screens
   bool isSending = false;
@@ -1533,44 +1537,44 @@ class AddInfoState extends State<AddInfo> with SingleTickerProviderStateMixin {
     );
   }
 
-  Padding buttonNav(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          ResetButton(
-            onReset: () {
-              // Form reset logic
-              ifPatientExist = false;
-              _formKey.currentState!.save();
-              _formKey.currentState!.reset();
+  // Padding buttonNav(BuildContext context) {
+  //   return Padding(
+  //     padding: const EdgeInsets.all(8.0),
+  //     child: Row(
+  //       mainAxisAlignment: MainAxisAlignment.center,
+  //       crossAxisAlignment: CrossAxisAlignment.center,
+  //       children: <Widget>[
+  //         ResetButton(
+  //           onReset: () {
+  //             // Form reset logic
+  //             ifPatientExist = false;
+  //             _formKey.currentState!.save();
+  //             _formKey.currentState!.reset();
 
-              // Update state
-              setState(() {
-                // Present Address
-                presentRegionId = "";
-                presentProvincesId = "";
-                presentCitiesId = "";
-                presentRegionDesc = "";
-                presentProvincesDesc = "";
-                presentCitiesDesc = "";
+  //             // Update state
+  //             setState(() {
+  //               // Present Address
+  //               presentRegionId = "";
+  //               presentProvincesId = "";
+  //               presentCitiesId = "";
+  //               presentRegionDesc = "";
+  //               presentProvincesDesc = "";
+  //               presentCitiesDesc = "";
 
-                // Permanent Address
-                permanentRegionId = "";
-                permanentProvincesId = "";
-                permanentCitiesId = "";
-                permanentRegionDesc = "";
-                permanentProvincesDesc = "";
-                permanentCitiesDesc = "";
-              });
-            },
-          ),
-        ],
-      ),
-    );
-  }
+  //               // Permanent Address
+  //               permanentRegionId = "";
+  //               permanentProvincesId = "";
+  //               permanentCitiesId = "";
+  //               permanentRegionDesc = "";
+  //               permanentProvincesDesc = "";
+  //               permanentCitiesDesc = "";
+  //             });
+  //           },
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
   //End of Layout Widgets
 
@@ -1818,10 +1822,23 @@ class AddInfoState extends State<AddInfo> with SingleTickerProviderStateMixin {
     );
   }
 
+  void _onScroll() {
+    if (_scrollController.hasClients) {
+      double maxScroll = _scrollController.position.maxScrollExtent;
+      double currentScroll = _scrollController.position.pixels;
+      double delta = 50.0; // Threshold of 50 pixels from bottom
+
+      setState(() {
+        isAtBottom = maxScroll - currentScroll <= delta;
+      });
+    }
+  }
+
   @override
   void initState() {
     super.initState();
     _controller = TabController(length: 2, vsync: this);
+    _scrollController.addListener(_onScroll);
 
     readJsonICDCodes();
     readJsonRegions();
@@ -1848,13 +1865,54 @@ class AddInfoState extends State<AddInfo> with SingleTickerProviderStateMixin {
                 child: Scaffold(
                   appBar: AppBar(
                     automaticallyImplyLeading: false,
-                    title: Text("Adding Patient Data",
-                        style: Theme.of(context).textTheme.titleLarge),
+                    title: Text("Adding Patient Info",
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleLarge!
+                            .copyWith(color: AppColors.primary)),
+                    centerTitle: true,
                     leading: IconButton(
                       onPressed: widget.onBack,
-                      icon: const Icon(LucideIcons.arrowLeft),
+                      icon: const Icon(LucideIcons.chevronLeft,
+                          size: 24, color: AppColors.textPrimary),
                     ),
-                    centerTitle: true,
+                    actions: [
+                      IconButton(
+                        onPressed: () {
+                          // Form reset logic
+                          ifPatientExist = false;
+                          _formKey.currentState!.save();
+                          _formKey.currentState!.reset();
+
+                          // Update state
+                          setState(() {
+                            // Refresh logic here
+                            isUnkown = false;
+
+                            // Present Address
+                            presentRegionId = "";
+                            presentProvincesId = "";
+                            presentCitiesId = "";
+                            presentRegionDesc = "";
+                            presentProvincesDesc = "";
+                            presentCitiesDesc = "";
+
+                            // Permanent Address
+                            permanentRegionId = "";
+                            permanentProvincesId = "";
+                            permanentCitiesId = "";
+                            permanentRegionDesc = "";
+                            permanentProvincesDesc = "";
+                            permanentCitiesDesc = "";
+
+                            naturesOfInjuryList = [];
+                            externalCausesInjury = [];
+                          });
+                        },
+                        icon: const Icon(LucideIcons.listRestart,
+                            size: 24, color: AppColors.textPrimary),
+                      ),
+                    ],
                     bottom: TabBar(
                       isScrollable: false,
                       labelStyle:
@@ -1885,7 +1943,7 @@ class AddInfoState extends State<AddInfo> with SingleTickerProviderStateMixin {
                       children: [
                         // General Data
                         Scaffold(
-                          persistentFooterButtons: [buttonNav(context)],
+                          // persistentFooterButtons: [buttonNav(context)],
                           body: Padding(
                             padding: const EdgeInsets.symmetric(vertical: 8),
                             child: SingleChildScrollView(
@@ -1919,79 +1977,92 @@ class AddInfoState extends State<AddInfo> with SingleTickerProviderStateMixin {
 
                         // PreHospital Data
                         Scaffold(
-                          persistentFooterButtons: [
-                            FormBottomButton(
-                              formKey: _formKey,
-                              onSubmitPressed: () async {
-                                _formKey.currentState!.save();
-                                var value = _formKey.currentState!.value;
+                          persistentFooterButtons: isAtBottom
+                              ? [
+                                  FormBottomButton(
+                                    formKey: _formKey,
+                                    onSubmitPressed: () async {
+                                      _formKey.currentState!.save();
+                                      var value = _formKey.currentState!.value;
 
-                                // Helper function to check and add errors
-                                void checkField(
-                                    dynamic fieldValue, String fieldName) {
-                                  if (fieldValue == null || fieldValue == "") {
-                                    errorFields.add(fieldName);
-                                  }
-                                }
+                                      // Helper function to check and add errors
+                                      void checkField(dynamic fieldValue,
+                                          String fieldName) {
+                                        if (fieldValue == null ||
+                                            fieldValue == "") {
+                                          errorFields.add(fieldName);
+                                        }
+                                      }
 
-                                // General Infos
-                                if (isUnkown) {
-                                  checkField(value['gender'], 'Sex');
-                                } else {
-                                  checkField(value['gender'], 'Sex');
-                                  checkField(value['firstName'], 'firstName');
-                                  checkField(value['lastName'], 'lastName');
-                                  checkField(value['birthday'], 'birthday');
-                                  checkField(
-                                      presentCitiesId, 'present address');
-                                  checkField(
-                                      permanentCitiesId, 'permanent address');
-                                }
+                                      // General Infos
+                                      if (isUnkown) {
+                                        checkField(value['gender'], 'Sex');
+                                      } else {
+                                        checkField(value['gender'], 'Sex');
+                                        checkField(
+                                            value['firstName'], 'firstName');
+                                        checkField(
+                                            value['lastName'], 'lastName');
+                                        checkField(
+                                            value['birthday'], 'birthday');
+                                        checkField(
+                                            presentCitiesId, 'present address');
+                                        checkField(permanentCitiesId,
+                                            'permanent address');
+                                      }
 
-                                // Emergency Room Infos
-                                checkField(
-                                    value['patientType'], 'patient type');
-                                checkField(externalCauses.isNotEmpty,
-                                    'external causes');
-                                checkField(naturesOfInjuryList.isNotEmpty,
-                                    'natures of injury');
-                                if (regionId == "" &&
-                                    provincesId == "" &&
-                                    citiesId == "") {
-                                  errorFields.add('place of injury');
-                                }
+                                      // Emergency Room Infos
+                                      checkField(
+                                          value['patientType'], 'patient type');
+                                      checkField(externalCauses.isNotEmpty,
+                                          'external causes');
+                                      checkField(naturesOfInjuryList.isNotEmpty,
+                                          'natures of injury');
+                                      if (regionId == "" &&
+                                          provincesId == "" &&
+                                          citiesId == "") {
+                                        errorFields.add('place of injury');
+                                      }
 
-                                // Medicolegal
-                                if (value["medicolegalCase"] == "yes") {
-                                  checkField(ddMedicolegal, 'Is Medicolegal');
-                                }
+                                      // Medicolegal
+                                      if (value["medicolegalCase"] == "yes") {
+                                        checkField(
+                                            ddMedicolegal, 'Is Medicolegal');
+                                      }
 
-                                // Vehicular accident-specific checks
-                                if (value['vehicularAccidentBool'] == "yes") {
-                                  checkField(value['collisionOrNonCollision'],
-                                      'collision');
-                                  checkField(value['typeVehicularAccident'],
-                                      'Vehicular Accident Type');
-                                  checkField(ddPlaceofOccurence,
-                                      'Vehicular Place of Occurrence');
-                                  checkField(value['positionOfPatient'],
-                                      'Vehicular Patient Position');
-                                  checkField(value['activityDuringAccident'],
-                                      'Vehicular Patient PreInjury Activity');
-                                }
+                                      // Vehicular accident-specific checks
+                                      if (value['vehicularAccidentBool'] ==
+                                          "yes") {
+                                        checkField(
+                                            value['collisionOrNonCollision'],
+                                            'collision');
+                                        checkField(
+                                            value['typeVehicularAccident'],
+                                            'Vehicular Accident Type');
+                                        checkField(ddPlaceofOccurence,
+                                            'Vehicular Place of Occurrence');
+                                        checkField(value['positionOfPatient'],
+                                            'Vehicular Patient Position');
+                                        checkField(
+                                            value['activityDuringAccident'],
+                                            'Vehicular Patient PreInjury Activity');
+                                      }
 
-                                // Show confirmation or missing fields dialog
-                                if (errorFields.isEmpty) {
-                                  _showConfirmationDialog();
-                                } else {
-                                  _showMissingDialog();
-                                }
-                              },
-                            )
-                          ],
+                                      // Show confirmation or missing fields dialog
+                                      if (errorFields.isEmpty) {
+                                        _showConfirmationDialog();
+                                      } else {
+                                        _showMissingDialog();
+                                      }
+                                    },
+                                  )
+                                ]
+                              : null,
                           body: Padding(
                             padding: const EdgeInsets.symmetric(vertical: 8),
                             child: SingleChildScrollView(
+                              controller: _scrollController,
+                              // padding: const EdgeInsets.only(bottom: 40),
                               child: Column(
                                 children: [
                                   Padding(
@@ -2007,6 +2078,7 @@ class AddInfoState extends State<AddInfo> with SingleTickerProviderStateMixin {
                                         medicolegalDetails(),
                                         massInjuryTF(),
                                         natureOfInjuryDetails(),
+                                        const SizedBox(height: 16),
                                       ],
                                     ),
                                   ),

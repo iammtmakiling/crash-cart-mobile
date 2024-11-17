@@ -1,4 +1,6 @@
+import 'package:dashboard/core/theme/app_colors.dart';
 import 'package:dashboard/main/main_navigation.dart';
+import 'package:lucide_icons/lucide_icons.dart';
 
 import '../../core/api_requests/_api.dart';
 import 'package:dashboard/features/viewFeature/viewSummary.dart';
@@ -93,6 +95,9 @@ class AddDischargeState extends State<AddDischarge>
     with SingleTickerProviderStateMixin {
   final GlobalKey<FormBuilderState> _formKey = GlobalKey<FormBuilderState>();
 
+  bool isAtBottom = false;
+  final ScrollController _scrollController = ScrollController();
+
   // Record Related
   late Map<String, dynamic> record;
 
@@ -157,13 +162,8 @@ class AddDischargeState extends State<AddDischarge>
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            const Text(
-              "Treatment Completed?",
-              style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold),
-            ),
+            Text("Treatment Completed?",
+                style: Theme.of(context).textTheme.bodyMedium),
             FormRadio(
               enabled: true,
               name: "treatmentCompletedDischarge",
@@ -180,25 +180,17 @@ class AddDischargeState extends State<AddDischarge>
   Widget icdCodeAndDiagnosis(BuildContext context) {
     // var widthScreen = MediaQuery.of(context).size.width;
 
-    return const Padding(
-      padding: EdgeInsets.all(8.0),
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Text(
             "Final Diagnosis",
-            style: TextStyle(
-                color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
+            style: Theme.of(context).textTheme.bodyMedium,
           ),
-          // Text(
-          //   "(Description)",
-          //   style: TextStyle(
-          //       color: Colors.black87,
-          //       fontSize: 12,
-          //       fontWeight: FontWeight.bold),
-          // ),
-          SizedBox(height: 8),
+          const SizedBox(height: 8),
           FormTextArea(name: "icdCodeDischarge", labelName: "Description")
           // FormTextField(name: "icdCodeDischarge", labelName: "")
         ],
@@ -217,13 +209,9 @@ class AddDischargeState extends State<AddDischarge>
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            const Text(
-              "Disposition on Discharge?",
-              style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold),
-            ),
+            Text("Disposition on Discharge?",
+                style: Theme.of(context).textTheme.bodyMedium),
+            const SizedBox(height: 8),
             FormBuilderRadioGroup(
               enabled: true,
               name: "dispositionDischarge",
@@ -258,15 +246,31 @@ class AddDischargeState extends State<AddDischarge>
 
   // End of Discharge Data Widgets
 
+  void _onScroll() {
+    if (_scrollController.hasClients) {
+      double maxScroll = _scrollController.position.maxScrollExtent;
+      double currentScroll = _scrollController.position.pixels;
+      double delta = 50.0; // Threshold of 50 pixels from bottom
+
+      setState(() {
+        isAtBottom = maxScroll - currentScroll <= delta;
+      });
+    }
+  }
+
   @override
   void initState() {
     super.initState();
     record = widget.record;
     _tabController = TabController(length: 2, vsync: this);
+
+    // Replace the old scroll listener with the new one
+    _scrollController.addListener(_onScroll);
   }
 
   @override
   void dispose() {
+    _scrollController.dispose();
     _tabController.dispose();
     super.dispose();
   }
@@ -276,70 +280,85 @@ class AddDischargeState extends State<AddDischarge>
     return Scaffold(
       body: Column(
         children: [
-          if (!isSending && !isSentSuccessfully)
-            MiniAppBarBack(
-              onBack: widget.onBack,
-            ),
-          isSending
-              ? const SendingWidget()
-              : isSentSuccessfully
-                  ? SuccessfulWidget(
-                      message: "Successful!",
-                      onPressed: () {
-                        Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(
-                            builder: (context) => const MainNavigation(),
-                          ),
-                        );
-                      },
-                    )
-                  : Expanded(
-                      child: DefaultTabController(
-                          length: 2, // Number of tabs
-                          child: Scaffold(
-                            appBar: AppBar(
-                              backgroundColor: Colors.white,
-                              toolbarHeight: 10,
-                              bottom: TabBar(
-                                controller: _tabController,
-                                tabs: const [
-                                  Tab(
-                                    child: Text(
-                                      "Adding",
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        color: Colors.cyan,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ),
-                                  Tab(
-                                    child: Text(
-                                      'View Docs',
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        color: Colors.cyan,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            body: FormBuilder(
-                              key: _formKey,
-                              child: TabBarView(
-                                controller: _tabController,
-                                children: [
-                                  firstPage(context),
-                                  ViewSummary(
-                                      patientData: widget.patientData,
-                                      patient: widget.fullRecord),
-                                ],
-                              ),
-                            ),
-                          )),
+          // if (!isSending && !isSentSuccessfully)
+          //   MiniAppBarBack(
+          //     onBack: widget.onBack,
+          //   ),
+          // isSending
+          //     ? const SendingWidget()
+          //     : isSentSuccessfully
+          //         ? SuccessfulWidget(
+          //             message: "Successful!",
+          //             onPressed: () {
+          //               Navigator.of(context).pushReplacement(
+          //                 MaterialPageRoute(
+          //                   builder: (context) => const MainNavigation(),
+          //                 ),
+          //               );
+          //             },
+          //           )
+          // :
+          Expanded(
+            child: DefaultTabController(
+                length: 2, // Number of tabs
+                child: Scaffold(
+                  appBar: AppBar(
+                    automaticallyImplyLeading: false,
+                    title: Text("Adding Discharge Data",
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleLarge!
+                            .copyWith(color: AppColors.primary)),
+                    centerTitle: true,
+                    leading: IconButton(
+                      onPressed: widget.onBack,
+                      icon: const Icon(LucideIcons.chevronLeft,
+                          size: 24, color: AppColors.textPrimary),
                     ),
+                    actions: [
+                      IconButton(
+                        onPressed: () {
+                          setState(() {
+                            // Refresh logic here
+                            _formKey.currentState?.reset();
+                          });
+                        },
+                        icon: const Icon(LucideIcons.listRestart,
+                            size: 24, color: AppColors.textPrimary),
+                      ),
+                    ],
+                    bottom: TabBar(
+                      controller: _tabController,
+                      tabs: [
+                        Tab(
+                          child: Text(
+                            "Adding",
+                            style: Theme.of(context).textTheme.bodyMedium,
+                          ),
+                        ),
+                        Tab(
+                          child: Text(
+                            'View Docs',
+                            style: Theme.of(context).textTheme.bodyMedium,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  body: FormBuilder(
+                    key: _formKey,
+                    child: TabBarView(
+                      controller: _tabController,
+                      children: [
+                        firstPage(context),
+                        ViewSummary(
+                            patientData: widget.patientData,
+                            patient: widget.fullRecord),
+                      ],
+                    ),
+                  ),
+                )),
+          ),
         ],
       ),
     );
@@ -347,53 +366,53 @@ class AddDischargeState extends State<AddDischarge>
 
   Widget firstPage(BuildContext context) {
     return Scaffold(
-      persistentFooterButtons: [
-        FormBottomButton(
-          formKey: _formKey,
-          onSubmitPressed: () async {
-            _formKey.currentState!.save();
-            if (_formKey.currentState!.validate()) {
-              var result = await Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (BuildContext context) => const PinCodeScreen(),
-                    fullscreenDialog: true,
-                  ));
+      persistentFooterButtons: isAtBottom
+          ? [
+              FormBottomButton(
+                formKey: _formKey,
+                onSubmitPressed: () async {
+                  _formKey.currentState!.save();
+                  if (_formKey.currentState!.validate()) {
+                    var result = await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (BuildContext context) =>
+                              const PinCodeScreen(),
+                          fullscreenDialog: true,
+                        ));
 
-              if (result == true) {
-                setState(() {
-                  isSending = true;
-                });
+                    if (result == true) {
+                      setState(() {
+                        isSending = true;
+                      });
 
-                await _insertData(
-                  _formKey.currentState!.value,
-                );
-                setState(() {
-                  isSending = false;
-                  isSentSuccessfully = true;
-                });
-              }
-            } else {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text("Fill all required fields"),
-                  duration: Duration(seconds: 5),
-                ),
-              );
-            }
-          },
-        )
-      ],
+                      await _insertData(
+                        _formKey.currentState!.value,
+                      );
+                      setState(() {
+                        isSending = false;
+                        isSentSuccessfully = true;
+                      });
+                    }
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text("Fill all required fields"),
+                        duration: Duration(seconds: 5),
+                      ),
+                    );
+                  }
+                },
+              )
+            ]
+          : null,
       body: Column(
         children: [
           Expanded(
-            // child: Scaffold(
-            //   body: FormBuilder(
-            //     key: _formKey,
-            //     autovalidateMode: AutovalidateMode.onUserInteraction,
             child: Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(16.0),
               child: SingleChildScrollView(
+                controller: _scrollController,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -406,8 +425,6 @@ class AddDischargeState extends State<AddDischarge>
               ),
             ),
           ),
-          // ),
-          // ),
         ],
       ),
     );

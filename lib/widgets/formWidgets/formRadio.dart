@@ -32,6 +32,7 @@ class FormRadio extends StatelessWidget {
         activeColor: AppColors.primary,
         orientation: OptionsOrientation.horizontal,
         decoration: const InputDecoration(
+          fillColor: Colors.transparent,
           border: InputBorder.none,
           enabledBorder: InputBorder.none,
           focusedBorder: InputBorder.none,

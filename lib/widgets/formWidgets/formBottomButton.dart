@@ -24,33 +24,33 @@ class FormBottomButton extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          Expanded(
-            child: OutlinedButton(
-              style: ButtonStyle(
-                padding: WidgetStateProperty.all(
-                  const EdgeInsets.symmetric(vertical: 8.0),
-                ),
-                shape: WidgetStateProperty.all(
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(0),
-                  ),
-                ),
-                side: WidgetStateProperty.all(
-                  BorderSide(color: AppColors.primary),
-                ),
-              ),
-              child: Text(
-                "Reset",
-                style: AppTextTheme.textTheme.bodyMedium!.copyWith(
-                  color: AppColors.primary,
-                ),
-              ),
-              onPressed: () {
-                formKey.currentState!.save();
-                formKey.currentState!.reset();
-              },
-            ),
-          ),
+          // Expanded(
+          //   child: OutlinedButton(
+          //     style: ButtonStyle(
+          //       padding: WidgetStateProperty.all(
+          //         const EdgeInsets.symmetric(vertical: 8.0),
+          //       ),
+          //       shape: WidgetStateProperty.all(
+          //         RoundedRectangleBorder(
+          //           borderRadius: BorderRadius.circular(0),
+          //         ),
+          //       ),
+          //       side: WidgetStateProperty.all(
+          //         BorderSide(color: AppColors.primary),
+          //       ),
+          //     ),
+          //     child: Text(
+          //       "Reset",
+          //       style: AppTextTheme.textTheme.bodyMedium!.copyWith(
+          //         color: AppColors.primary,
+          //       ),
+          //     ),
+          //     onPressed: () {
+          //       formKey.currentState!.save();
+          //       formKey.currentState!.reset();
+          //     },
+          //   ),
+          // ),
           const SizedBox(width: 8),
           Expanded(
             child: MaterialButton(
