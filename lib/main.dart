@@ -47,7 +47,7 @@ void main() async {
         title: 'Navigation Basics',
         debugShowCheckedModeBanner: false,
         theme: AppTheme.lightTheme,
-        home: AddInfo(onBack: () {}),
+        home: SignInScreen(),
       ),
     ),
   );

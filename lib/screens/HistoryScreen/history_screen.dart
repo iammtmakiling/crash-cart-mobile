@@ -1,14 +1,15 @@
 import 'dart:async';
 import 'dart:convert';
-
+import 'package:dashboard/core/api_requests/getPatient.dart';
+import 'package:dashboard/core/provider/user_provider.dart';
 import 'package:dashboard/core/theme/app_colors.dart';
 import 'package:dashboard/core/utils/helper_utils.dart';
-import 'package:dashboard/globals.dart';
 import 'package:dashboard/screens/RecordsScreen/widgets/patient_box.dart';
-import 'package:dashboard/widgets/main_appbar.dart';
 import 'package:dashboard/widgets/widgets.dart';
 import 'package:flutter/material.dart';
-import '../../core/api_requests/_api.dart';
+import 'package:provider/provider.dart';
+
+import '../../widgets/main_appbar.dart';
 
 class HistoryScreen extends StatefulWidget {
   final List<Map<String, dynamic>> historyPhase;
@@ -24,19 +25,21 @@ class HistoryScreenState extends State<HistoryScreen> {
   List<dynamic> filteredPatients = [];
   int currentPage = 1;
   int itemsPerPage = 5;
+  String bearerToken = "";
   bool isLoading = true;
 
   @override
   void initState() {
     super.initState();
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    bearerToken = userProvider.bearerToken;
     fetchPatients();
   }
 
   Future<void> fetchPatients() async {
     try {
-      List<Future<Map<String, dynamic>>> fetchTasks = [];
+      List<Future<Map<String, dynamic>?>> fetchTasks = [];
 
-      // Prepare fetch tasks for each patient
       for (var patient in widget.historyPhase) {
         Map<String, dynamic> parsedPatient = patient['parsed'];
         var patientID = encryp(parsedPatient['patientID']);
@@ -44,29 +47,31 @@ class HistoryScreenState extends State<HistoryScreen> {
         fetchTasks.add(getPatientDetails(encodedpatientID, bearerToken));
       }
 
-      // Execute fetch tasks in parallel
-      List<Map<String, dynamic>> fetchedPatients =
+      List<Map<String, dynamic>?> fetchedPatients =
           await Future.wait(fetchTasks);
 
-      // Process fetched data
       for (int i = 0; i < fetchedPatients.length; i++) {
-        Map<String, dynamic> temp = fetchedPatients[i];
-        String fullName = "${temp["general"]['firstName']}. ";
-        if (temp["general"]['middleName'] != null &&
-            temp["general"]['middleName'].isNotEmpty) {
-          fullName += "${temp["general"]['middleName'][0]}. ";
+        Map<String, dynamic>? temp = fetchedPatients[i];
+        if (temp == null) continue;
+
+        Map<String, dynamic>? general = temp['general'];
+        if (general == null) continue;
+
+        String fullName = "${general['firstName'] ?? 'Unknown'}. ";
+        if (general['middleName'] != null && general['middleName'].isNotEmpty) {
+          fullName += "${general['middleName'][0]}. ";
         }
-        fullName += "${temp["general"]['lastName']}";
-        if (temp["general"]["suffix"] != null &&
-            temp["general"]["suffix"].isNotEmpty) {
-          fullName += " ${temp["general"]["suffix"]}";
+        fullName += "${general['lastName'] ?? 'Unknown'}";
+        if (general['suffix'] != null && general['suffix'].isNotEmpty) {
+          fullName += " ${general['suffix']}";
         }
+
         Map<String, dynamic> processedPatient = {
           "record": widget.historyPhase[i]['parsed'],
           "unparsedRecord": widget.historyPhase[i]['unparsed'],
           "fullName": fullName,
           "patientID": widget.historyPhase[i]['patientID'],
-          "general": temp['general'],
+          "general": general,
         };
         processedPatients.add(processedPatient);
       }

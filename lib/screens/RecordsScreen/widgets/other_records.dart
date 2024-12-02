@@ -59,6 +59,11 @@ class OtherRecordsState extends State<OtherRecords> {
       // Process fetched data
       for (int i = 0; i < fetchedPatients.length; i++) {
         Map<String, dynamic> temp = fetchedPatients[i];
+
+        if (i < 3) {
+          print("Processed patient $i: $temp");
+        }
+
         String fullName = "${temp["general"]['firstName']}. ";
         if (temp["general"]['middleName'] != null &&
             temp["general"]['middleName'].isNotEmpty) {
