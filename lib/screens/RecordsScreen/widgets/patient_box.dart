@@ -27,16 +27,17 @@ class PatientBox extends StatelessWidget {
     final statusColor = getStatusColor(patientRecord['patientStatus']);
 
     return Container(
-      margin:
-          isTile ? const EdgeInsets.symmetric(vertical: 8.0) : EdgeInsets.zero,
-      padding: isTile ? const EdgeInsets.all(16.0) : EdgeInsets.zero,
+      margin: const EdgeInsets.symmetric(vertical: 8.0),
+      padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
-        color: isTile ? Colors.white : Colors.transparent,
+        color: Colors.white,
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: AppColors.primary.withOpacity(0.08)),
+        border: Border.all(
+          color: isTile ? statusColor.withOpacity(0.08) : statusColor,
+        ),
         boxShadow: [
           BoxShadow(
-            color: AppColors.primary.withOpacity(0.08),
+            color: statusColor.withOpacity(0.08),
             blurRadius: 1,
           ),
         ],

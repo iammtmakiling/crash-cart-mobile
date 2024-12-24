@@ -38,7 +38,8 @@ class FormDropdown extends StatelessWidget {
         items: items
             .map((item) => DropdownMenuItem(
                   value: item,
-                  child: Text(item),
+                  child:
+                      Text(item, style: Theme.of(context).textTheme.bodyMedium),
                 ))
             .toList(),
         validator: validator,

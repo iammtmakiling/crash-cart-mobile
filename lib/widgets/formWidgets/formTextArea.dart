@@ -49,12 +49,16 @@ class FormTextArea extends StatelessWidget {
           ),
         ),
         labelText: labelName,
-        floatingLabelBehavior: FloatingLabelBehavior.always,
-        labelStyle: Theme.of(context).textTheme.bodyMedium,
-        hintStyle: Theme.of(context).textTheme.bodyMedium,
+        floatingLabelBehavior: FloatingLabelBehavior.never,
+        labelStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
+              color: AppColors.textTertiary,
+            ),
+        hintStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
+              color: AppColors.textTertiary,
+            ),
         contentPadding: const EdgeInsets.symmetric(
-          horizontal: 20.0,
-          vertical: 15.0,
+          horizontal: 8.0,
+          vertical: 8.0,
         ),
         prefixIcon: prefixIcon,
       ),

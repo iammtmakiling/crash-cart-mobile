@@ -2127,18 +2127,11 @@ class AddInfoERState extends State<AddInfoER>
   }
 
   void showErrorModal(BuildContext context, String errorMessage) {
-    List<String> errorFields = [
-      "API Error: $errorMessage",
-      "Please try again later.",
-      "If the problem persists, contact support."
-    ];
-
     showDialog(
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {
         return ErrorModal(
-          errorFields: errorFields,
           onClose: () {
             Navigator.of(context).pop();
           },

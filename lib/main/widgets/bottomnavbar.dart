@@ -1,4 +1,5 @@
 import 'package:dashboard/core/provider/user_provider.dart';
+import 'package:dashboard/features/addFeature/add_emergencyRoomData.dart';
 import 'package:dashboard/features/addFeature/add_info.dart';
 import 'package:dashboard/features/addFeature/add_info_er.dart';
 import 'package:dashboard/main/main_navigation.dart';
@@ -42,12 +43,12 @@ class BottomNavBar extends StatelessWidget {
                       'Records',
                       themePrimaryColor,
                       context),
-                  if (userProvider.role == 'Pre-Hospital Staff' ||
-                      userProvider.role == 'ER Staff')
-                    BottomNavigationBarItem(
-                      icon: SizedBox(width: 0, height: 0),
-                      label: '',
-                    ),
+                  // if (userProvider.role == 'Pre-Hospital Staff' ||
+                  //     userProvider.role == 'ER Staff')
+                  BottomNavigationBarItem(
+                    icon: SizedBox(width: 0, height: 0),
+                    label: '',
+                  ),
                   _buildBottomNavigationBarItem(
                       LucideIcons.history,
                       LucideIcons.history,
@@ -130,7 +131,7 @@ class BottomNavBar extends StatelessWidget {
                   ),
                 );
               } else {
-                return addInfo(
+                return AddEmergencyRoomData(
                   onBack: () => Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(

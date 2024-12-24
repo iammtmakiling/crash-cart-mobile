@@ -293,16 +293,16 @@ List<String> positionOfPatientList = [
   'Pedestrian',
 ];
 List<String> vehiclesList = [
+  'Pedestrian',
+  'Bicycle',
+  'Motorcycle',
+  'Tricycle',
   'Car',
-  "Van",
-  "Bus",
-  "Motorcycle",
-  "Bicycle",
-  "Tricycle",
-  "Jeepney",
-  "Truck",
-  "Boat",
-  "Plane"
+  'Truck',
+  'Van',
+  'Recreational land vehicle',
+  'Boat',
+  'Aircraft',
 ];
 List<String> vehicleAccidentType = ['Land', 'Air', 'Sea'];
 List<String> yesNoList = ['yes', 'no'];
@@ -597,4 +597,20 @@ List<String> complicationsList = [
   'Disorientation and Confusion',
   'Venous Access Complications',
   'Hematologic Complications',
+];
+
+List<String> mechanismOfInjuryList = [
+  'Vehicular Crash',
+  'Fall',
+  'Stab',
+  'Gunshot',
+  'Burn',
+  'Drowning',
+  'Strangulation',
+  'Mauling',
+  'Impalement',
+  'Hacking Injury',
+  'Crushing Injury',
+  'Blast Injury',
+  'Other',
 ];

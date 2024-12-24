@@ -1,4 +1,5 @@
 import 'package:dashboard/core/theme/app_colors.dart';
+import 'package:dashboard/widgets/custom_modal.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
@@ -12,7 +13,24 @@ AppBar mainAppBar(BuildContext context, String title) {
       IconButton(
         icon: Icon(LucideIcons.info, color: Theme.of(context).iconTheme.color),
         onPressed: () {
-          // Add notification handling here
+          showDialog(
+            context: context,
+            builder: (context) => CustomModal(
+              body: Column(
+                children: [
+                  Text(
+                    'Crash Cart Information',
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                  const SizedBox(height: 16),
+                  Text(
+                    'It is a Trauma Registry Tool that allows doctors to collect patient data. It is used to track, streamline, and report patient data for trauma care.',
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
+            ),
+          );
         },
       ),
     ],

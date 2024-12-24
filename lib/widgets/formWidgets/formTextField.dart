@@ -35,12 +35,13 @@ class FormTextField extends StatelessWidget {
           style: Theme.of(context).textTheme.bodySmall,
           decoration: InputDecoration(
             labelText: labelName,
+            floatingLabelBehavior: FloatingLabelBehavior.never,
             filled: true,
             fillColor: isEnabled
                 ? AppColors.primaryVariant.withOpacity(0.1)
                 : AppColors.textTertiary.withOpacity(0.05),
             labelStyle: AppTextTheme.textTheme.bodySmall?.copyWith(
-              color: AppColors.textSecondary,
+              color: AppColors.textTertiary,
             ),
             hintStyle: AppTextTheme.textTheme.bodySmall?.copyWith(
               color: AppColors.textTertiary,
